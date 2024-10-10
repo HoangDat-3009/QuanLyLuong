@@ -1,0 +1,14 @@
+.bg-custom{
+    background-color: #0b1e52;
+}
+.nav-link{
+    margin-top: 10px;
+    font-size: 18px !important;
+}
+body,.bg-footer{
+    background-color: #d0ddf6 !important;
+}
+.sb-sidenav-footer{
+    background-color: rgba(11, 30, 82,0.2) !important;
+
+}
