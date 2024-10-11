@@ -3,37 +3,44 @@
 	Layout = "~/Views/Shared/MyLayout.cshtml";
 }
 @model IEnumerable<NhanVien>
-@* <table class="table table-striped">
-	<thead>
-		<tr>
-			<th>Mã NV</th>
-			<th>Họ tên</th>
-			<th>Ngày sinh</th>
-			<th>Giới tính</th>
-
-			<th>Địa chỉ</th>
-			<th>Email</th>
-		</tr>
-	</thead>
-	<tbody>
-		@foreach(var s in Model)
-		{
-			<tr>
-				<td>@s.Id</td>
-				<td>@s.Name</td>
-				<td>@s.DateOfBirth</td>
-				<td>@s.Gender</td>
-				<td>@s.Address</td>
-				<td>@s.Email</td>
-			</tr>
-		}
-	</tbody>
-</table> *@
-@section Scripts {
+  <table class="table table-striped">
+  	<thead>
+  		<tr>
+  			<th>STT</th>
+  			<th>Mã nhân viên</th>
+            <th>Họ và tên</th>
+            <th>Ngày sinh</th>
+  			<th>Giới tính</th>
+  			<th>Địa chỉ</th>
+  			<th>Số điện thoại</th>
+  			<th>Số cccd</th>
+            <th>Phòng ban</th>
+            <th>Chức vụ</th>
+            <th>Quê quán</th>
+            <th>Ngày tuyển dụng</th>
+            <th>Tài khoản ngân hàng</th>
+            <th>Số tài khoản</th>
+  		</tr>
+  	</thead>
+  	<tbody>
+  		@foreach(var s in Model)
+  		{
+  			<tr>
+  				<td>@s.Id</td>
+  				<td>@s.Name</td>
+  				<td>@s.DateOfBirth</td>
+  				<td>@s.Gender</td>
+  				<td>@s.Address</td>
+  				<td>@s.Email</td>
+  			</tr>
+  		}
+  	</tbody>
+  </table>
+@* @section Scripts {
 	<script>
 		var table = document.querySelector("table");
 		table.onclick = function onTableClick() {
 			table.style = "background-color: yellow;"
 		}
 	</script>
-}
+} *@
