@@ -6,6 +6,7 @@ namespace QLLuong.Controllers
     public class NhanVienController : Controller
     {
         private List<NhanVien> listNhanVien = new List<NhanVien>();
+        private NhanVien inforStaff = new NhanVien();
         public NhanVienController()
         {
             listNhanVien = new List<NhanVien>()
@@ -23,6 +24,10 @@ namespace QLLuong.Controllers
         public IActionResult Index()
         {
             return View(listNhanVien);
+        }
+        public IActionResult Index_Infor_Staff()
+        {
+            return View(inforStaff);
         }
     }
 }
