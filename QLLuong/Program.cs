@@ -15,7 +15,6 @@ namespace QLLuong
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
@@ -28,12 +27,17 @@ namespace QLLuong
 
             app.MapControllerRoute(
                 name: "NhanVienList",
-                pattern: "/NhanVien/List",
+                pattern: "/NhanVien",
                 defaults: new { controller = "NhanVien", action = "Index" });
 
             app.MapControllerRoute(
+                name: "NhanVienList",
+                pattern: "/ChamCong",
+                defaults: new { controller = "ChamCong", action = "Index" });
+
+            app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=LogIn}/{action=Login}/{id?}");
 
             app.Run();
         }
