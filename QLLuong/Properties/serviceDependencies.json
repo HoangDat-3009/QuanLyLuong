@@ -5,8 +5,7 @@
     },
     "mssql1": {
       "type": "mssql",
-      "connectionId": "ConnectionStrings:CompanyController",
-      "dynamicId": null
+      "connectionId": "ConnectionStrings:CompanyContext"
     }
   }
 }
