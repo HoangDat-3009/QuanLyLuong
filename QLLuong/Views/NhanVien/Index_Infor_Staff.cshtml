@@ -3,6 +3,37 @@
     ViewData["Title"] = "Index_Infor_Staff";
     Layout = "~/Views/Shared/MyLayout.cshtml";
 }
-
-<h1>Đéo biết viết gì</h1>
-
+<h1>chua viet cai gi ca</h1>
+@* @model IEnumerable<NhanVien> *@
+@* <div class="container mt-4">
+    <div class="row">
+        <div class="col-md-3 text-center">
+            <!-- Hiển thị ảnh cá nhân -->
+            <img src="@Model.ImageUrl" alt="Ảnh cá nhân" class="img-thumbnail" style="width: 200px; height: 200px;">
+        </div>
+        <div class="col-md-9">
+            <h3>@Model.HoVaTen</h3>
+            <hr>
+            <div class="row">
+                <!-- Hàng đầu tiên chứa nửa số thông tin -->
+                <div class="col-md-6">
+                    <p><strong>Mã nhân viên:</strong> @Model.MaNhanVien</p>
+                    <p><strong>Ngày sinh:</strong> @Model.NgaySinh.ToString("dd/MM/yyyy")</p>
+                    <p><strong>Giới tính:</strong> @Model.GioiTinh</p>
+                    <p><strong>Địa chỉ:</strong> @Model.DiaChi</p>
+                    <p><strong>Số điện thoại:</strong> @Model.SoDienThoai</p>
+                    <p><strong>Số CCCD:</strong> @Model.SoCCCD</p>
+                </div>
+                <!-- Hàng thứ hai chứa phần còn lại -->
+                <div class="col-md-6">
+                    <p><strong>Phòng ban:</strong> @Model.PhongBan</p>
+                    <p><strong>Chức vụ:</strong> @Model.ChucVu</p>
+                    <p><strong>Quê quán:</strong> @Model.QueQuan</p>
+                    <p><strong>Ngày tuyển dụng:</strong> @Model.NgayTuyenDung.ToString("dd/MM/yyyy")</p>
+                    <p><strong>Tài khoản ngân hàng:</strong> @Model.TaiKhoanNganHang</p>
+                    <p><strong>Số tài khoản:</strong> @Model.SoTaiKhoan</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> *@
