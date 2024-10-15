@@ -34,6 +34,25 @@ namespace QLLuong
                 name: "NhanVien_Infor_Staff",
                 pattern: "/NhanVien/Infor",
                 defaults: new { controller = "NhanVien", action = "Index_Infor_Staff" });
+                name: "NhanVien_Luong",
+                pattern: "/Luong",
+                defaults: new { controller = "Luong", action = "Index" });
+            app.MapControllerRoute(
+                name: "NhanVien_KTKL",
+                pattern: "/KTKL",
+                defaults: new { controller = "KTKL", action = "Index" });
+            app.MapControllerRoute(
+                name: "Login_Index",
+                pattern: "/Login",
+                defaults: new { controller = "Login", action = "Index" });
+            app.MapControllerRoute(
+                name: "Home",
+                pattern: "/Home",
+                defaults: new { controller = "Home", action = "Index" });
+            app.MapControllerRoute(
+                name: "NhanVienList",
+                pattern: "/ChamCong",
+                defaults: new { controller = "ChamCong", action = "Index" });
 
             app.MapControllerRoute(
                 name: "default",
