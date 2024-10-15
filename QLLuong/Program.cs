@@ -42,7 +42,14 @@ namespace QLLuong
                 name: "NhanVien_KTKL",
                 pattern: "KTKL",
                 defaults: new { controller = "KTKL", action = "Index" });
-
+            app.MapControllerRoute(
+                name: "Login_Index",
+                pattern: "/Login",
+                defaults: new { controller = "Login", action = "Index" });
+            app.MapControllerRoute(
+                name: "Home",
+                pattern: "/Home",
+                defaults: new { controller = "Home", action = "Index" });
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
