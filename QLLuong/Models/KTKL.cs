@@ -4,16 +4,12 @@ namespace QLLuong.Models
 {
 	public class KTKL
 	{
-		public string kTLKId { get; set; }
-		[Required]
-		public string staffId { get; set; }
-		[Required]
-		public string? loaiKTKL { get; set; }
-		[Required]
-		public DateTime? thangNam { get; set; }
-		[Required]
-		public string? lyDo { get; set; }
-		[Required]
-		public string? soTien { get; set; }
+		public int MaKTKL { get; set; }
+		public int? MaNhanVien { get; set; }
+		public string? LoaiKTKL { get; set; }
+		public int? Thang { get; set; }
+		public int? Nam { get; set; }
+		public int? MaLyDo { get; set; }
+		public string? SoTien { get; set; }
 	}
 }
