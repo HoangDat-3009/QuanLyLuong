@@ -9,8 +9,8 @@ namespace QLLuong.Data
         {
         }
 
-        public DbSet<QLLuong.Models.NhanVien> NhanViens { get; set; }
-        public DbSet<QLLuong.Models.Luong> Luongs { get; set; }
-        public DbSet<QLLuong.Models.KTKL> KTKLs { get; set; }
+        public DbSet<QLLuong.Models.NhanVien> NhanVien { get; set; }
+        public DbSet<QLLuong.Models.Luong> Luong { get; set; }
+        public DbSet<QLLuong.Models.KTKL> KTKL { get; set; }
     }
 }

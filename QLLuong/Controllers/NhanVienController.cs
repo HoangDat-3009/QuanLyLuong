@@ -1,28 +1,23 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using QLLuong.Models;
+using Microsoft.EntityFrameworkCore;
+using QLLuong.Data;
 
 namespace QLLuong.Controllers
 {
     public class NhanVienController : Controller
     {
-        private List<NhanVien> listNhanVien = new List<NhanVien>();
-        public NhanVienController()
+        private readonly QLLuongContext _context;
+
+        public NhanVienController(QLLuongContext context)
         {
-            listNhanVien = new List<NhanVien>()
-                {
-                    new NhanVien()
-                    {
-                        MaNhanVien = 1, HoTen = "Tran Van A", DiaChi = "so 1 abc", NgaySinh = DateTime.Now
-                    },
-                    new NhanVien()
-                    {
-                        MaNhanVien = 2, HoTen = "Tran Van B", DiaChi = "so 2 abc", NgaySinh = DateTime.Now
-                    }
-                };
+            _context = context;
         }
-        public IActionResult Index()
+
+        public async Task<IActionResult> Index()
         {
-            return View(listNhanVien);
+            var nhanViens = await _context.NhanVien.ToListAsync();
+            return View(nhanViens);
+
         }
     }
 }

@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using QLLuong.Data;
+
 namespace QLLuong
 {
     public class Program
@@ -5,6 +8,10 @@ namespace QLLuong
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            builder.Services.AddDbContext<QLLuongContext>(options =>
+            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();

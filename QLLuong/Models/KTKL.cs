@@ -4,7 +4,8 @@ namespace QLLuong.Models
 {
 	public class KTKL
 	{
-		public int MaKTKL { get; set; }
+		[Key]
+        public int MaKTKL { get; set; }
 		public int? MaNhanVien { get; set; }
 		public string? LoaiKTKL { get; set; }
 		public int? Thang { get; set; }
