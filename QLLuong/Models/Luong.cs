@@ -1,34 +1,26 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Humanizer;
+using System.ComponentModel.DataAnnotations;
 
 namespace QLLuong.Models
 {
 	public class Luong
 	{
 
-		private string luongId { get; set; }
-		[Required]
+		private int MaLuong  { get; set; }
 
-		private string? staffId { get; set; }
-		[Required]
-		private DateTime? createdDate { get; set; }
-		[Required]
+		private int MaNhanVien  { get; set; }
+		private int? Thang { get; set; }
+		private int? Nam { get; set; }
 
-		private float? heSoLuong { get; set; }
-		[Required]
-		[Range(0.1, 10.0)]
+		private float? HeSo { get; set; }
 
-		private float? luongCoBan { get; set; }
-		[Required]
-		private float? phuCapTrinhDo { get; set; }
-		[Required]
-		private float? phuCapChucVu { get; set; }
-		[Required]
-		private float? bHYT { get; set; }
-		[Required]
-		private float? bHXH { get; set; }
-		[Required]
-		private float? KTKL { get; set; }
-		[Required]
-		private float? thucLinh { get; set; }
+		private float? luong { get; set; }
+		private float? PhuCapChucVu { get; set; }
+		private float? PhuCapTrinhDo { get; set; }
+		private float? BHYT { get; set; }
+		private float? BHTN { get; set; }
+		private float? BHXH { get; set; }
+		private float? KhenThuongKyLuat { get; set; }
+		private float? ThucLinh { get; set; }
 	}
 }
