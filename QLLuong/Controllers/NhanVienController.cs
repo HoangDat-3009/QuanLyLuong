@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using QLLuong.Data;
 
 namespace QLLuong.Controllers
@@ -13,11 +12,17 @@ namespace QLLuong.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index(string searchString)
         {
-            var nhanViens = await _context.NhanVien.ToListAsync();
-            return View(nhanViens);
+            var nhanViens = from nv in _context.NhanVien
+                            select nv;
 
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                nhanViens = nhanViens.Where(s => s.MaNhanVien.ToString().Equals(searchString) || (s.HoTen != null && s.HoTen.Contains(searchString)));
+            }
+
+            return View(nhanViens.ToList());
         }
     }
 }
