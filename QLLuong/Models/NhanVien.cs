@@ -18,21 +18,9 @@ namespace QLLuong.Models
         [RegularExpression("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$",
     ErrorMessage = "Mật khẩu phải từ 8 ký tự trở lên, có ít nhất một ký tự viết hoa, một ký tự viết thường, một chữ số và một ký tự đặc biệt.")]
         [Required(ErrorMessage = "Không được bỏ trống")]
-        /*public string? Password { get; set; }//Mật khẩu
-        [Required(ErrorMessage = "Không được bỏ trông mục này")]
-        [DataType(DataType.Password)]*/
-
-/*        [Display(Name = "Ngành")]
-        public Branch? Branch { get; set; }//Ngành học
-        [Required(ErrorMessage = "Không được bỏ trông mục này")]*/
+       
         [Display(Name = "Giới tính")]
-        public Gender? Gender { get; set; }//Giới tính
-
-       /* [Display(Name = "Hệ")]
-
-        public bool IsRegular { get; set; }//Hệ: true-chính quy, false-phi chính quy
-        [DataType(DataType.MultilineText)]
-        [Required(ErrorMessage = "Không được bỏ trông mục này")]*/
+        public Gender? Gender { get; set; }//Giới tính\
 
         [Display(Name = "Địa chỉ")]
         public string? Address { get; set; }//Địa chỉ
@@ -40,8 +28,7 @@ namespace QLLuong.Models
         [DataType(DataType.Date)]
         [Required]
         public DateTime DateOfBirth { get; set; }//Ngày sinh
-       /* [Range(0.0, 10.0)]
-        [Required]
-        public float? Point { get; set; }//Ngày sinh*/
+
+        
     }
 }

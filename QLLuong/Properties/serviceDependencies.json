@@ -1,11 +1,13 @@
 {
   "dependencies": {
-    "secrets1": {
-      "type": "secrets"
+    "mssql2": {
+      "ignored": "true",
+      "type": "mssql",
+      "connectionId": "ConnectionStrings:DefaultConnection"
     },
     "mssql1": {
       "type": "mssql",
-      "connectionId": "ConnectionStrings:CompanyContext"
+      "connectionId": "ConnectionStrings:QLNhanVienContext"
     }
   }
 }
