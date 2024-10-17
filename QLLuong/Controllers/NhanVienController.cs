@@ -1,33 +1,28 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using QLLuong.Models;
+using QLLuong.Data;
 
 namespace QLLuong.Controllers
 {
     public class NhanVienController : Controller
     {
-        private List<NhanVien> listNhanVien = new List<NhanVien>();
-        private NhanVien inforStaff = new NhanVien();
-        public NhanVienController()
+        private readonly QLLuongContext _context;
+
+        public NhanVienController(QLLuongContext context)
         {
-            listNhanVien = new List<NhanVien>()
+            _context = context;
+        }
+
+        public IActionResult Index(string searchString)
+        {
+            var nhanViens = from nv in _context.NhanVien
+                            select nv;
+
+            if (!string.IsNullOrEmpty(searchString))
             {
-                new NhanVien()
-                {
-                    Id = 1,Name = "Tran Van A",Email = " abc@gmail.com",Address="so 1 abc",DateOfBirth=new DateTime()
-                },
-                new NhanVien()
-                {
-                    Id = 2,Name = "Tran Van B",Email = " abcd@gmail.com",Address="so 2 abc",DateOfBirth=new DateTime()
-                }
-            };
-        }
-        public IActionResult Index()
-        {
-            return View(listNhanVien);
-        }
-        public IActionResult Index_Infor_Staff()
-        {
-            return View(inforStaff);
+                nhanViens = nhanViens.Where(s => s.MaNhanVien.ToString().Equals(searchString) || (s.HoTen != null && s.HoTen.Contains(searchString)));
+            }
+
+            return View(nhanViens.ToList());
         }
     }
 }
