@@ -1,17 +1,19 @@
 ﻿@{
-	ViewData["Title"] = "NhanVien List";
-	Layout = "~/Views/Shared/MyLayout.cshtml";
+    ViewData["Title"] = "NhanVien List";
+    Layout = "~/Views/Shared/MyLayout.cshtml";
 }
 @model IEnumerable<NhanVien>
+
 <div style="display: flex; justify-content: center; align-items: center; margin: 20px;">
     <form method="get" asp-action="Index" style="display: flex; justify-content: center; align-items: center;">
         <div class="form-group" style="margin-right: 10px;">
-            <input type="text" name="searchString" class="form-control" 
-            placeholder="Nhập mã nhân viên hoặc tên nhân viên" style="width: 350px;" />
+            <input type="text" name="searchString" class="form-control"
+                   placeholder="Nhập mã nhân viên hoặc tên nhân viên" style="width: 350px;" />
         </div>
         <button type="submit" class="btn btn-primary">Tìm kiếm</button>
     </form>
 </div>
+
 <div style="border: 2px solid black; margin: 20px; border-radius: 8px; background-color: #f9f9f9;">
     <table class="table table-striped">
         <thead>
@@ -22,13 +24,14 @@
                 <th>Ngày sinh</th>
                 <th>Giới tính</th>
                 <th>Nơi sinh</th>
-                <th>Phòng ban</th>
-                <th>Chức vụ</th>
-                <th>Trình độ</th>
-                <th>Chuyên môn</th>
+                <th>Mã phòng ban</th>
+                <th>Mã chức vụ</th>
+                <th>Mã trình độ</th>
+                <th>mã chuyên môn</th>
                 <th>Địa chỉ</th>
                 <th>Số điện thoại</th>
-                <th>Hệ số lương</th>
+                <th>Mã hệ số lương</th>
+                <th>Chức năng</th>
             </tr>
         </thead>
         <tbody>
@@ -51,6 +54,10 @@
                     <td>@s.DiaChi</td>
                     <td>@s.DienThoai</td>
                     <td>@s.MaHeSo</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-maNhanVien="@s.MaNhanVien" class="btn btn-warning">Edit</a>
+                        <a asp-action="Delete" asp-route-maNhanVien="@s.MaNhanVien" class="btn btn-danger">Delete</a>
+                    </td>
                 </tr>
                 STT++;
             }
