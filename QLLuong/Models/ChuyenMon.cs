@@ -4,14 +4,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace QLLuong.Models;
 
-public partial class PhongBan
+public partial class ChuyenMon
 {
     [Key]
-    public int MaPhongBan { get; set; }
+    public int MaChuyenMon { get; set; }
 
-    public string? TenPhongBan { get; set; }
-
-    public string? DienThoai { get; set; }
+    public string? TenChuyenMon { get; set; }
 
     public virtual ICollection<NhanVien> NhanViens { get; set; } = new List<NhanVien>();
 }
