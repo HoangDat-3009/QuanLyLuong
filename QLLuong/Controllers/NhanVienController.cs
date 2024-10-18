@@ -17,33 +17,44 @@ public class NhanVienController : Controller
     // Existing Index action
     public IActionResult Index(string searchString)
     {
-        var nhanViens = from nv in _context.NhanVien
+        var nhanViens = from nv in _context.NhanViens
                         select nv;
 
         if (!string.IsNullOrEmpty(searchString))
         {
-            nhanViens = nhanViens.Where(s => s.MaNhanVien.ToString().Contains(searchString) || s.HoTen.Contains(searchString));
+            nhanViens = nhanViens.Where(s => s.MaNhanVien.ToString().Contains(searchString) 
+            || s.HoTen.Contains(searchString));
         }
-
+        ViewBag.PhongBans = _context.PhongBans.ToList();
+        ViewBag.TrinhDos = _context.TrinhDos.ToList();
+        ViewBag.ChucVus = _context.ChucVus.ToList();
+        ViewBag.HeSos = _context.HeSos.ToList();
+        ViewBag.DanTocs = _context.DanTocs.ToList();
+        ViewBag.ChuyenMons = _context.ChuyenMons.ToList();
         return View(nhanViens.ToList());
     }
 
     // Edit action
     public async Task<IActionResult> Edit(int maNhanVien)
     {
-        var nhanVien = await _context.NhanVien.FindAsync(maNhanVien);
+        var nhanVien = await _context.NhanViens.FindAsync(maNhanVien);
         if (nhanVien == null)
         {
             return NotFound();
         }
 
-        ViewBag.PhongBans = _context.PhongBan.ToList();
+        ViewBag.PhongBans = _context.PhongBans.ToList();
+        ViewBag.TrinhDos = _context.TrinhDos.ToList();
+        ViewBag.ChucVus = _context.ChucVus.ToList();
+        ViewBag.HeSos = _context.HeSos.ToList();
+        ViewBag.DanTocs = _context.DanTocs.ToList();
+        ViewBag.ChuyenMons = _context.ChuyenMons.ToList();
         return View(nhanVien);
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int maNhanVien, [Bind("MaNhanVien,HoTen,NgaySinh,GioiTinh,NoiSinh,MaPhongBan,MaChucVu,MaTrinhDo,MaChuyenMon,DiaChi,DienThoai,MaHeSo")] NhanVien nhanVien)
+    public async Task<IActionResult> Edit(int maNhanVien, [Bind("MaNhanVien,HoTen,NgaySinh,GioiTinh,NoiSinh,MaPhongBan,MaChucVu,MaTrinhDo,MaChuyenMon,DiaChi,DienThoai,MaHeSo,Cccd,TaiKhoanNganHang,SoTaiKhoanNganHang")] NhanVien nhanVien)
     {
         if (maNhanVien != nhanVien.MaNhanVien)
         {
@@ -71,14 +82,19 @@ public class NhanVienController : Controller
             return RedirectToAction(nameof(Index));
         }
 
-        ViewBag.PhongBans = _context.PhongBan.ToList();
+        ViewBag.PhongBans = _context.PhongBans.ToList();
+        ViewBag.TrinhDos = _context.TrinhDos.ToList();
+        ViewBag.ChucVus = _context.ChucVus.ToList();
+        ViewBag.HeSos = _context.HeSos.ToList();
+        ViewBag.DanTocs = _context.DanTocs.ToList();
+        ViewBag.ChuyenMons = _context.ChuyenMons.ToList();
         return View(nhanVien);
     }
 
     // Delete action
     public IActionResult Delete(int maNhanVien)
     {
-        var nhanVien = _context.NhanVien.Find(maNhanVien);
+        var nhanVien = _context.NhanViens.Find(maNhanVien);
         if (nhanVien == null)
         {
             return NotFound();
@@ -90,10 +106,10 @@ public class NhanVienController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int maNhanVien)
     {
-        var nhanVien = await _context.NhanVien.FindAsync(maNhanVien);
+        var nhanVien = await _context.NhanViens.FindAsync(maNhanVien);
         if (nhanVien != null)
         {
-            _context.NhanVien.Remove(nhanVien);
+            _context.NhanViens.Remove(nhanVien);
             await _context.SaveChangesAsync();
         }
         return RedirectToAction(nameof(Index));
@@ -101,6 +117,6 @@ public class NhanVienController : Controller
 
     private bool NhanVienExists(int id)
     {
-        return _context.NhanVien.Any(e => e.MaNhanVien == id);
+        return _context.NhanViens.Any(e => e.MaNhanVien == id);
     }
 }

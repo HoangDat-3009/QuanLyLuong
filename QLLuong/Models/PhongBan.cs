@@ -1,14 +1,17 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
-namespace QLLuong.Models
+namespace QLLuong.Models;
+
+public partial class PhongBan
 {
-    public class PhongBan
-    {
-        [Key]
-        public int MaPhongBan { get; set; }
-        public string? TenPhongBan { get; set; }
-        public string? DienThoai { get; set; }
+    [Key]
+    public int MaPhongBan { get; set; }
 
-        public virtual ICollection<NhanVien> NhanViens { get; set; }
-    }
+    public string? TenPhongBan { get; set; }
+
+    public string? DienThoai { get; set; }
+
+    public virtual ICollection<NhanVien> NhanViens { get; set; } = new List<NhanVien>();
 }

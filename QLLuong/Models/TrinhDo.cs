@@ -1,13 +1,17 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
-namespace QLLuong.Models
+namespace QLLuong.Models;
+
+public partial class TrinhDo
 {
-	public class TrinhDo
-	{
-		[Key]
-		public int MaTrinhDo { get; set; }
-		public string? TenTrinhDo { get; set; }
-		public decimal PhuCap { get; set; }
-        public virtual ICollection<NhanVien> NhanViens { get; set; }
-    }
+    [Key]
+    public int MaTrinhDo { get; set; }
+
+    public string? TenTrinhDo { get; set; }
+
+    public decimal? PhuCap { get; set; }
+
+    public virtual ICollection<NhanVien> NhanViens { get; set; } = new List<NhanVien>();
 }
