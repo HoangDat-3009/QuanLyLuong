@@ -1,22 +1,22 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
-namespace QLLuong.Models
+namespace QLLuong.Models;
+
+public partial class ChamCong
 {
-    [Table("ChamCong")]
-    public class ChamCong
-    {
-        [Key]
-        public int? MaNhanVien { get; set; }
-        [Required]
-        public DateTime? NgayGioVao { get; set; }
-        [Required]
-        public DateTime? NgayGioRa { get; set; }
+    [Key]
+    public int ChamCongId { get; set; }
+    public int MaNhanVien { get; set; }
 
-        [Required]
-        public string? TrangThai { get; set; }
-        [Required]
-        public string? GhiChu { get; set; }
+    public DateTime? NgayGioVao { get; set; }
 
-    }
+    public DateTime? NgayGioRa { get; set; }
+
+    public string? TrangThai { get; set; }
+
+    public string? GhiChu { get; set; }
+
+    public virtual NhanVien? MaNhanVienNavigation { get; set; }
 }

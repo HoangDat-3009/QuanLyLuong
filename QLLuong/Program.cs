@@ -1,5 +1,9 @@
 using Microsoft.EntityFrameworkCore;
+using QLLuong.Models;
 using QLLuong.Data;
+using System.Data.Common;
+using Microsoft.Data.SqlClient;
+using System;
 
 namespace QLLuong
 {
@@ -7,14 +11,15 @@ namespace QLLuong
     {
         public static void Main(string[] args)
         {
+
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddDbContext<QLLuongContext>(options =>
-            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
+            builder.Services.AddDbContext<QlluongContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddSession();
 
             var app = builder.Build();
 
@@ -31,6 +36,10 @@ namespace QLLuong
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseSession();
+
+
 
             app.MapControllerRoute(
                 name: "NhanVienList",
@@ -57,13 +66,13 @@ namespace QLLuong
                 pattern: "/Home",
                 defaults: new { controller = "Home", action = "Index" });
             app.MapControllerRoute(
-                name: "NhanVienList",
+                name: "ChamCong",
                 pattern: "/ChamCong",
                 defaults: new { controller = "ChamCong", action = "Index" });
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=LogIn}/{action=Login}/{id?}");
+                pattern: "{controller=LogIn}/{action=Index}/{id?}");
 
             app.Run();
         }

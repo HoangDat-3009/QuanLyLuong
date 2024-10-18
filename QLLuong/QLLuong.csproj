@@ -8,8 +8,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\BaoHiem\**" />
+    <Content Remove="Views\BaoHiem\**" />
+    <EmbeddedResource Remove="Views\BaoHiem\**" />
+    <None Remove="Views\BaoHiem\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="EntityFramework" Version="6.5.1" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.21.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.10">
       <PrivateAssets>all</PrivateAssets>
@@ -19,7 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\BaoHiem\" />
+    <Folder Include="Models\" />
   </ItemGroup>
 
 </Project>
