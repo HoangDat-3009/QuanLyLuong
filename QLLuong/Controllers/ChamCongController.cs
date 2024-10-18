@@ -12,9 +12,9 @@ namespace QLLuong.Controllers
 {
     public class ChamCongController : Controller
     {
-        private readonly QlluongContext _context;
+        private readonly QLLuongContext _context;
 
-        public ChamCongController(QlluongContext context)
+        public ChamCongController(QLLuongContext context)
         {
             _context = context;
         }

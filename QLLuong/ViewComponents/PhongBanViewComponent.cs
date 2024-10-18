@@ -12,7 +12,7 @@ namespace QLLuong.ViewComponents
         public PhongBanViewComponent(QLLuongContext context)
         {
             _context = context;
-            _phongBans = _context.PhongBan.ToList();
+            _phongBans = _context.PhongBans.ToList();
         }
         public async Task<IViewComponentResult> InvokeAsync()
         {

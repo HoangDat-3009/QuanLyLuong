@@ -25,7 +25,7 @@ namespace QLLuong.Controllers
         }
 
         //login
-        QlluongContext db = new QlluongContext();
+        QLLuongContext db = new QLLuongContext();
         public ActionResult Index()
         {
             if (HttpContext.Session.GetString("Username") == null)

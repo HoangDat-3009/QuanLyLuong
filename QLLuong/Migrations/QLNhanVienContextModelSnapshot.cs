@@ -10,7 +10,7 @@ using QLLuong.Data;
 
 namespace QLLuong.Migrations
 {
-    [DbContext(typeof(QlluongContext))]
+    [DbContext(typeof(QLLuongContext))]
     partial class QLNhanVienContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
