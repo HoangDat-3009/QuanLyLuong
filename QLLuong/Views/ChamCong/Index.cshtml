@@ -1,8 +1,9 @@
 ﻿@{
-	ViewData["Title"] = "Cham Cong";
-	Layout = "~/Views/Shared/MyLayout.cshtml";
+    ViewData["Title"] = "Cham Cong";
+    Layout = "~/Views/Shared/MyLayout.cshtml";
 }
-@model IEnumerable<ChamCong >
+@model IEnumerable<QLLuong.Models.ChamCong >
+
 
 <div class="container-fluid px-4">
     <h1 class="mt-4">Chấm công</h1>
@@ -15,10 +16,11 @@
             <table id="tb" class="table table-hover">
                 <thead>
                     <tr>
+                        <th>STT</th>
                         <th>MNV</th>
-                        @* <th>Tên nhân viên</th>
+                        <th>Tên nhân viên</th>
                         <th>Phòng ban</th>
-                        <th>Chức vụ</th> *@
+                        <th>Chức vụ</th>
                         <th>Thời gian vào</th>
                         <th>Thời gian ra</th>
                         <th>Trạng thái</th>
@@ -28,15 +30,23 @@
 
                 </thead>
                 <tbody>
+                    @{
+                        var STT = 1;
+                    }
                     @foreach (var s in Model)
                     {
                         <tr>
+                            <td>@STT</td>
                             <td>@s.MaNhanVien</td>
+                            <td>@s.MaNhanVienNavigation.HoTen</td>
+                            <td>@s.MaNhanVienNavigation.MaPhongBanNavigation.TenPhongBan</td>
+                            <td>@s.MaNhanVienNavigation.MaChucVuNavigation.TenChucVu</td>
                             <td>@s.NgayGioVao</td>
                             <td>@s.NgayGioRa</td>
                             <td>@s.TrangThai</td>
                             <td>@s.GhiChu</td>
                         </tr>
+                        STT++;
                     }
                 </tbody>
             </table>

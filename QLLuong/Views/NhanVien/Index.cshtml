@@ -1,47 +1,59 @@
-﻿@{
+﻿﻿@{
 	ViewData["Title"] = "NhanVien List";
 	Layout = "~/Views/Shared/MyLayout.cshtml";
 }
 @model IEnumerable<NhanVien>
-<div class="container - mt-4"></div>
-  <table class="table table-striped">
-  	<thead>
-  		<tr>
-  			<th>STT</th>
-  			<th>Mã nhân viên</th>
-            <th>Họ và tên</th>
-            <th>Ngày sinh</th>
-  			<th>Giới tính</th>
-  			<th>Địa chỉ</th>
-  			<th>Số điện thoại</th>
-  			<th>Số cccd</th>
-            <th>Phòng ban</th>
-            <th>Chức vụ</th>
-            <th>Quê quán</th>
-            <th>Ngày tuyển dụng</th>
-            <th>Tài khoản ngân hàng</th>
-            <th>Số tài khoản</th>
-  		</tr>
-  	</thead>
-  	<tbody>
-  		@foreach(var s in Model)
-  		{
-  			<tr>
-  				<td>@s.Id</td>
-  				<td>@s.Name</td>
-  				<td>@s.DateOfBirth</td>
-  				<td>@s.Gender</td>
-  				<td>@s.Address</td>
-  				<td>@s.Email</td>
-  			</tr>
-  		}
-  	</tbody>
-  </table>
-@* @section Scripts {
-	<script>
-		var table = document.querySelector("table");
-		table.onclick = function onTableClick() {
-			table.style = "background-color: yellow;"
-		}
-	</script>
-} *@
+<div style="display: flex; justify-content: center; align-items: center; margin: 20px;">
+    <form method="get" asp-action="Index" style="display: flex; justify-content: center; align-items: center;">
+        <div class="form-group" style="margin-right: 10px;">
+            <input type="text" name="searchString" class="form-control" 
+            placeholder="Nhập mã nhân viên hoặc tên nhân viên" style="width: 350px;" />
+        </div>
+        <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+    </form>
+</div>
+<div style="border: 2px solid black; margin: 20px; border-radius: 8px; background-color: #f9f9f9;">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>STT</th>
+                <th>Mã nhân viên</th>
+                <th>Họ và tên</th>
+                <th>Ngày sinh</th>
+                <th>Giới tính</th>
+                <th>Nơi sinh</th>
+                <th>Phòng ban</th>
+                <th>Chức vụ</th>
+                <th>Trình độ</th>
+                <th>Chuyên môn</th>
+                <th>Địa chỉ</th>
+                <th>Số điện thoại</th>
+                <th>Hệ số lương</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                var STT = 1;
+            }
+            @foreach (var s in Model)
+            {
+                <tr>
+                    <td>@STT</td>
+                    <td>@s.MaNhanVien</td>
+                    <td>@s.HoTen</td>
+                    <td>@s.NgaySinh</td>
+                    <td>@s.GioiTinh</td>
+                    <td>@s.NoiSinh</td>
+                    <td>@s.MaPhongBan</td>
+                    <td>@s.MaChucVu</td>
+                    <td>@s.MaTrinhDo</td>
+                    <td>@s.MaChuyenMon</td>
+                    <td>@s.DiaChi</td>
+                    <td>@s.DienThoai</td>
+                    <td>@s.MaHeSo</td>
+                </tr>
+                STT++;
+            }
+        </tbody>
+    </table>
+</div>

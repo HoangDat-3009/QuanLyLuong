@@ -1,24 +1,15 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
-using System.ComponentModel.DataAnnotations.Schema;
+namespace QLLuong.Models;
 
-
-namespace QLLuong.Models
+public partial class UserLogin
 {
-    public class UserLogin
-    {
-        [Key, Column(Order = 1)]
-        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
-        public int id { get; set; }
+    [Key]
+    public int Id { get; set; }
 
-        [Required]
-        [StringLength(50)]
-        public string UserName { get; set; }    
+    public string Username { get; set; } = null!;
 
-        [Required]
-        [StringLength(255)]
-        public string UserPassword { get; set; }
-    }
+    public string Userpassword { get; set; } = null!;
 }

@@ -1,34 +1,35 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
 
-namespace QLLuong.Models
+namespace QLLuong.Models;
+
+public partial class Luong
 {
-	public class Luong
-	{
+    public int MaLuong { get; set; }
 
-		private string luongId { get; set; }
-		[Required]
+    public int? MaNhanVien { get; set; }
 
-		private string? staffId { get; set; }
-		[Required]
-		private DateTime? createdDate { get; set; }
-		[Required]
+    public int? Thang { get; set; }
 
-		private float? heSoLuong { get; set; }
-		[Required]
-		[Range(0.1, 10.0)]
+    public int? Nam { get; set; }
 
-		private float? luongCoBan { get; set; }
-		[Required]
-		private float? phuCapTrinhDo { get; set; }
-		[Required]
-		private float? phuCapChucVu { get; set; }
-		[Required]
-		private float? bHYT { get; set; }
-		[Required]
-		private float? bHXH { get; set; }
-		[Required]
-		private float? KTKL { get; set; }
-		[Required]
-		private float? thucLinh { get; set; }
-	}
+    public double? HeSo { get; set; }
+
+    public decimal? Luong1 { get; set; }
+
+    public decimal? PhuCapChucVu { get; set; }
+
+    public decimal? PhuCapTrinhDo { get; set; }
+
+    public decimal? Bhyt { get; set; }
+
+    public decimal? Bhtn { get; set; }
+
+    public decimal? Bhxh { get; set; }
+
+    public decimal? KhenThuongKyLuat { get; set; }
+
+    public decimal? ThucLinh { get; set; }
+
+    public virtual NhanVien? MaNhanVienNavigation { get; set; }
 }

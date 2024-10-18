@@ -14,11 +14,12 @@ namespace QLLuong
 
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddDbContext<QLNhanVienContext>(options =>
-            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+            builder.Services.AddDbContext<QlluongContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddSession();
 
             var app = builder.Build();
 
@@ -35,6 +36,10 @@ namespace QLLuong
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseSession();
+
+
 
             app.MapControllerRoute(
                 name: "NhanVienList",

@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@{
+    Layout = null;
+}
+
+@model UserLogin
+<!DOCTYPE html>
 <html lang="vi">
 
 <head>
@@ -25,7 +30,7 @@
                     <div class="card rounded-4 text-black content-log-in ">
 
 
-                        
+
                         <!-- content -->
 
                         <div class="card-body p-md-5 mx-md-4">
@@ -35,26 +40,30 @@
                                 <h2 class="mt-1 mb-5 pb-1">Đăng nhập</h2>
                             </div>
 
-                            <form>
+
+                            @using (Html.BeginForm("Index", "Login", FormMethod.Post))
+                            {
                                 <!-- <p>Please login to your account</p>  -->
 
                                 <div class="form-outline mb-4 box-input">
                                     <i class="fa-solid fa-user-shield icon-ip"></i>
+                                    @* @Html.TextBoxFor(x => x.UserName, new { @class = "form-control", placeholder = "Tên đăng nhập", required = "required", autofocus = "autofocus" }) *@
                                     <input type="text" id="userName" class="form-control" placeholder="Tên đăng nhập" />
 
                                 </div>
 
                                 <div class="form-outline mb-4 box-input">
                                     <i class="fa-solid fa-key icon-ip"></i>
+                                    @* @Html.TextBoxFor(x => x.UserPassword, new { @class = "form-control", @id = "passwordInput", type = "password", placeholder = "Mật khẩu" }) *@
                                     <input type="password" id="passwordInput" class="form-control"
-                                           placeholder="Mật khẩu" />
+                                placeholder="Mật khẩu" />
                                     <button><i class="fa-regular fa-eye show-password "></i></button>
                                     <button id="togglePassword">
                                         <i class="fa-regular fa-eye-slash show-password "></i>
                                     </button>
 
                                 </div>
-
+                                <h3>@ViewBag.LoginFail</h3>
                                 <div class="text-center pt-1 mb-5 pb-1 help">
                                     <a class="text-muted " href="#!">Quên mật khẩu?</a>
                                     <a class="text-muted" href="">
@@ -62,13 +71,13 @@
                                         giúp
                                     </a>
                                     <button class="btn btn-primary btn-block fa-lg  mb-3"
-                                            type="button" id="btn-log-in">
+                                            type="submit" id="btn-log-in">
                                         Đăng nhập
                                     </button>
 
                                 </div>
 
-                            </form>
+                            }
 
                         </div>
 
@@ -82,7 +91,7 @@
     <script src="~/js/login.js"></script>
 
     <!-- Bootstrap JavaScript Libraries -->
-   
+
 
 </body>
 
