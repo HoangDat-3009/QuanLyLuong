@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using QLLuong.Models;
 
 namespace QLLuong.Data
 {
@@ -9,8 +10,8 @@ namespace QLLuong.Data
         {
         }
 
-        public DbSet<QLLuong.Models.NhanVien> NhanVien { get; set; }
-        public DbSet<QLLuong.Models.Luong> Luong { get; set; }
-        public DbSet<QLLuong.Models.KTKL> KTKL { get; set; }
+        public DbSet<NhanVien> NhanVien { get; set; }
+        public DbSet<PhongBan> PhongBan { get; set; }
+
     }
 }

@@ -1,0 +1,10 @@
+﻿@model IEnumerable<PhongBan>
+<ul class="nav">
+	@foreach(var s in Model)
+	{
+		<li class="nav-item">
+			<a	asp-controller="NhanVien" asp-action="Index"
+				asp-route-mid="@s.MaPhongBan" class = "nav-link">@s.TenPhongBan</a>
+		</li>
+	}
+</ul>

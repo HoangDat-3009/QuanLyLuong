@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using QLLuong.Data;
 
@@ -11,9 +12,11 @@ using QLLuong.Data;
 namespace QLLuong.Migrations
 {
     [DbContext(typeof(QLLuongContext))]
-    partial class QLLuongContextModelSnapshot : ModelSnapshot
+    [Migration("20241017073639_UpdatePhongBanSchema")]
+    partial class UpdatePhongBanSchema
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,10 +32,6 @@ namespace QLLuong.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MaNhanVien"));
-
-                    b.Property<string>("CCCD")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DiaChi")
                         .IsRequired()
@@ -78,14 +77,6 @@ namespace QLLuong.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("NoiSinh")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SoTKNH")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TKNH")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
