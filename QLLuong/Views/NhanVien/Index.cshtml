@@ -31,6 +31,9 @@
                 <th>Địa chỉ</th>
                 <th>Số điện thoại</th>
                 <th>Mã hệ số lương</th>
+                <th>CCCD</th>
+                <th>Ngân hàng</th>
+                <th>Số tài khoản</th>
                 <th>Chức năng</th>
             </tr>
         </thead>
@@ -54,6 +57,9 @@
                     <td>@s.DiaChi</td>
                     <td>@s.DienThoai</td>
                     <td>@s.MaHeSo</td>
+                    <td>@s.CCCD</td>
+                    <td>@s.TaiKhoanNganHang</td>
+                    <td>@s.SoTaiKhoanNganHang</td>
                     <td>
                         <a asp-action="Edit" asp-route-maNhanVien="@s.MaNhanVien" class="btn btn-warning">Edit</a>
                         <a asp-action="Delete" asp-route-maNhanVien="@s.MaNhanVien" class="btn btn-danger">Delete</a>

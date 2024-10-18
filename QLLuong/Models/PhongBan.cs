@@ -8,5 +8,7 @@ namespace QLLuong.Models
         public int MaPhongBan { get; set; }
         public string? TenPhongBan { get; set; }
         public string? DienThoai { get; set; }
+
+        public virtual ICollection<NhanVien> NhanViens { get; set; }
     }
 }
