@@ -5,14 +5,11 @@
     Layout = "~/Views/Shared/MyLayout.cshtml";
 }
 
-<div style ="text-align: center; margin: 20px;"><h2>Sửa tin nhân viên</h2></div>
+<div style ="text-align: center; margin: 20px; font-weight:bold; font-size: medium;" ><h2>Sửa thông tin</h2></div>
 
 
 <!-- Di chuyển nút "Back to List" lên trên, căn bên trái -->
-<div style="text-align: left; margin: 20px;" >
-	<a asp-action="Index" class="btn btn-secondary" >Back to List</a>
-    
-</div>
+
 
 <div style="border: 2px solid black; padding: 10px; border-radius: 8px; background-color: #f9f9f9;">
     <form asp-action="Edit" method="post">
@@ -103,14 +100,18 @@
                     <span asp-validation-for="MaHeSo" class="text-danger"></span>
                 </div>
             </div>
-            
 
+			
             <!-- Nút Submit -->
-            <div class="form-group row">
-                <div class="col-sm-offset-2 col-sm-10">
+            <div class="form-group col" style="display: flex; justify-content: center; padding: 20px; gap: 20px;">
+                <div>
                     <input type="submit" value="Save" class="btn btn-primary" />
                 </div>
+                <div>
+                    <a asp-action="Index" class="btn btn-danger">Huỷ</a>
+                </div>
             </div>
+            
         </div>
     </form>
 </div>
