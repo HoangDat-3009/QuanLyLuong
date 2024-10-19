@@ -12,8 +12,8 @@ using QLLuong.Data;
 namespace QLLuong.Migrations
 {
     [DbContext(typeof(QLLuongContext))]
-    [Migration("20241019032155_AddNhanVienDaNghiViec")]
-    partial class AddNhanVienDaNghiViec
+    [Migration("20241019063245_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
