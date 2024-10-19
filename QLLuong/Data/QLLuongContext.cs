@@ -18,6 +18,7 @@ public partial class QLLuongContext : DbContext
     }
 
     public virtual DbSet<ChamCong> ChamCongs { get; set; }
+    public virtual DbSet<NhanVienDaNghiViec> NhanVienDaNghiViecs { get; set; }
 
     public virtual DbSet<ChucVu> ChucVus { get; set; }
 
@@ -43,10 +44,7 @@ public partial class QLLuongContext : DbContext
 
     public virtual DbSet<UserLogin> UserLogins { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=HUNG\\SQLEXPRESS;Initial Catalog=QLLuong;Integrated Security=True;Trust Server Certificate=True");
-
+    
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<ChamCong>(entity =>
