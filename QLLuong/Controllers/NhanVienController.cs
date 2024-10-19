@@ -34,6 +34,22 @@ public class NhanVienController : Controller
         return View(nhanViens.ToList());
     }
 
+    public IActionResult NhanVienByPhongBan(int mid)
+    {
+        if(mid == 0)
+        {
+            return View("Index");
+        }
+        
+        var nhanViens = _context.NhanViens.Where(nv => nv.MaPhongBan == mid).ToList();
+        ViewBag.TrinhDos = _context.TrinhDos.ToList();
+        ViewBag.ChucVus = _context.ChucVus.ToList();
+        ViewBag.HeSos = _context.HeSos.ToList();
+        ViewBag.DanTocs = _context.DanTocs.ToList();
+        ViewBag.ChuyenMons = _context.ChuyenMons.ToList();
+        return PartialView("NhanVienTable", nhanViens);
+    }
+
     // Edit action
     public async Task<IActionResult> Edit(int maNhanVien)
     {
