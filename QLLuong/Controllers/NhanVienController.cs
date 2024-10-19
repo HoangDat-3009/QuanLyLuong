@@ -22,8 +22,8 @@ public class NhanVienController : Controller
 
         if (!string.IsNullOrEmpty(searchString))
         {
-            nhanViens = nhanViens.Where(s => s.MaNhanVien.ToString().Contains(searchString) 
-            || s.HoTen.Contains(searchString));
+            nhanViens = nhanViens.Where(s => s.MaNhanVien.ToString().Equals(searchString) 
+            ||(s.HoTen != null && s.HoTen.Contains(searchString)));
         }
         ViewBag.PhongBans = _context.PhongBans.ToList();
         ViewBag.TrinhDos = _context.TrinhDos.ToList();
@@ -54,7 +54,8 @@ public class NhanVienController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int maNhanVien, [Bind("MaNhanVien,HoTen,NgaySinh,GioiTinh,NoiSinh,MaPhongBan,MaChucVu,MaTrinhDo,MaChuyenMon,DiaChi,DienThoai,MaHeSo,Cccd,TaiKhoanNganHang,SoTaiKhoanNganHang")] NhanVien nhanVien)
+    public async Task<IActionResult> Edit(int maNhanVien, [Bind("MaNhanVien,HoTen,NgaySinh,GioiTinh,NoiSinh,MaPhongBan,MaChucVu,MaTrinhDo,MaChuyenMon," +
+        "DiaChi,DienThoai,MaHeSo,Cccd,TaiKhoanNganHang,SoTaiKhoanNganHang")] NhanVien nhanVien)
     {
         if (maNhanVien != nhanVien.MaNhanVien)
         {
@@ -109,11 +110,36 @@ public class NhanVienController : Controller
         var nhanVien = await _context.NhanViens.FindAsync(maNhanVien);
         if (nhanVien != null)
         {
+            var nhanVienDaNghiViec = new NhanVienDaNghiViec
+            {
+                MaNhanVien = nhanVien.MaNhanVien,
+                HoTen = nhanVien.HoTen,
+                GioiTinh = nhanVien.GioiTinh,
+                NgaySinh = nhanVien.NgaySinh,
+                NoiSinh = nhanVien.NoiSinh,
+                NgayVaoCongTy = nhanVien.NgayVaoCongTy,
+                MaDanToc = nhanVien.MaDanToc,
+                MaChucVu = nhanVien.MaChucVu,
+                MaPhongBan = nhanVien.MaPhongBan,
+                MaTrinhDo = nhanVien.MaTrinhDo,
+                MaChuyenMon = nhanVien.MaChuyenMon,
+                DiaChi = nhanVien.DiaChi,
+                DienThoai = nhanVien.DienThoai,
+                MaHeSo = nhanVien.MaHeSo,
+                Cccd = nhanVien.Cccd,
+                TaiKhoanNganHang = nhanVien.TaiKhoanNganHang,
+                SoTaiKhoanNganHang = nhanVien.SoTaiKhoanNganHang,
+                NgayNghiViec = DateTime.Now
+            };
+
+            _context.NhanVienDaNghiViecs.Add(nhanVienDaNghiViec);
             _context.NhanViens.Remove(nhanVien);
             await _context.SaveChangesAsync();
         }
         return RedirectToAction(nameof(Index));
     }
+
+
 
     private bool NhanVienExists(int id)
     {
