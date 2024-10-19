@@ -8,7 +8,6 @@ public partial class NhanVien
 {
     [Key]
     public int MaNhanVien { get; set; }
-
     public string? HoTen { get; set; }
 
     public string? GioiTinh { get; set; }

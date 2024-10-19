@@ -10,6 +10,9 @@
         <div style="margin: 10px" class="col-md-4">
             @await Component.InvokeAsync("PhongBan")
         </div>
+        <div class="col-md-4 text-right">
+            <a asp-action="Create" class="btn btn-success">Create New NhanVien</a>
+        </div>
         <div class="col-md-4">
             <form method="get" asp-action="Index" class="form-inline justify-content-end my-3">
                 <div class="input-group">

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using QLLuong.Data;
 using QLLuong.Models;
@@ -32,6 +33,47 @@ public class NhanVienController : Controller
         ViewBag.DanTocs = _context.DanTocs.ToList();
         ViewBag.ChuyenMons = _context.ChuyenMons.ToList();
         return View(nhanViens.ToList());
+    }
+    public IActionResult Create()
+    {
+        // Fetch the last MaNhanVien
+        var lastNhanVien = _context.NhanViens.OrderByDescending(nv => nv.MaNhanVien).FirstOrDefault();
+        int newMaNhanVien = (lastNhanVien != null) ? lastNhanVien.MaNhanVien + 1 : 1;
+
+        // Initialize ViewBag properties
+        ViewBag.PhongBans = GetPhongBans();
+        ViewBag.ChucVus = GetChucVus();
+        ViewBag.TrinhDos = GetTrinhDos();
+        ViewBag.ChuyenMons = GetChuyenMons();
+        ViewBag.HeSos = GetHeSos();
+        ViewBag.DanTocs = GetDanTocs();
+
+        // Pass the new MaNhanVien to the view
+        var model = new NhanVien { MaNhanVien = newMaNhanVien };
+        return View(model);
+    }
+
+
+    // POST: NhanVien/Create
+    [HttpPost]
+    public IActionResult Create(NhanVien nhanVien)
+    {
+        if (ModelState.IsValid)
+        {
+            _context.NhanViens.Add(nhanVien);
+            _context.SaveChanges();
+            return RedirectToAction(nameof(Index));
+        }
+
+        // Reinitialize ViewBag properties in case of validation errors
+        ViewBag.PhongBans = GetPhongBans();
+        ViewBag.ChucVus = GetChucVus();
+        ViewBag.TrinhDos = GetTrinhDos();
+        ViewBag.ChuyenMons = GetChuyenMons();
+        ViewBag.HeSos = GetHeSos();
+        ViewBag.DanTocs = GetDanTocs();
+
+        return View(nhanVien);
     }
 
     public IActionResult NhanVienByPhongBan(int mid)
@@ -124,41 +166,51 @@ public class NhanVienController : Controller
     public async Task<IActionResult> DeleteConfirmed(int maNhanVien)
     {
         var nhanVien = await _context.NhanViens.FindAsync(maNhanVien);
-        if (nhanVien != null)
+        if (nhanVien == null)
         {
-            var nhanVienDaNghiViec = new NhanVienDaNghiViec
-            {
-                MaNhanVien = nhanVien.MaNhanVien,
-                HoTen = nhanVien.HoTen,
-                GioiTinh = nhanVien.GioiTinh,
-                NgaySinh = nhanVien.NgaySinh,
-                NoiSinh = nhanVien.NoiSinh,
-                NgayVaoCongTy = nhanVien.NgayVaoCongTy,
-                MaDanToc = nhanVien.MaDanToc,
-                MaChucVu = nhanVien.MaChucVu,
-                MaPhongBan = nhanVien.MaPhongBan,
-                MaTrinhDo = nhanVien.MaTrinhDo,
-                MaChuyenMon = nhanVien.MaChuyenMon,
-                DiaChi = nhanVien.DiaChi,
-                DienThoai = nhanVien.DienThoai,
-                MaHeSo = nhanVien.MaHeSo,
-                Cccd = nhanVien.Cccd,
-                TaiKhoanNganHang = nhanVien.TaiKhoanNganHang,
-                SoTaiKhoanNganHang = nhanVien.SoTaiKhoanNganHang,
-                NgayNghiViec = DateTime.Now
-            };
-
-            _context.NhanVienDaNghiViecs.Add(nhanVienDaNghiViec);
-            _context.NhanViens.Remove(nhanVien);
-            await _context.SaveChangesAsync();
+            return NotFound();
         }
+
+        _context.NhanViens.Remove(nhanVien);
+        await _context.SaveChangesAsync();
         return RedirectToAction(nameof(Index));
     }
+
+
 
 
 
     private bool NhanVienExists(int id)
     {
         return _context.NhanViens.Any(e => e.MaNhanVien == id);
+    }
+    private List<PhongBan> GetPhongBans()
+    {
+        return _context.PhongBans.ToList();
+    }
+
+    private List<ChucVu> GetChucVus()
+    {
+        return _context.ChucVus.ToList();
+    }
+
+    private List<TrinhDo> GetTrinhDos()
+    {
+        return _context.TrinhDos.ToList();
+    }
+
+    private List<ChuyenMon> GetChuyenMons()
+    {
+        return _context.ChuyenMons.ToList();
+    }
+
+    private List<HeSo> GetHeSos()
+    {
+        return _context.HeSos.ToList();
+    }
+
+    private List<DanToc> GetDanTocs()
+    {
+        return _context.DanTocs.ToList();
     }
 }
