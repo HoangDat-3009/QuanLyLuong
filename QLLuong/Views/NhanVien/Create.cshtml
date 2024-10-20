@@ -1,0 +1,152 @@
+﻿@model QLLuong.Models.NhanVien
+
+@{
+    ViewData["Title"] = "Create NhanVien";
+    Layout = "~/Views/Shared/MyLayout.cshtml";
+}
+
+<h2>Create NhanVien</h2>
+
+<div class="border p-3">
+    <form asp-action="Create" method="post">
+        <div class="form-horizontal">
+            <hr />
+
+            <!-- Hàng thứ nhất: MaNhanVien, HoTen -->
+            <div class="form-group row">
+                <label asp-for="MaNhanVien" class="col-sm-2 control-label">Mã nhân viên</label>
+                <div class="col-sm-4">
+                    <input asp-for="MaNhanVien" class="form-control" readonly />
+                    <span asp-validation-for="MaNhanVien" class="text-danger"></span>
+                </div>
+                <label asp-for="HoTen" class="col-sm-2 control-label">Họ và tên</label>
+                <div class="col-sm-4">
+                    <input asp-for="HoTen" class="form-control" />
+                    <span asp-validation-for="HoTen" class="text-danger"></span>
+                </div>
+            </div>
+
+            <!-- Hàng thứ hai: NgaySinh, GioiTinh -->
+            <!-- Hàng thứ hai: NgaySinh, GioiTinh -->
+            <div class="form-group row">
+                <label asp-for="NgaySinh" class="col-sm-2 control-label">Ngày sinh</label>
+                <div class="col-sm-4">
+                    <input asp-for="NgaySinh" class="form-control" type="date" />
+                    <span asp-validation-for="NgaySinh" class="text-danger"></span>
+                </div>
+                <label asp-for="GioiTinh" class="col-sm-2 control-label">Giới tính</label>
+                <div class="col-sm-4">
+                    <input asp-for="GioiTinh" class="form-control" />
+                    <span asp-validation-for="GioiTinh" class="text-danger"></span>
+                </div>
+            </div>
+
+
+            <!-- Hàng thứ ba: NoiSinh, MaPhongBan -->
+            <div class="form-group row">
+                <label asp-for="NoiSinh" class="col-sm-2 control-label">Nơi sinh</label>
+                <div class="col-sm-4">
+                    <input asp-for="NoiSinh" class="form-control" />
+                    <span asp-validation-for="NoiSinh" class="text-danger"></span>
+                </div>
+                <label asp-for="MaPhongBan" class="col-sm-2 control-label">Phòng ban</label>
+                <div class="col-sm-4">
+                    <select asp-for="MaPhongBan" class="form-control"
+                            asp-items="@(new SelectList(ViewBag.PhongBans, "MaPhongBan", "TenPhongBan"))"></select>
+                    <span asp-validation-for="MaPhongBan" class="text-danger"></span>
+                </div>
+            </div>
+
+            <!-- Hàng thứ tư: MaChucVu, MaTrinhDo -->
+            <div class="form-group row">
+                <label asp-for="MaChucVu" class="col-sm-2 control-label">Chức vụ</label>
+                <div class="col-sm-4">
+                    <select asp-for="MaChucVu" class="form-control"
+                            asp-items="@(new SelectList(ViewBag.ChucVus, "MaChucVu", "TenChucVu"))"></select>
+                    <span asp-validation-for="MaChucVu" class="text-danger"></span>
+                </div>
+                <label asp-for="MaTrinhDo" class="col-sm-2 control-label">Trình độ</label>
+                <div class="col-sm-4">
+                    <select asp-for="MaTrinhDo" class="form-control"
+                            asp-items="@(new SelectList(ViewBag.TrinhDos, "MaTrinhDo", "TenTrinhDo"))"></select>
+                    <span asp-validation-for="MaTrinhDo" class="text-danger"></span>
+                </div>
+            </div>
+
+            <!-- Hàng thứ năm: MaChuyenMon, DiaChi -->
+            <div class="form-group row">
+                <label asp-for="MaChuyenMon" class="col-sm-2 control-label">Chuyên môn</label>
+                <div class="col-sm-4">
+                    <select asp-for="MaChuyenMon" class="form-control"
+                            asp-items="@(new SelectList(ViewBag.ChuyenMons, "MaChuyenMon", "TenChuyenMon"))"></select>
+                    <span asp-validation-for="MaChuyenMon" class="text-danger"></span>
+                </div>
+                <label asp-for="DiaChi" class="col-sm-2 control-label">Địa chỉ</label>
+                <div class="col-sm-4">
+                    <input asp-for="DiaChi" class="form-control" />
+                    <span asp-validation-for="DiaChi" class="text-danger"></span>
+                </div>
+            </div>
+
+            <!-- Hàng thứ sáu: DienThoai, MaHeSo -->
+            <div class="form-group row">
+                <label asp-for="DienThoai" class="col-sm-2 control-label">Số điện thoại</label>
+                <div class="col-sm-4">
+                    <input asp-for="DienThoai" class="form-control" />
+                    <span asp-validation-for="DienThoai" class="text-danger"></span>
+                </div>
+                <label asp-for="MaHeSo" class="col-sm-2 control-label">Hệ số lương</label>
+                <div class="col-sm-4">
+                    <select asp-for="MaHeSo" class="form-control"
+                            asp-items="@(new SelectList(ViewBag.HeSos, "MaHeSo", "HeSoLuong"))"></select>
+                    <span asp-validation-for="MaHeSo" class="text-danger"></span>
+                </div>
+            </div>
+
+            <!-- Hàng thứ bảy: MaDanToc -->
+            <div class="form-group row">
+                <label asp-for="MaDanToc" class="col-sm-2 control-label">Dân tộc</label>
+                <div class="col-sm-4">
+                    <select asp-for="MaDanToc" class="form-control"
+                            asp-items="@(new SelectList(ViewBag.DanTocs, "MaDanToc", "TenDanToc"))"></select>
+                    <span asp-validation-for="MaDanToc" class="text-danger"></span>
+                </div>
+                <label asp-for="Cccd" class="col-sm-2 control-label">Căn cước công dân</label>
+                <div class="col-sm-4">
+                    <input asp-for="Cccd" class="form-control" />
+                    <span asp-validation-for="Cccd" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label asp-for="TaiKhoanNganHang" class="col-sm-2 control-label">Ngân hàng</label>
+                <div class="col-sm-4">
+                    <input asp-for="TaiKhoanNganHang" class="form-control" />
+                    <span asp-validation-for="TaiKhoanNganHang" class="text-danger"></span>
+                </div>
+                <label asp-for="SoTaiKhoanNganHang" class="col-sm-2 control-label">Số tài khoản</label>
+                <div class="col-sm-4">
+                    <input asp-for="SoTaiKhoanNganHang" class="form-control" />
+                    <span asp-validation-for="SoTaiKhoanNganHang" class="text-danger"></span>
+                </div>
+            </div>
+
+            <!-- Nút Submit -->
+            <div class="form-group col" style="display: flex; justify-content: center; padding: 20px; gap: 20px;">
+                <div>
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+                <div>
+                    <a asp-action="Index" class="btn btn-danger">Huỷ</a>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
