@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using QLLuong.Data;
 
@@ -11,9 +12,11 @@ using QLLuong.Data;
 namespace QLLuong.Migrations
 {
     [DbContext(typeof(QLLuongContext))]
-    partial class QLLuongContextModelSnapshot : ModelSnapshot
+    [Migration("20241019163932_AddNhanVienDaNghiViecsTable")]
+    partial class AddNhanVienDaNghiViecsTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -321,25 +324,19 @@ namespace QLLuong.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MaNhanVien"));
 
                     b.Property<string>("Cccd")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)")
-                        .HasColumnName("CCCD");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DiaChi")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DienThoai")
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("GioiTinh")
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("HoTen")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("MaChucVu")
                         .HasColumnType("int");
@@ -360,7 +357,7 @@ namespace QLLuong.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("NgayNghiViec")
-                        .HasColumnType("datetime");
+                        .HasColumnType("datetime2");
 
                     b.Property<DateOnly?>("NgaySinh")
                         .HasColumnType("date");
@@ -369,16 +366,13 @@ namespace QLLuong.Migrations
                         .HasColumnType("date");
 
                     b.Property<string>("NoiSinh")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SoTaiKhoanNganHang")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TaiKhoanNganHang")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("MaNhanVien");
 

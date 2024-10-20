@@ -223,6 +223,22 @@ public partial class QLLuongContext : DbContext
                 .HasForeignKey(d => d.MaTrinhDo)
                 .HasConstraintName("FK__NhanVien__MaTrin__6383C8BA");
         });
+        modelBuilder.Entity<NhanVienDaNghiViec>(entity =>
+        {
+            entity.HasKey(e => e.MaNhanVien);
+            entity.Property(e => e.HoTen).HasMaxLength(100);
+            entity.Property(e => e.GioiTinh).HasMaxLength(10);
+            entity.Property(e => e.NgaySinh).HasColumnType("date");
+            entity.Property(e => e.NoiSinh).HasMaxLength(100);
+            entity.Property(e => e.NgayVaoCongTy).HasColumnType("date");
+            entity.Property(e => e.DiaChi).HasMaxLength(255);
+            entity.Property(e => e.DienThoai).HasMaxLength(15);
+            entity.Property(e => e.Cccd).HasMaxLength(20).HasColumnName("CCCD");
+            entity.Property(e => e.TaiKhoanNganHang).HasMaxLength(100);
+            entity.Property(e => e.SoTaiKhoanNganHang).HasMaxLength(50);
+            entity.Property(e => e.NgayNghiViec).HasColumnType("datetime");
+        });
+
 
         modelBuilder.Entity<PhongBan>(entity =>
         {
