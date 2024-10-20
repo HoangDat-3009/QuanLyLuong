@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using QLLuong.Data;
 using QLLuong.Models;
+using X.PagedList;
 
 namespace QLLuong.Controllers
 {
@@ -18,74 +20,47 @@ namespace QLLuong.Controllers
         {
             _context = context;
         }
+        private int pageSize = 12;
 
-        // GET: ChamCong
-        public async Task<IActionResult> Index()
+        [HttpGet]
+        public IActionResult Index(string searchString, int page = 1)
         {
-            var qlluongContext = _context.ChamCongs
-            .Include(c => c.MaNhanVienNavigation)
-            .ThenInclude(nv => nv.MaPhongBanNavigation)
-            .Include(c => c.MaNhanVienNavigation)
-            .ThenInclude(nv => nv.MaChucVuNavigation);
-
-            return View(await qlluongContext.ToListAsync());
-        }
-
-        // GET: ChamCong/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            /*var chamCong = await _context.ChamCongs
+            var chamcongs = _context.ChamCongs
                 .Include(c => c.MaNhanVienNavigation)
-                .FirstOrDefaultAsync(m => m.MaNhanVien == id);*/
-            var chamCong = await _context.ChamCongs
-            .Include(c => c.MaNhanVienNavigation)
-            .ThenInclude(n => n.MaPhongBanNavigation)
-            .Include(c => c.MaNhanVienNavigation)
-            .ThenInclude(n => n.MaChucVuNavigation)
-            .FirstOrDefaultAsync(m => m.ChamCongId == id);
-            
+                .ThenInclude(nv => nv.MaPhongBanNavigation)
+                .Include(c => c.MaNhanVienNavigation)
+                .ThenInclude(nv => nv.MaChucVuNavigation)
+                .AsQueryable();
 
 
-            if (chamCong == null)
+            // tim kiem
+            if (!string.IsNullOrEmpty(searchString))
             {
-                return NotFound();
+                chamcongs = chamcongs.Where(c => c.MaNhanVienNavigation.HoTen.ToLower().Contains(searchString.ToLower())||c.MaNhanVien.ToString().Contains(searchString));
             }
 
-            return View(chamCong);
+            //phan trang
+            page = page < 1 ? 1 : page;
+
+            int skip = (page - 1) * pageSize;
+
+
+            var paginatedChamCongs = chamcongs.Skip(skip).Take(pageSize).ToList();
+
+ 
+            int totalRecords = chamcongs.Count();
+            int totalPages = (int)Math.Ceiling((double)totalRecords / pageSize);
+
+            ViewBag.PageIndex = page;
+            ViewBag.TotalPages = totalPages;
+
+            return View(paginatedChamCongs);
         }
 
 
 
-        // GET: ChamCong/Create
-        public IActionResult Create()
-        {
-            ViewData["MaNhanVien"] = new SelectList(_context.NhanViens, "MaNhanVien", "MaNhanVien");
-            return View();
-        }
 
-        // POST: ChamCong/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MaNhanVien,NgayGioVao,NgayGioRa,TrangThai,GhiChu")] ChamCong chamCong)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(chamCong);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["MaNhanVien"] = new SelectList(_context.NhanViens, "MaNhanVien", "MaNhanVien", chamCong.MaNhanVien);
-            return View(chamCong);
-        }
-
-        // GET: ChamCong/Edit/5
+        // GET: ChamCong/Edit
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -103,13 +78,11 @@ namespace QLLuong.Controllers
         }
 
         // POST: ChamCong/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("MaNhanVien,NgayGioVao,NgayGioRa,TrangThai,GhiChu")] ChamCong chamCong)
         {
-            if (id != chamCong.MaNhanVien)
+            /*if (id != chamCong.MaNhanVien)
             {
                 return NotFound();
             }
@@ -134,42 +107,8 @@ namespace QLLuong.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MaNhanVien"] = new SelectList(_context.NhanViens, "MaNhanVien", "MaNhanVien", chamCong.MaNhanVien);
+            ViewData["MaNhanVien"] = new SelectList(_context.NhanViens, "MaNhanVien", "MaNhanVien", chamCong.MaNhanVien);*/
             return View(chamCong);
-        }
-
-        // GET: ChamCong/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var chamCong = await _context.ChamCongs
-                .Include(c => c.MaNhanVienNavigation)
-                .FirstOrDefaultAsync(m => m.MaNhanVien == id);
-            if (chamCong == null)
-            {
-                return NotFound();
-            }
-
-            return View(chamCong);
-        }
-
-        // POST: ChamCong/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async    Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var chamCong = await _context.ChamCongs.FindAsync(id);
-            if (chamCong != null)
-            {
-                _context.ChamCongs.Remove(chamCong);
-            }
-
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
         }
 
         private bool ChamCongExists(int id)

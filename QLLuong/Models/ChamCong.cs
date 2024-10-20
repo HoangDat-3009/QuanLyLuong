@@ -8,7 +8,8 @@ public partial class ChamCong
 {
     [Key]
     public int ChamCongId { get; set; }
-    public int MaNhanVien { get; set; }
+    
+    public int? MaNhanVien { get; set; }
 
     public DateTime? NgayGioVao { get; set; }
 
