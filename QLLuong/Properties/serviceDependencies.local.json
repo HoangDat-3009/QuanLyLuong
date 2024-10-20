@@ -1,11 +1,15 @@
 {
   "dependencies": {
-    "mssql1": {
+    "secrets1": {
+      "type": "secrets.user",
+      "dynamicId": null
+    },
+    "mssql2": {
       "serviceConnectorResourceId": "",
       "secretStore": "LocalSecretsFile",
       "resourceId": null,
       "type": "mssql.onprem",
-      "connectionId": "ConnectionStrings:QLNhanVienContext"
+      "connectionId": "ConnectionStrings:DefaultConnection"
     }
   }
 }

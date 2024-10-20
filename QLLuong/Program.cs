@@ -14,7 +14,8 @@ namespace QLLuong
 
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddDbContext<QLLuongContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+            builder.Services.AddDbContext<QLLuongContext>(options => 
+            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
@@ -45,10 +46,7 @@ namespace QLLuong
                 name: "NhanVienList",
                 pattern: "/NhanVien",
                 defaults: new { controller = "NhanVien", action = "Index" });
-            app.MapControllerRoute(
-                name: "NhanVien_Infor_Staff",
-                pattern: "/NhanVien/Infor",
-                defaults: new { controller = "NhanVien", action = "Index_Infor_Staff" });
+           
             app.MapControllerRoute(
                 name: "NhanVien_Luong",
                 pattern: "Luong",
@@ -69,10 +67,9 @@ namespace QLLuong
                 name: "ChamCong",
                 pattern: "/ChamCong",
                 defaults: new { controller = "ChamCong", action = "Index" });
-
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=LogIn}/{action=Index}/{id?}");
+                pattern: "{controller=NhanVien}/{action=Index}/{id?}");
 
             app.Run();
         }

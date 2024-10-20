@@ -1,7 +1,10 @@
 {
   "dependencies": {
+    "secrets1": {
+      "type": "secrets",
+      "dynamicId": null
+    },
     "mssql2": {
-      "ignored": "true",
       "type": "mssql",
       "connectionId": "ConnectionStrings:DefaultConnection"
     },

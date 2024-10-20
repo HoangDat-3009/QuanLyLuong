@@ -1,0 +1,61 @@
+﻿
+@{
+    ViewData["Title"] = "Luong List";
+    Layout = "~/Views/Shared/MyLayout.cshtml";
+}
+@model IEnumerable<QLLuong.Models.Luong>
+
+<h1>Lương đây</h1>
+@foreach(var i in Model)
+{
+    <li>@i.MaNhanVienNavigation?.HoTen</li>
+}
+@* <div class="table-responsive">
+    <div id="content">
+        <table class="table table-striped table-bordered table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th>STT</th>
+                    <th>Mã lương</th>
+                    <th>Tên nhân viên</th>
+                    <th>Tháng </th>
+                    <th>Năm</th>
+                    <th>Lương cơ bản</th>
+                    <th>Hệ số</th>
+                    <th>Phụ cấp trình độ</th>
+                    <th>Phụ cấp chức vị</th>
+                    <th>BHYT</th>
+                    <th>BHTN</th>
+                    <th>BHXH</th>
+                    <th>Khen thưởng hoặc kỷ luật</th>
+                    <th>Thực lĩnh</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    var STT = 1;
+                }
+                @foreach (var s in Model)
+                {
+                    <tr>
+                        <td>@STT</td>
+                        <td>@s.MaLuong</td>
+                        <td>@s.LuongCoBan_PhanTramBH?.LuongCoBan</td>
+                        <td>@s.Thang</td>
+                        <td>@s.Nam</td>
+                        <td>@s.MaLuongCoBan_PhanTramBH</td>
+                        <td>@s.HeSo</td>
+                        <td>@s.PhuCapTrinhDo</td>
+                        <td>@s.PhuCapChucVu</td>
+                        <td>@s.BHYT</td>
+                        <td>@s.BHTN</td>
+                        <td>@s.BHXH</td>
+                        <td>@s.KhenThuongKyLuat</td>
+                        <td>@s.ThucLinh</td>
+                    </tr>
+                    STT++;
+                }
+            </tbody>
+        </table>
+    </div>
+</div> *@
