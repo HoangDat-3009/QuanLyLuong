@@ -12,3 +12,7 @@
     background-color: rgba(11, 30, 82,0.2) !important;
 
 }
+#departmentFilter {
+    width: 200px;
+    margin-left: 20px;
+}

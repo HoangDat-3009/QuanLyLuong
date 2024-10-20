@@ -20,10 +20,10 @@ namespace QLLuong.Controllers
         {
             _context = context;
         }
-        private int pageSize = 12;
+        private int pageSize = 10;
 
         [HttpGet]
-        public IActionResult Index(string searchString, int page = 1)
+        public IActionResult Index(string searchString, int selectedDepartmentId = 0, int page = 1)
         {
             var chamcongs = _context.ChamCongs
                 .Include(c => c.MaNhanVienNavigation)
@@ -33,17 +33,20 @@ namespace QLLuong.Controllers
                 .AsQueryable();
 
 
-            // tim kiem
+            //tim kiem
             if (!string.IsNullOrEmpty(searchString))
             {
                 chamcongs = chamcongs.Where(c => c.MaNhanVienNavigation.HoTen.ToLower().Contains(searchString.ToLower())||c.MaNhanVien.ToString().Contains(searchString));
             }
+            // Lọc theo phòng ban đã chọn
+            if (selectedDepartmentId > 0)
+            {
+                chamcongs = chamcongs.Where(c => c.MaNhanVienNavigation.MaPhongBan == selectedDepartmentId);
+            }
 
             //phan trang
             page = page < 1 ? 1 : page;
-
             int skip = (page - 1) * pageSize;
-
 
             var paginatedChamCongs = chamcongs.Skip(skip).Take(pageSize).ToList();
 
@@ -54,8 +57,11 @@ namespace QLLuong.Controllers
             ViewBag.PageIndex = page;
             ViewBag.TotalPages = totalPages;
 
+            ViewBag.Departments = _context.PhongBans.ToList();
+
             return View(paginatedChamCongs);
         }
+
 
 
 
