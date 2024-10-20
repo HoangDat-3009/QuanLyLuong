@@ -20,7 +20,7 @@ namespace QLLuong.Controllers
         {
             _context = context;
         }
-        private int pageSize = 10;
+        private int pageSize = 13;
 
         [HttpGet]
         public IActionResult Index(string searchString, int selectedDepartmentId = 0, int page = 1)
@@ -66,29 +66,33 @@ namespace QLLuong.Controllers
 
 
 
+
         // GET: ChamCong/Edit
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int maNhanVien)
         {
-            if (id == null)
+            var cc = await _context.ChamCongs
+                .Include(c => c.MaNhanVienNavigation)
+                .ThenInclude(nv => nv.MaPhongBanNavigation)
+                .Include(c => c.MaNhanVienNavigation)
+                .ThenInclude(nv => nv.MaChucVuNavigation)
+                .AsQueryable()
+                .FirstOrDefaultAsync(c => c.MaNhanVien == maNhanVien);
+            if (cc == null)
             {
                 return NotFound();
             }
 
-            var chamCong = await _context.ChamCongs.FindAsync(id);
-            if (chamCong == null)
-            {
-                return NotFound();
-            }
-            ViewData["MaNhanVien"] = new SelectList(_context.NhanViens, "MaNhanVien", "MaNhanVien", chamCong.MaNhanVien);
-            return View(chamCong);
+            ViewBag.PhongBans = _context.PhongBans.ToList();
+            
+            ViewBag.ChucVus = _context.ChucVus.ToList();
+            return View(cc);
         }
 
-        // POST: ChamCong/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("MaNhanVien,NgayGioVao,NgayGioRa,TrangThai,GhiChu")] ChamCong chamCong)
+        public async Task<IActionResult> Edit(int maNhanVien, [Bind("ChamCongId ,MaNhanVien,HoTen,MaPhongBan,MaChucVu,NgayGioVao,NgayGioRa,TrangThai,GhiChu")] ChamCong cc)
         {
-            /*if (id != chamCong.MaNhanVien)
+            if (maNhanVien != cc.MaNhanVien)
             {
                 return NotFound();
             }
@@ -97,12 +101,24 @@ namespace QLLuong.Controllers
             {
                 try
                 {
-                    _context.Update(chamCong);
+                    var existingCc = await _context.ChamCongs.FindAsync(cc.ChamCongId);
+                    if (existingCc == null)
+                    {
+                        return NotFound();
+                    }
+
+                    // Cập nhật các trường cần thiết
+                    existingCc.NgayGioVao = cc.NgayGioVao;
+                    existingCc.NgayGioRa = cc.NgayGioRa;
+                    existingCc.TrangThai = cc.TrangThai;
+                    existingCc.GhiChu = cc.GhiChu;
+
+                    // Cập nhật dữ liệu
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ChamCongExists(chamCong.MaNhanVien))
+                    if (!ChamCongExists(cc.ChamCongId)) // Kiểm tra sự tồn tại của bản ghi
                     {
                         return NotFound();
                     }
@@ -113,13 +129,18 @@ namespace QLLuong.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MaNhanVien"] = new SelectList(_context.NhanViens, "MaNhanVien", "MaNhanVien", chamCong.MaNhanVien);*/
-            return View(chamCong);
+
+            ViewBag.PhongBans = _context.PhongBans.ToList();
+            
+            ViewBag.ChucVus = _context.ChucVus.ToList();
+
+            return View(cc);
         }
 
         private bool ChamCongExists(int id)
         {
-            return _context.ChamCongs.Any(e => e.MaNhanVien == id);
+            return _context.ChamCongs.Any(e => e.ChamCongId == id);
         }
+
     }
 }

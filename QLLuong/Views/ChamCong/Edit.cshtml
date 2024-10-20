@@ -1,50 +1,94 @@
 ﻿@model QLLuong.Models.ChamCong
 
 @{
-    ViewData["Title"] = "Cham Cong";
+    ViewData["Title"] = "Edit Cham Cong";
     Layout = "~/Views/Shared/MyLayout.cshtml";
 }
+<div class="container align-content-center" style="width:200%;">
+    <h1 class="mt-4">Chấm công</h1>
+    
+    <div class="" style="width:120%; margin-top:20px;">
+        <div class="col-md-4">
+            <form asp-action="Edit" method="post">
+                <div>
+                    <div class="form-group row">
+                        <label asp-for="ChamCongId" class="col-sm-3 control-label">Mã Chấm công</label>
+                        <div class="col-sm-8">
+                            <input asp-for="ChamCongId" class="form-control" readonly />
+                            <span asp-validation-for="ChamCongId" class="text-danger"></span>
+                        </div>
+                        <br />
+                        <label asp-for="MaNhanVien" class="col-sm-3 control-label">Mã nhân viên</label>
+                        <div class="col-sm-8">
+                            <input asp-for="MaNhanVien" class="form-control" readonly />
+                            <span asp-validation-for="MaNhanVien" class="text-danger"></span>
+                        </div>
+                        <div class="d-inline-block" style="margin-top:10px;">
+                            <label class="col-sm-3 control-label">Họ và tên</label>
+                            <div class="col-sm-8">
+                                <input asp-for="MaNhanVienNavigation.HoTen" class="form-control" readonly />
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+                
 
-<h1>Edit</h1>
+                <label style="margin-top:10px;" class="col-sm-2 control-label">Phòng ban</label>
+                <div class="col-sm-4">
+                    <select class="form-control"
+                            asp-for="MaNhanVienNavigation.MaPhongBan"
+                            asp-items="@(new SelectList(ViewBag.PhongBans, "MaPhongBan", "TenPhongBan", Model.MaNhanVienNavigation?.MaPhongBan))" disabled></select>
+                    <span asp-validation-for="MaNhanVienNavigation.MaPhongBan" class="text-danger"></span>
+                </div>
 
-<h4>ChamCong</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="MaNhanVien" />
-            <div class="form-group">
-                <label asp-for="NgayGioVao" class="control-label"></label>
-                <input asp-for="NgayGioVao" class="form-control" />
-                <span asp-validation-for="NgayGioVao" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="NgayGioRa" class="control-label"></label>
-                <input asp-for="NgayGioRa" class="form-control" />
-                <span asp-validation-for="NgayGioRa" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="TrangThai" class="control-label"></label>
-                <input asp-for="TrangThai" class="form-control" />
-                <span asp-validation-for="TrangThai" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="GhiChu" class="control-label"></label>
-                <input asp-for="GhiChu" class="form-control" />
-                <span asp-validation-for="GhiChu" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+                <label style="margin-top:10px;" class="col-sm-2 control-label">Chức vụ</label>
+                <div class="col-sm-4">
+                    <select class="form-control"
+                            asp-for="MaNhanVienNavigation.MaChucVu"
+                            asp-items="@(new SelectList(ViewBag.ChucVus, "MaChucVu", "TenChucVu", Model.MaNhanVienNavigation?.MaChucVu))" disabled></select>
+                    <span asp-validation-for="MaNhanVienNavigation.MaChucVu" class="text-danger"></span>
+                </div>
+
+
+                <div style="margin-top:10px;" class="form-group">
+                    <label  asp-for="NgayGioVao" class="control-label" disabled>Thời gian vào</label>
+                    <input asp-for="NgayGioVao" class="form-control" type="datetime-local" readonly />
+                    <span asp-validation-for="NgayGioVao" class="text-danger"></span>
+                </div>
+
+                <div style="margin-top:10px;" class="form-group">
+                    <label asp-for="NgayGioRa" class="control-label" disabled>Thời gian ra</label>
+                    <input asp-for="NgayGioRa" class="form-control" type="datetime-local" readonly />
+                    <span asp-validation-for="NgayGioRa" class="text-danger"></span>
+                </div>
+
+                <div style="margin-top:10px;" class="form-group">
+                    <label asp-for="TrangThai" class="control-label">Trạng thái</label>
+                    <input asp-for="TrangThai" class="form-control" readonly />
+                    <span asp-validation-for="TrangThai" class="text-danger"></span>
+                </div>
+
+                <div style="margin-top:10px;" class="form-group">
+                    <label asp-for="GhiChu" class="control-label">Ghi chú</label>
+                    <input asp-for="GhiChu" class="form-control" />
+                    <span asp-validation-for="GhiChu" class="text-danger"></span>
+                </div>
+
+                <div class="form-group  d-inline-block" style="margin-top:30px;">
+                    <a class="btn btn-primary" style="margin:30px 30px 30px 150px;" asp-action="Index">Huỷ</a>
+                    <input style="margin-left:40px" type="submit" value="Lưu" class="btn btn-primary" />
+                </div>
+                
+            </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
