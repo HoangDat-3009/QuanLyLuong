@@ -67,7 +67,6 @@ namespace QLLuong
                 name: "ChamCong",
                 pattern: "/ChamCong",
                 defaults: new { controller = "ChamCong", action = "Index" });
-
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=NhanVien}/{action=Index}/{id?}");

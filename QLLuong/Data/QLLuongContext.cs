@@ -32,7 +32,7 @@ public partial class QLLuongContext : DbContext
 
     public virtual DbSet<Luong> Luongs { get; set; }
 
-    public virtual DbSet<LuongCoBan> LuongCoBans { get; set; }
+    public virtual DbSet<LuongCoBan_PhanTramBH> LuongCoBan_PhanTramBHs { get; set; }
 
     public virtual DbSet<LyDoKtkl> LyDoKtkls { get; set; }
 
@@ -123,46 +123,52 @@ public partial class QLLuongContext : DbContext
                 .HasForeignKey(d => d.MaNhanVien)
                 .HasConstraintName("FK__KhenThuon__MaNha__6C190EBB");
         });
+        modelBuilder.Entity<LuongCoBan_PhanTramBH>(entity =>
+        {
+            entity.HasKey(e => e.MaLuongCoBan_PhanTramBH).HasName("PK__LuongCoB__EDBBAA72BA929539");
+
+            entity.ToTable("LuongCoBan_PhanTramBH");
+            entity.Property(e => e.LuongCoBan).HasColumnType("decimal(15, 2)");
+            entity.Property(e => e.PhanTramBHYT).HasColumnType("float").HasColumnName("PhanTramBHYT");
+            entity.Property(e => e.PhanTramBHTN).HasColumnType("float").HasColumnName("PhanTramBHTN");
+            entity.Property(e => e.PhanTramBHXH).HasColumnType("float").HasColumnName("PhanTramBHXH");
+        });
 
         modelBuilder.Entity<Luong>(entity =>
         {
             entity.HasKey(e => e.MaLuong).HasName("PK__Luong__6609A48D03F257E2");
 
             entity.ToTable("Luong");
-
-            entity.Property(e => e.MaLuong).ValueGeneratedNever();
-            entity.Property(e => e.Bhtn)
+            entity.Property(e => e.HeSo)
+                .HasColumnType("float");
+            entity.Property(e => e.Thang)
+                .HasColumnType("int");
+            entity.Property(e => e.Nam)
+                .HasColumnType("int");
+            entity.Property(e => e.BHTN)
                 .HasColumnType("decimal(15, 2)")
                 .HasColumnName("BHTN");
-            entity.Property(e => e.Bhxh)
+            entity.Property(e => e.BHXH)
                 .HasColumnType("decimal(15, 2)")
                 .HasColumnName("BHXH");
-            entity.Property(e => e.Bhyt)
+            entity.Property(e => e.BHYT)
                 .HasColumnType("decimal(15, 2)")
                 .HasColumnName("BHYT");
             entity.Property(e => e.KhenThuongKyLuat).HasColumnType("decimal(15, 2)");
             entity.Property(e => e.Luong1)
-                .HasColumnType("decimal(15, 2)")
-                .HasColumnName("Luong");
+                .HasColumnType("decimal(15, 2)").HasColumnName("Luong");
             entity.Property(e => e.PhuCapChucVu).HasColumnType("decimal(15, 2)");
             entity.Property(e => e.PhuCapTrinhDo).HasColumnType("decimal(15, 2)");
-            entity.Property(e => e.ThucLinh).HasColumnType("decimal(15, 2)");
+                entity.Property(e => e.ThucLinh).HasColumnType("decimal(15, 2)");
 
             entity.HasOne(d => d.MaNhanVienNavigation).WithMany(p => p.Luongs)
                 .HasForeignKey(d => d.MaNhanVien)
-                .HasConstraintName("FK__Luong__MaNhanVie__6A30C649");
-        });
+                .HasConstraintName("FK__Luong__MaNhanVie__6A30C649"); 
 
-        modelBuilder.Entity<LuongCoBan>(entity =>
-        {
-            entity.HasKey(e => e.MaLuongCoBan).HasName("PK__LuongCoB__542BDA5FA898E9B5");
-
-            entity.ToTable("LuongCoBan");
-
-            entity.Property(e => e.MaLuongCoBan).ValueGeneratedNever();
-            entity.Property(e => e.LuongCoBan1)
-                .HasColumnType("decimal(15, 2)")
-                .HasColumnName("LuongCoBan");
+            entity.HasOne(d => d.LuongCoBan_PhanTramBH).WithMany(p => p.Luongs)
+                .HasForeignKey(d => d.MaLuongCoBan_PhanTramBH)
+                .HasConstraintName("FK__Luong__MaLuongCo__6477ECF3");
+            
         });
 
         modelBuilder.Entity<LyDoKtkl>(entity =>
