@@ -1,16 +1,15 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Luong List";
     Layout = "~/Views/Shared/MyLayout.cshtml";
 }
 @model IEnumerable<QLLuong.Models.Luong>
 
 <h1>Lương đây</h1>
-@foreach(var i in Model)
+@* @foreach(var i in Model)
 {
     <li>@i.MaNhanVienNavigation?.HoTen</li>
-}
-@* <div class="table-responsive">
+} *@
+<div class="table-responsive">
     <div id="content">
         <table class="table table-striped table-bordered table-hover">
             <thead class="thead-dark">
@@ -35,7 +34,7 @@
                 @{
                     var STT = 1;
                 }
-                @foreach (var s in Model)
+                @if (Model != null)
                 {
                     @foreach (var s in Model)
                     {
@@ -45,7 +44,7 @@
                                     <td>@s.MaNhanVienNavigation?.HoTen</td>
                                     <td>@s.Thang</td>
                                     <td>@s.Nam</td>
-                                    <td>@s.LuongCoBan_PhanTramBH.LuongCoBan</td>
+                                    <td>@s.MaLuongCoBan_PhanTramBH</td>
                                     <td>@s.HeSo</td>
                                     <td>@s.PhuCapTrinhDo</td>
                                     <td>@s.PhuCapChucVu</td>
@@ -67,4 +66,4 @@
             </tbody>
         </table>
     </div>
-</div> *@
+</div>
