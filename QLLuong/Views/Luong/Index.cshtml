@@ -37,23 +37,32 @@
                 }
                 @foreach (var s in Model)
                 {
-                    <tr>
-                        <td>@STT</td>
-                        <td>@s.MaLuong</td>
-                        <td>@s.LuongCoBan_PhanTramBH?.LuongCoBan</td>
-                        <td>@s.Thang</td>
-                        <td>@s.Nam</td>
-                        <td>@s.MaLuongCoBan_PhanTramBH</td>
-                        <td>@s.HeSo</td>
-                        <td>@s.PhuCapTrinhDo</td>
-                        <td>@s.PhuCapChucVu</td>
-                        <td>@s.BHYT</td>
-                        <td>@s.BHTN</td>
-                        <td>@s.BHXH</td>
-                        <td>@s.KhenThuongKyLuat</td>
-                        <td>@s.ThucLinh</td>
-                    </tr>
-                    STT++;
+                    @foreach (var s in Model)
+                    {
+                                <tr>
+                                    <td>@STT</td>
+                                    <td>@s.MaLuong</td>
+                                    <td>@s.MaNhanVienNavigation?.HoTen</td>
+                                    <td>@s.Thang</td>
+                                    <td>@s.Nam</td>
+                                    <td>@s.LuongCoBan_PhanTramBH.LuongCoBan</td>
+                                    <td>@s.HeSo</td>
+                                    <td>@s.PhuCapTrinhDo</td>
+                                    <td>@s.PhuCapChucVu</td>
+                                    <td>@s.BHYT</td>
+                                    <td>@s.BHTN</td>
+                                    <td>@s.BHXH</td>
+                                    <td>@s.KhenThuongKyLuat</td>
+                                    <td>@s.ThucLinh</td>
+                                </tr>
+                        STT++;
+                    }
+                }
+                else
+                {
+                        <tr>
+                            <td colspan="14">No data available.</td>
+                        </tr>
                 }
             </tbody>
         </table>
