@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace QLLuong.Models;
 
 public partial class KhenThuongKyLuat
 {
-    [Key]
     public int MaKtkl { get; set; }
 
     public int? MaNhanVien { get; set; }
@@ -20,6 +18,8 @@ public partial class KhenThuongKyLuat
     public int? MaLyDo { get; set; }
 
     public decimal? SoTien { get; set; }
+
+    public virtual ICollection<Luong> Luongs { get; set; } = new List<Luong>();
 
     public virtual LyDoKtkl? MaLyDoNavigation { get; set; }
 

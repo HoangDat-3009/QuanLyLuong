@@ -197,11 +197,17 @@ public class NhanVienController : Controller
     public async Task<IActionResult> DeleteConfirmed(int maNhanVien)
     {
         var nhanVien = await _context.NhanViens.FindAsync(maNhanVien);
+        var khenthuongkyluat = await _context.KhenThuongKyLuats.FindAsync(maNhanVien);
+        var luongs =  _context.Luongs.FindAsync(maNhanVien);
         if (nhanVien == null)
         {
             return NotFound();
         }
-
+        
+        if (khenthuongkyluat != null)
+        {
+            _context.KhenThuongKyLuats.Remove(khenthuongkyluat);
+        }
         _context.NhanViens.Remove(nhanVien);
         await _context.SaveChangesAsync();
         return RedirectToAction(nameof(Index));
