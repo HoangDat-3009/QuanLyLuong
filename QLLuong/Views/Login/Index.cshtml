@@ -2,7 +2,7 @@
     Layout = null;
 }
 
-@model UserLogin
+@model QLLuong.Models.UserLogin
 <!DOCTYPE html>
 <html lang="vi">
 
@@ -41,43 +41,43 @@
                             </div>
 
 
-                            @using (Html.BeginForm("Index", "Login", FormMethod.Post))
-                            {
+                            @using(Html.BeginForm("Index", "LogIn", FormMethod.Post)){
                                 <!-- <p>Please login to your account</p>  -->
-
+                            @* <form action="Login" method="post"> *@
                                 <div class="form-outline mb-4 box-input">
                                     <i class="fa-solid fa-user-shield icon-ip"></i>
-                                    @* @Html.TextBoxFor(x => x.UserName, new { @class = "form-control", placeholder = "Tên đăng nhập", required = "required", autofocus = "autofocus" }) *@
-                                    <input type="text" id="userName" class="form-control" placeholder="Tên đăng nhập" />
-
+                                    @Html.TextBoxFor(x => x.Username, new { @class = "form-control", placeholder = "Tên đăng nhập" , required = "required", autofocus = " autofocus"})
+                                    @* <input asp-for="Username" type="text" id="userName" class="form-control" placeholder="Tên đăng nhập" /> *@
+                                    
                                 </div>
-
+                                <span asp-validation-for="Username" class="text-danger"></span>
                                 <div class="form-outline mb-4 box-input">
                                     <i class="fa-solid fa-key icon-ip"></i>
-                                    @* @Html.TextBoxFor(x => x.UserPassword, new { @class = "form-control", @id = "passwordInput", type = "password", placeholder = "Mật khẩu" }) *@
-                                    <input type="password" id="passwordInput" class="form-control"
-                                placeholder="Mật khẩu" />
+                                    @Html.TextBoxFor(x => x.Userpassword, new { @class = "form-control",type="password", placeholder = "Mật khẩu" })
+                                    @* <input asp-for="Userpassword" type="password" id="passwordInput" class="form-control" placeholder="Mật khẩu" /> *@
                                     <button><i class="fa-regular fa-eye show-password "></i></button>
                                     <button id="togglePassword">
                                         <i class="fa-regular fa-eye-slash show-password "></i>
                                     </button>
-
                                 </div>
-                                <h3>@ViewBag.LoginFail</h3>
+                                <span asp-validation-for="Userpassword" class="text-danger"></span>
+
+                                
                                 <div class="text-center pt-1 mb-5 pb-1 help">
                                     <a class="text-muted " href="#!">Quên mật khẩu?</a>
                                     <a class="text-muted" href="">
-                                        <i class="fa-solid fa-circle-question"></i>Trợ
-                                        giúp
+                                        <i class="fa-solid fa-circle-question"></i>Trợ giúp
                                     </a>
-                                    <button class="btn btn-primary btn-block fa-lg  mb-3"
-                                            type="submit" id="btn-log-in">
-                                        Đăng nhập
-                                    </button>
-
+                                    @if (ViewBag.LoginFail != null)
+                                    {
+                                        <span  class="text-danger">@ViewBag.LoginFail</span>
+                                    }
+                                    <button class="btn btn-primary btn-block fa-lg  mb-3" type="submit" id="btn-log-in">Đăng nhập</button>
                                 </div>
-
+                            @* </form> *@
+    
                             }
+
 
                         </div>
 

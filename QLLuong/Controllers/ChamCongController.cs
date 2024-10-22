@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using QLLuong.Data;
 using QLLuong.Models;
+using QLLuong.Models.Authentication;
 using X.PagedList;
 
 namespace QLLuong.Controllers
@@ -23,6 +24,7 @@ namespace QLLuong.Controllers
         private int pageSize = 13;
 
         [HttpGet]
+        [Authentication]
         public IActionResult Index(string searchString, int selectedDepartmentId = 0, int page = 1)
         {
             var chamcongs = _context.ChamCongs
@@ -68,6 +70,7 @@ namespace QLLuong.Controllers
 
 
         // GET: ChamCong/Edit
+        [Authentication]
         public async Task<IActionResult> Edit(int maNhanVien)
         {
             var cc = await _context.ChamCongs
@@ -90,6 +93,7 @@ namespace QLLuong.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authentication]
         public async Task<IActionResult> Edit(int maNhanVien, [Bind("ChamCongId ,MaNhanVien,HoTen,MaPhongBan,MaChucVu,NgayGioVao,NgayGioRa,TrangThai,GhiChu")] ChamCong cc)
         {
             if (maNhanVien != cc.MaNhanVien)
@@ -107,18 +111,18 @@ namespace QLLuong.Controllers
                         return NotFound();
                     }
 
-                    // Cập nhật các trường cần thiết
+                    
                     existingCc.NgayGioVao = cc.NgayGioVao;
                     existingCc.NgayGioRa = cc.NgayGioRa;
                     existingCc.TrangThai = cc.TrangThai;
                     existingCc.GhiChu = cc.GhiChu;
 
-                    // Cập nhật dữ liệu
+                    
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ChamCongExists(cc.ChamCongId)) // Kiểm tra sự tồn tại của bản ghi
+                    if (!ChamCongExists(cc.ChamCongId)) 
                     {
                         return NotFound();
                     }
