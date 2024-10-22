@@ -107,18 +107,18 @@ namespace QLLuong.Controllers
                         return NotFound();
                     }
 
-                    // Cập nhật các trường cần thiết
+                    
                     existingCc.NgayGioVao = cc.NgayGioVao;
                     existingCc.NgayGioRa = cc.NgayGioRa;
                     existingCc.TrangThai = cc.TrangThai;
                     existingCc.GhiChu = cc.GhiChu;
 
-                    // Cập nhật dữ liệu
+                    
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ChamCongExists(cc.ChamCongId)) // Kiểm tra sự tồn tại của bản ghi
+                    if (!ChamCongExists(cc.ChamCongId)) 
                     {
                         return NotFound();
                     }

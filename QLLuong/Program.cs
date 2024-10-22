@@ -4,6 +4,7 @@ using QLLuong.Data;
 using System.Data.Common;
 using Microsoft.Data.SqlClient;
 using System;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace QLLuong
 {
@@ -20,7 +21,18 @@ namespace QLLuong
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
-            builder.Services.AddSession();
+
+
+
+
+            /*builder.Services.AddSession();*/
+            // Add this after AddControllersWithViews()
+            builder.Services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
 
             var app = builder.Build();
 
@@ -33,6 +45,9 @@ namespace QLLuong
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+
+        
 
             app.UseRouting();
 
@@ -70,7 +85,7 @@ namespace QLLuong
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=ChamCong}/{action=Index}/{id?}");
+                pattern: "{controller=LogIn}/{action=Index}/{id?}");
 
             app.Run();
         }
