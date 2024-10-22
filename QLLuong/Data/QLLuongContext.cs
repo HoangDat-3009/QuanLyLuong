@@ -51,7 +51,9 @@ public partial class QLLuongContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<ChamCong>(entity =>
+		modelBuilder.Entity<NhanVien>().HasQueryFilter(nv => !nv.IsDeleted);
+
+		modelBuilder.Entity<ChamCong>(entity =>
         {
             entity.HasKey(e => e.ChamCongId).HasName("PK__ChamCong__9D16AF613091FEAC");
 

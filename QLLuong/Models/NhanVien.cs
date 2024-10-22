@@ -30,6 +30,7 @@ public partial class NhanVien
     public string? DiaChi { get; set; }
 
     public string? DienThoai { get; set; }
+    public bool IsDeleted { get; set; }
 
     public int? MaHeSo { get; set; }
 
