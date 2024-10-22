@@ -38,21 +38,33 @@
                 {
                     @foreach (var s in Model)
                     {
-                                <tr>
+                        var luongcoban = s.MaLuongCoBanPhanTramBhNavigation?.LuongCoBan ?? 0;
+                        var hesoluong = s.MaNhanVienNavigation?.MaHeSoNavigation?.HeSoLuong ??0;
+                        var phucachucvu = s.MaNhanVienNavigation?.MaChucVuNavigation?.PhuCap ??0;
+                        var phucaptrihdo = s.MaNhanVienNavigation?.MaTrinhDoNavigation?.PhuCap ?? 0;
+                        var ptBhyt = s.MaLuongCoBanPhanTramBhNavigation?.PhanTramBhyt ?? 0;
+                        var ptBhtn = s.MaLuongCoBanPhanTramBhNavigation?.PhanTramBhtn ?? 0;
+                        var ptBhxh = s.MaLuongCoBanPhanTramBhNavigation?.PhanTramBhxh ?? 0;
+                        var bhyt = Math.Round(((float)luongcoban * hesoluong + (float)phucachucvu + (float)phucaptrihdo) * ptBhyt,2);
+                        var bhtn = Math.Round(((float)luongcoban * hesoluong + (float)phucachucvu + (float)phucaptrihdo) * ptBhtn, 2);
+                        var bhxh = Math.Round(((float)luongcoban * hesoluong + (float)phucachucvu + (float)phucaptrihdo) * ptBhxh, 2);
+                        var ktkl = s.MaKtklNavigation?.SoTien ?? 0;
+                        var thuclinh = Math.Round(((float)luongcoban * hesoluong + (float)phucachucvu + (float)phucaptrihdo) -(bhyt+bhxh+bhtn) + (float)ktkl, 2);
+                        <tr>
                                     <td>@STT</td>
                                     <td>@s.MaLuong</td>
                                     <td>@s.MaNhanVienNavigation?.HoTen</td>
                                     <td>@s.Thang</td>
                                     <td>@s.Nam</td>
-                                    <td>@s.MaLuongCoBan_PhanTramBH</td>
-                                    <td>@s.HeSo</td>
-                                    <td>@s.PhuCapTrinhDo</td>
-                                    <td>@s.PhuCapChucVu</td>
-                                    <td>@s.BHYT</td>
-                                    <td>@s.BHTN</td>
-                                    <td>@s.BHXH</td>
-                                    <td>@s.KhenThuongKyLuat</td>
-                                    <td>@s.ThucLinh</td>
+                                    <td>@s.MaLuongCoBanPhanTramBhNavigation.LuongCoBan</td>
+                                    <td>@s.MaNhanVienNavigation.MaHeSoNavigation.HeSoLuong</td>
+                                    <td>@s.MaNhanVienNavigation.MaTrinhDoNavigation.PhuCap</td>
+                                    <td>@s.MaNhanVienNavigation.MaChucVuNavigation.PhuCap</td>
+                                    <td>@bhyt</td>
+                                    <td>@bhtn</td>
+                                    <td>@bhxh</td>
+                                    <td>@ktkl</td>
+                                    <td>@thuclinh</td>
                                 </tr>
                         STT++;
                     }

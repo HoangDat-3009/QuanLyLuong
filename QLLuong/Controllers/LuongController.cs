@@ -17,8 +17,12 @@ namespace QLLuong.Controllers
             
             var luongs = from nv in db.Luongs
                          select nv;
-            ViewBag.LuongCoBan_PhanTramBH = db.LuongCoBan_PhanTramBHs.ToList();
+            ViewBag.LuongCoBanPhanTramBhs = db.LuongCoBanPhanTramBhs.ToList();
             ViewBag.NhanViens = db.NhanViens.ToList();
+            ViewBag.KhenThuongKyLuats = db.KhenThuongKyLuats.ToList();
+            ViewBag.TrinhDos = db.TrinhDos.ToList();
+            ViewBag.ChucVus = db.ChucVus.ToList();
+            ViewBag.HeSos = db.HeSos.ToList();
             return View(luongs);
         }
        
