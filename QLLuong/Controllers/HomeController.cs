@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using QLLuong.Models;
+using QLLuong.Models.Authentication;
 using System.Diagnostics;
 
 namespace QLLuong.Controllers
@@ -13,6 +14,7 @@ namespace QLLuong.Controllers
             _logger = logger;
         }
 
+        [Authentication]
         public IActionResult Index()
         {
             return View();

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using QLLuong.Data;
 using QLLuong.Models;
+using QLLuong.Models.Authentication;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -34,6 +35,7 @@ public class NhanVienController : Controller
          ViewBag.ChuyenMons = _context.ChuyenMons.ToList();
          return View(nhanViens.ToList());
      }*/
+    [Authentication]
     public async Task<IActionResult> Index(string searchString, int pageNumber = 1, int pageSize = 10)
     {
         var nhanViens = from nv in _context.NhanViens
@@ -65,6 +67,7 @@ public class NhanVienController : Controller
 
         return View(paginatedNhanViens);
     }
+    [Authentication]
     public IActionResult Create()
     {
         // Fetch the last MaNhanVien
@@ -107,6 +110,7 @@ public class NhanVienController : Controller
         return View(nhanVien);
     }
 
+    [Authentication]
     public IActionResult NhanVienByPhongBan(int mid)
     {
         if(mid == 0)
@@ -124,6 +128,7 @@ public class NhanVienController : Controller
     }
 
     // Edit action
+    [Authentication]
     public async Task<IActionResult> Edit(int maNhanVien)
     {
         var nhanVien = await _context.NhanViens.FindAsync(maNhanVien);
@@ -143,6 +148,7 @@ public class NhanVienController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
+    [Authentication]
     public async Task<IActionResult> Edit(int maNhanVien, [Bind("MaNhanVien,HoTen,NgaySinh,GioiTinh,NoiSinh,MaPhongBan,MaChucVu,MaTrinhDo,MaChuyenMon," +
     "DiaChi,DienThoai,MaHeSo,Cccd,TaiKhoanNganHang,SoTaiKhoanNganHang")] NhanVien nhanVien)
     {
@@ -182,6 +188,7 @@ public class NhanVienController : Controller
     }
 
     // Delete action
+    [Authentication]
     public IActionResult Delete(int maNhanVien)
     {
         var nhanVien = _context.NhanViens.Find(maNhanVien);
@@ -192,6 +199,7 @@ public class NhanVienController : Controller
         return View(nhanVien);
     }
 
+    [Authentication]
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(int maNhanVien)

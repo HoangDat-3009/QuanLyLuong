@@ -11,7 +11,7 @@ namespace QLLuong.Models
         [Required(ErrorMessage = "Bạn chưa nhập tài khoản")]
         public string Username { get; set; } 
         [Required(ErrorMessage = "Bạn chưa nhập mật khẩu")]
-        [DataType(DataType.Password)]
+        
         public string Userpassword { get; set; } = null!;
     }
 }   
