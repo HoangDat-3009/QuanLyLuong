@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using QLLuong.Data;
 
@@ -11,9 +12,11 @@ using QLLuong.Data;
 namespace QLLuong.Migrations
 {
     [DbContext(typeof(QLLuongContext))]
-    partial class QLLuongContextModelSnapshot : ModelSnapshot
+    [Migration("20241020045115_AddRequiredToNhanVien")]
+    partial class AddRequiredToNhanVien
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -238,33 +241,25 @@ namespace QLLuong.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Cccd")
-                        .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)")
                         .HasColumnName("CCCD");
 
                     b.Property<string>("DiaChi")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("DienThoai")
-                        .IsRequired()
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
 
                     b.Property<string>("GioiTinh")
-                        .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("HoTen")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
 
                     b.Property<int?>("MaChucVu")
                         .HasColumnType("int");
@@ -285,24 +280,20 @@ namespace QLLuong.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateOnly?>("NgaySinh")
-                        .IsRequired()
                         .HasColumnType("date");
 
                     b.Property<DateOnly?>("NgayVaoCongTy")
                         .HasColumnType("date");
 
                     b.Property<string>("NoiSinh")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("SoTaiKhoanNganHang")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("TaiKhoanNganHang")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -322,6 +313,79 @@ namespace QLLuong.Migrations
                     b.HasIndex("MaTrinhDo");
 
                     b.ToTable("NhanVien", (string)null);
+                });
+
+            modelBuilder.Entity("QLLuong.Models.NhanVienDaNghiViec", b =>
+                {
+                    b.Property<int>("MaNhanVien")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MaNhanVien"));
+
+                    b.Property<string>("Cccd")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasColumnName("CCCD");
+
+                    b.Property<string>("DiaChi")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("DienThoai")
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
+
+                    b.Property<string>("GioiTinh")
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<string>("HoTen")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int?>("MaChucVu")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("MaChuyenMon")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("MaDanToc")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("MaHeSo")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("MaPhongBan")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("MaTrinhDo")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("NgayNghiViec")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateOnly?>("NgaySinh")
+                        .HasColumnType("date");
+
+                    b.Property<DateOnly?>("NgayVaoCongTy")
+                        .HasColumnType("date");
+
+                    b.Property<string>("NoiSinh")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("SoTaiKhoanNganHang")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("TaiKhoanNganHang")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("MaNhanVien");
+
+                    b.ToTable("NhanVienDaNghiViecs");
                 });
 
             modelBuilder.Entity("QLLuong.Models.PhongBan", b =>

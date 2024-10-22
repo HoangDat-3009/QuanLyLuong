@@ -43,13 +43,12 @@ public partial class QLLuongContext : DbContext
 
     public virtual DbSet<UserLogin> UserLogins { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=LAPTOP-L0B33P1A\\HOANGDAT;Initial Catalog=QLLuong;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=False");
-
+    
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<ChamCong>(entity =>
+		modelBuilder.Entity<NhanVien>().HasQueryFilter(nv => !nv.IsDeleted);
+
+		modelBuilder.Entity<ChamCong>(entity =>
         {
             entity
                 .HasNoKey()
@@ -219,6 +218,8 @@ public partial class QLLuongContext : DbContext
                 .HasForeignKey(d => d.MaTrinhDo)
                 .HasConstraintName("FK__NhanVien__MaTrin__6383C8BA");
         });
+        
+
 
         modelBuilder.Entity<PhongBan>(entity =>
         {

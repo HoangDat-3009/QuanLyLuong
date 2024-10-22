@@ -16,18 +16,25 @@
         <div class="card-body">
             <form method="get" asp-action="Index" class="d-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
                 <div class="input-group">
-                    <input id="keyword" class="form-control" name="searchString" type="text" placeholder="Tìm kiếm theo MNV,Họ Tên" style="width: 220px;" />
+                    <input id="keyword" class="form-control" name="searchString" type="text" placeholder="Tìm kiếm theo MNV,Họ Tên" style="width: 250px;" />
                     <button id="btnSearch" class="btn btn-primary" type="submit">
                         <i class="fas fa-search"></i>
                     </button>
-                </div>
-            </form>
-            @* <div>
-                <form method="get" asp-action="ShowPhongban">
-                    <select asp-items="ViewBag.MaPhongBan" name="MaPhongBan" onchange="this.form.submit()">
+                    <select id="departmentFilter" style="width: 200px; margin-left:20px;" class="form-control" name="selectedDepartmentId" onchange="this.form.submit()">
+                        <option value="0">----Chọn phòng ban----</option>
+                        @foreach (var department in ViewBag.Departments)
+                        {
+                            <option value="@department.MaPhongBan" selected="@(department.MaPhongBan.ToString() == Context.Request.Query["selectedDepartmentId"])">
+                                @department.TenPhongBan
+                            </option>
+                        }
                     </select>
-                </form>
-            </div> *@
+                </div>
+
+                
+            </form>
+            
+            
 
             <table id="tb" class="table table-hover">
                 <thead>
@@ -62,7 +69,7 @@
                             <td>@s.NgayGioRa</td>
                             <td>@s.TrangThai</td>
                             <td>@s.GhiChu</td>
-                            <td><a asp-action="Edit" asp-route-chamCongID="@s.ChamCongId">Sửa</a></td>
+                            <td><a asp-action="Edit" asp-route-maNhanVien="@s.MaNhanVien">Sửa</a></td>
                         </tr>
                         STT++;
                     }

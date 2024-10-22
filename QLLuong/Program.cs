@@ -4,6 +4,7 @@ using QLLuong.Data;
 using System.Data.Common;
 using Microsoft.Data.SqlClient;
 using System;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace QLLuong
 {
@@ -14,12 +15,24 @@ namespace QLLuong
 
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddDbContext<QLLuongContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+            builder.Services.AddDbContext<QLLuongContext>(options => 
+            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
-            builder.Services.AddSession();
+
+
+
+
+            /*builder.Services.AddSession();*/
+            // Add this after AddControllersWithViews()
+            builder.Services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
 
             var app = builder.Build();
 
@@ -33,6 +46,9 @@ namespace QLLuong
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+
+        
+
             app.UseRouting();
 
             app.UseAuthorization();
@@ -45,10 +61,7 @@ namespace QLLuong
                 name: "NhanVienList",
                 pattern: "/NhanVien",
                 defaults: new { controller = "NhanVien", action = "Index" });
-            app.MapControllerRoute(
-                name: "NhanVien_Infor_Staff",
-                pattern: "/NhanVien/Infor",
-                defaults: new { controller = "NhanVien", action = "Index_Infor_Staff" });
+           
             app.MapControllerRoute(
                 name: "NhanVien_Luong",
                 pattern: "Luong",

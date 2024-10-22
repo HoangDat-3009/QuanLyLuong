@@ -1,14 +1,14 @@
 ﻿@model QLLuong.Models.NhanVien
 
 @{
-    ViewData["Title"] = "Edit NhanVien";
+    ViewData["Title"] = "Create NhanVien";
     Layout = "~/Views/Shared/MyLayout.cshtml";
 }
 
-<div style="text-align: center; margin: 20px; font-weight:bold; font-size: medium;"><h2>Sửa thông tin</h2></div>
+<h2>Create NhanVien</h2>
 
-<div style="border: 2px solid black; padding: 10px; border-radius: 8px; background-color: #f9f9f9;">
-    <form asp-action="Edit" method="post">
+<div class="border p-3">
+    <form asp-action="Create" method="post">
         <div class="form-horizontal">
             <hr />
 
@@ -21,16 +21,17 @@
                 </div>
                 <label asp-for="HoTen" class="col-sm-2 control-label">Họ và tên</label>
                 <div class="col-sm-4">
-                    <input asp-for="HoTen" class="form-control" oninput="this.value = this.value.toLowerCase()" />
+                    <input asp-for="HoTen" class="form-control" />
                     <span asp-validation-for="HoTen" class="text-danger"></span>
                 </div>
             </div>
 
             <!-- Hàng thứ hai: NgaySinh, GioiTinh -->
+            <!-- Hàng thứ hai: NgaySinh, GioiTinh -->
             <div class="form-group row">
                 <label asp-for="NgaySinh" class="col-sm-2 control-label">Ngày sinh</label>
                 <div class="col-sm-4">
-                    <input asp-for="NgaySinh" class="form-control" />
+                    <input asp-for="NgaySinh" class="form-control" type="date" />
                     <span asp-validation-for="NgaySinh" class="text-danger"></span>
                 </div>
                 <label asp-for="GioiTinh" class="col-sm-2 control-label">Giới tính</label>
@@ -39,6 +40,7 @@
                     <span asp-validation-for="GioiTinh" class="text-danger"></span>
                 </div>
             </div>
+
 
             <!-- Hàng thứ ba: NoiSinh, MaPhongBan -->
             <div class="form-group row">
@@ -147,3 +149,4 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
+
