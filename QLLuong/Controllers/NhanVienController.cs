@@ -202,8 +202,8 @@ public class NhanVienController : Controller
             return NotFound();
         }
 
-        _context.NhanViens.Remove(nhanVien);
-        await _context.SaveChangesAsync();
+		nhanVien.IsDeleted = true;
+		await _context.SaveChangesAsync();
         return RedirectToAction(nameof(Index));
     }
 

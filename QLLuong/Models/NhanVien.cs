@@ -32,6 +32,7 @@ public partial class NhanVien
     public string? DiaChi { get; set; }
     [Required(ErrorMessage = "Không được bỏ trống mục này")]
     public string? DienThoai { get; set; }
+    public bool IsDeleted { get; set; }
 
     public int? MaHeSo { get; set; }
     [Required(ErrorMessage = "Không được bỏ trống mục này")]
