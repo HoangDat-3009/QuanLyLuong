@@ -25,6 +25,10 @@ namespace QLLuong.Controllers
             ViewBag.HeSos = db.HeSos.ToList();
             return View(luongs);
         }
-       
+       public IActionResult LuongCB_BH()
+        {
+            var luongcb_bh = db.LuongCoBanPhanTramBhs.ToList();
+            return View(luongcb_bh);
+        }
     }
 }
