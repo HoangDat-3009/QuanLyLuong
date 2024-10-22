@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using QLLuong.Data;
 using QLLuong.Models;
+using X.PagedList;
 
 namespace QLLuong.Controllers
 {
@@ -18,98 +20,79 @@ namespace QLLuong.Controllers
         {
             _context = context;
         }
+        private int pageSize = 13;
 
-        // GET: ChamCong
-        public async Task<IActionResult> Index()
+        [HttpGet]
+        public IActionResult Index(string searchString, int selectedDepartmentId = 0, int page = 1)
         {
-            var qlluongContext = _context.ChamCongs
-            .Include(c => c.MaNhanVienNavigation)
-            .ThenInclude(nv => nv.MaPhongBanNavigation)
-            .Include(c => c.MaNhanVienNavigation)
-            .ThenInclude(nv => nv.MaChucVuNavigation);
-
-            return View(await qlluongContext.ToListAsync());
-        }
-
-        // GET: ChamCong/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            /*var chamCong = await _context.ChamCongs
+            var chamcongs = _context.ChamCongs
                 .Include(c => c.MaNhanVienNavigation)
-                .FirstOrDefaultAsync(m => m.MaNhanVien == id);*/
-            var chamCong = await _context.ChamCongs
-            .Include(c => c.MaNhanVienNavigation)
-            .ThenInclude(n => n.MaPhongBanNavigation)
-            .Include(c => c.MaNhanVienNavigation)
-            .ThenInclude(n => n.MaChucVuNavigation)
-            .FirstOrDefaultAsync(m => m.ChamCongId == id);
+                .ThenInclude(nv => nv.MaPhongBanNavigation)
+                .Include(c => c.MaNhanVienNavigation)
+                .ThenInclude(nv => nv.MaChucVuNavigation)
+                .AsQueryable();
+
+
+            //tim kiem
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                chamcongs = chamcongs.Where(c => c.MaNhanVienNavigation.HoTen.ToLower().Contains(searchString.ToLower())||c.MaNhanVien.ToString().Contains(searchString));
+            }
+            // Lọc theo phòng ban đã chọn
+            if (selectedDepartmentId > 0)
+            {
+                chamcongs = chamcongs.Where(c => c.MaNhanVienNavigation.MaPhongBan == selectedDepartmentId);
+            }
+
+            //phan trang
+            page = page < 1 ? 1 : page;
+            int skip = (page - 1) * pageSize;
+
+            var paginatedChamCongs = chamcongs.Skip(skip).Take(pageSize).ToList();
+
+ 
+            int totalRecords = chamcongs.Count();
+            int totalPages = (int)Math.Ceiling((double)totalRecords / pageSize);
+
+            ViewBag.PageIndex = page;
+            ViewBag.TotalPages = totalPages;
+
+            ViewBag.Departments = _context.PhongBans.ToList();
+
+            return View(paginatedChamCongs);
+        }
+
+
+
+
+
+
+        // GET: ChamCong/Edit
+        public async Task<IActionResult> Edit(int maNhanVien)
+        {
+            var cc = await _context.ChamCongs
+                .Include(c => c.MaNhanVienNavigation)
+                .ThenInclude(nv => nv.MaPhongBanNavigation)
+                .Include(c => c.MaNhanVienNavigation)
+                .ThenInclude(nv => nv.MaChucVuNavigation)
+                .AsQueryable()
+                .FirstOrDefaultAsync(c => c.MaNhanVien == maNhanVien);
+            if (cc == null)
+            {
+                return NotFound();
+            }
+
+            ViewBag.PhongBans = _context.PhongBans.ToList();
             
-
-
-            if (chamCong == null)
-            {
-                return NotFound();
-            }
-
-            return View(chamCong);
+            ViewBag.ChucVus = _context.ChucVus.ToList();
+            return View(cc);
         }
 
-
-
-        // GET: ChamCong/Create
-        public IActionResult Create()
-        {
-            ViewData["MaNhanVien"] = new SelectList(_context.NhanViens, "MaNhanVien", "MaNhanVien");
-            return View();
-        }
-
-        // POST: ChamCong/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MaNhanVien,NgayGioVao,NgayGioRa,TrangThai,GhiChu")] ChamCong chamCong)
+        public async Task<IActionResult> Edit(int maNhanVien, [Bind("ChamCongId ,MaNhanVien,HoTen,MaPhongBan,MaChucVu,NgayGioVao,NgayGioRa,TrangThai,GhiChu")] ChamCong cc)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(chamCong);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["MaNhanVien"] = new SelectList(_context.NhanViens, "MaNhanVien", "MaNhanVien", chamCong.MaNhanVien);
-            return View(chamCong);
-        }
-
-        // GET: ChamCong/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var chamCong = await _context.ChamCongs.FindAsync(id);
-            if (chamCong == null)
-            {
-                return NotFound();
-            }
-            ViewData["MaNhanVien"] = new SelectList(_context.NhanViens, "MaNhanVien", "MaNhanVien", chamCong.MaNhanVien);
-            return View(chamCong);
-        }
-
-        // POST: ChamCong/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("MaNhanVien,NgayGioVao,NgayGioRa,TrangThai,GhiChu")] ChamCong chamCong)
-        {
-            if (id != chamCong.MaNhanVien)
+            if (maNhanVien != cc.MaNhanVien)
             {
                 return NotFound();
             }
@@ -118,12 +101,24 @@ namespace QLLuong.Controllers
             {
                 try
                 {
-                    _context.Update(chamCong);
+                    var existingCc = await _context.ChamCongs.FindAsync(cc.ChamCongId);
+                    if (existingCc == null)
+                    {
+                        return NotFound();
+                    }
+
+                    // Cập nhật các trường cần thiết
+                    existingCc.NgayGioVao = cc.NgayGioVao;
+                    existingCc.NgayGioRa = cc.NgayGioRa;
+                    existingCc.TrangThai = cc.TrangThai;
+                    existingCc.GhiChu = cc.GhiChu;
+
+                    // Cập nhật dữ liệu
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ChamCongExists(chamCong.MaNhanVien))
+                    if (!ChamCongExists(cc.ChamCongId)) // Kiểm tra sự tồn tại của bản ghi
                     {
                         return NotFound();
                     }
@@ -134,47 +129,18 @@ namespace QLLuong.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MaNhanVien"] = new SelectList(_context.NhanViens, "MaNhanVien", "MaNhanVien", chamCong.MaNhanVien);
-            return View(chamCong);
-        }
 
-        // GET: ChamCong/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            ViewBag.PhongBans = _context.PhongBans.ToList();
+            
+            ViewBag.ChucVus = _context.ChucVus.ToList();
 
-            var chamCong = await _context.ChamCongs
-                .Include(c => c.MaNhanVienNavigation)
-                .FirstOrDefaultAsync(m => m.MaNhanVien == id);
-            if (chamCong == null)
-            {
-                return NotFound();
-            }
-
-            return View(chamCong);
-        }
-
-        // POST: ChamCong/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async    Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var chamCong = await _context.ChamCongs.FindAsync(id);
-            if (chamCong != null)
-            {
-                _context.ChamCongs.Remove(chamCong);
-            }
-
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return View(cc);
         }
 
         private bool ChamCongExists(int id)
         {
-            return _context.ChamCongs.Any(e => e.MaNhanVien == id);
+            return _context.ChamCongs.Any(e => e.ChamCongId == id);
         }
+
     }
 }
