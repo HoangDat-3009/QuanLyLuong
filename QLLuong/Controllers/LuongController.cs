@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using QLLuong.Data;
-using System.Data.Entity;
+using QLLuong.Models;
 
 namespace QLLuong.Controllers
 {
@@ -15,20 +15,25 @@ namespace QLLuong.Controllers
         public IActionResult Index()
         {
             
-            var luongs = from nv in db.Luongs
-                         select nv;
+            var luongs = db.Luongs.Include(l=> l.MaNhanVienNavigation)
+                .ThenInclude(nv=>nv.MaHeSoNavigation)
+                .Include(l=>l.MaKtklNavigation)
+                .Include(l=>l.MaLuongCoBanPhanTramBhNavigation).ToList();
+            //for (int i = 0; i < luongs.Count(); i++)
+            //{
+            //    if (luongs[i].MaNhanVienNavigation == null)
+            //    {
+            //        luongs.RemoveAt(i);
+            //    }
+            //}
             ViewBag.LuongCoBanPhanTramBhs = db.LuongCoBanPhanTramBhs.ToList();
-            ViewBag.NhanViens = db.NhanViens.ToList();
+            //ViewBag.NhanViens = db.NhanViens.ToList();
             ViewBag.KhenThuongKyLuats = db.KhenThuongKyLuats.ToList();
             ViewBag.TrinhDos = db.TrinhDos.ToList();
             ViewBag.ChucVus = db.ChucVus.ToList();
             ViewBag.HeSos = db.HeSos.ToList();
             return View(luongs);
         }
-       public IActionResult LuongCB_BH()
-        {
-            var luongcb_bh = db.LuongCoBanPhanTramBhs.ToList();
-            return View(luongcb_bh);
-        }
+        
     }
 }

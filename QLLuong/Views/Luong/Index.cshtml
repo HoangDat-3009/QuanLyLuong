@@ -24,7 +24,7 @@
             </form>
         </div>
         <div>
-            <a asp-action="Create" class="btn btn-success">Lương cơ bản và bảo hiểm</a>
+            <a asp-route="Luong_LuongCB" asp-route-MaLuongCoBanPhanTramBh="1" class="btn btn-success">Lương cơ bản và bảo hiểm</a>
         </div>
         
        
@@ -36,6 +36,7 @@
                     <tr>
                         <th>STT</th>
                         <th>Mã lương</th>
+                        <th>Mã NV</th>
                         <th>Tên nhân viên</th>
                         <th>Tháng </th>
                         <th>Năm</th>
@@ -46,7 +47,7 @@
                         <th>BHYT</th>
                         <th>BHTN</th>
                         <th>BHXH</th>
-                        <th>Khen thưởng hoặc kỷ luật</th>
+                        <th>KT và KL</th>
                         <th>Thực lĩnh</th>
                     </tr>
                 </thead>
@@ -58,6 +59,8 @@
                     {
                         @foreach (var s in Model)
                         {
+                            bool check = s.MaNhanVienNavigation == null ? true : false;
+                            if (check) continue;
                             var luongcoban = s.MaLuongCoBanPhanTramBhNavigation?.LuongCoBan ?? 0;
                             var hesoluong = s.MaNhanVienNavigation?.MaHeSoNavigation?.HeSoLuong ?? 0;
                             var phucachucvu = s.MaNhanVienNavigation?.MaChucVuNavigation?.PhuCap ?? 0;
@@ -73,6 +76,7 @@
                             <tr>
                                 <td>@STT</td>
                                 <td>@s.MaLuong</td>
+                                <td>@s.MaNhanVien</td>
                                 <td>@s.MaNhanVienNavigation?.HoTen</td>
                                 <td>@s.Thang</td>
                                 <td>@s.Nam</td>

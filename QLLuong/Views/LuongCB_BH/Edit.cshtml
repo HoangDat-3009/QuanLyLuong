@@ -1,0 +1,71 @@
+﻿@{
+    ViewData["Title"] = "Luong List";
+    Layout = "~/Views/Shared/MyLayout.cshtml";
+}
+@model QLLuong.Models.LuongCoBanPhanTramBh
+<div style="border: 2px solid black; padding: 10px; border-radius: 8px; background-color: #f9f9f9;">
+    <form asp-action="Edit" method="post">
+        <div class="form-horizontal">
+            <hr />
+            <div class="form-group row" style="display: none;">
+                <label asp-for="MaLuongCoBanPhanTramBh" class="col-sm-2 control-label">ma</label>
+                <div class="col-sm-4">
+                    <input asp-for="MaLuongCoBanPhanTramBh" class="form-control" readonly />
+                    <span asp-validation-for="MaLuongCoBanPhanTramBh" class="text-danger"></span>
+                </div>
+
+            </div>
+
+            <!-- Hàng thứ nhất: MaNhanVien, HoTen -->
+            <div class="form-group row">
+                <label asp-for="LuongCoBan" class="col-sm-2 control-label">Lương cơ bản</label>
+                <div class="col-sm-4">
+                    <input asp-for="LuongCoBan" class="form-control"  />
+                    <span asp-validation-for="LuongCoBan" class="text-danger"></span>
+                </div>
+
+            </div>
+
+            <!-- Hàng thứ hai: NgaySinh, GioiTinh -->
+            <div style="margin-top:10px;" class="form-group">
+                <label asp-for="PhanTramBhyt" class="control-label">BHYT</label>
+                <input asp-for="PhanTramBhyt" class="form-control" />
+                <span asp-validation-for="PhanTramBhyt" class="text-danger"></span>
+            </div>
+
+            <!-- Hàng thứ ba: NoiSinh, MaPhongBan -->
+            <div style="margin-top:10px;" class="form-group">
+                <label asp-for="PhanTramBhtn" class="control-label">BHTN</label>
+                <input asp-for="PhanTramBhtn" class="form-control" />
+                <span asp-validation-for="PhanTramBhtn" class="text-danger"></span>
+            </div>
+            
+
+            <!-- Hàng thứ tư: MaChucVu, MaTrinhDo -->
+            <div style="margin-top:10px;" class="form-group">
+                <label asp-for="PhanTramBhxh" class="control-label">BHXH</label>
+                <input asp-for="PhanTramBhxh" class="form-control" />
+                <span asp-validation-for="PhanTramBhxh" class="text-danger"></span>
+            </div>
+            
+
+
+
+            <!-- Nút Submit -->
+            <div class="form-group col" style="display: flex; justify-content: center; padding: 20px; gap: 20px;">
+                <div>
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+                <div>
+                    <a asp-route="NhanVien_Luong" class="btn btn-danger">Huỷ</a>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
