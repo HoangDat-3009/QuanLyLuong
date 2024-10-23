@@ -21,7 +21,7 @@ namespace QLLuong.Controllers
         {
             _context = context;
         }
-        private int pageSize = 13;
+        private int pageSize = 10;
 
         [HttpGet]
         [Authentication]
@@ -63,9 +63,6 @@ namespace QLLuong.Controllers
 
             return View(paginatedChamCongs);
         }
-
-
-
 
 
 
