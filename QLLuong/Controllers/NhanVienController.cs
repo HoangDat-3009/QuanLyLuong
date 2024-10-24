@@ -36,7 +36,7 @@ public class NhanVienController : Controller
          return View(nhanViens.ToList());
      }*/
     [Authentication]
-    public async Task<IActionResult> Index(string searchString, int pageNumber = 1, int pageSize = 10)
+    public async Task<IActionResult> Index(string searchString, int pageNumber = 1, int pageSize = 6)
     {
         var nhanViens = from nv in _context.NhanViens
                         .Include(nv => nv.MaPhongBanNavigation)
