@@ -1,0 +1,32 @@
+﻿<div id="layoutSidenav_nav">
+    <nav class="sb-sidenav accordion sb-sidenav-dark bg-custom" id="sidenavAccordion">
+        <div class="sb-sidenav-menu">
+            <div class="nav">
+                <!-- <div class="sb-sidenav-menu-heading">Core</div> -->
+                <a class="nav-link" asp-route="Home">
+                    <div class="sb-nav-link-icon"><i class="fa-solid fa-house"></i></div>
+                    Home
+                </a>
+                <!-- <div class="sb-sidenav-menu-heading">Addons</div> -->
+
+                <a class="nav-link" asp-route="NhanVienList">
+                    <div class="sb-nav-link-icon"><i class="fa-solid fa-users"></i></div>
+                    Thông tin Nhân viên
+                </a>
+                <a class="nav-link" asp-route="ChamCong">
+                    <div class="sb-nav-link-icon"><i class="fa-solid fa-calendar-xmark"></i></div>
+                    Thông tin Chấm công
+                </a>
+                <a class="nav-link" asp-route="NhanVien_Luong">
+                    <div class="sb-nav-link-icon"><i class="fa-solid fa-list"></i></div>
+                    Thông tin lương
+                </a>
+                
+
+            </div>
+        </div>
+        <div class="sb-sidenav-footer">
+            <div class="small">Logged in as: @Context.Session.GetString("Username")</div>
+        </div>
+    </nav>
+</div>

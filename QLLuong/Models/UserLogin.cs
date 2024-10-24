@@ -7,12 +7,17 @@ namespace QLLuong.Models
     public partial class UserLogin
     {
         [Key]
-        public int Id { get; set; }
-        [Required(ErrorMessage = "Bạn chưa nhập tài khoản")]
-        public string Username { get; set; } 
-        [Required(ErrorMessage = "Bạn chưa nhập mật khẩu")]
-        
-        public string Userpassword { get; set; } = null!;
+        public int MaNhanVien { get; set; }
+
+        public string? Username { get; set; }
+
+        public string? Userpassword { get; set; }
+
+        public int? MaQuyen { get; set; }
+
+        public virtual NhanVien MaNhanVienNavigation { get; set; } = null!;
+
+        public virtual Quyen? MaQuyenNavigation { get; set; }
     }
 }   
 

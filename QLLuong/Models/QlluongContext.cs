@@ -1,18 +1,16 @@
-﻿
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using QLLuong.Models;
 
-namespace QLLuong.Data;
+namespace QLLuong.Models;
 
-public partial class QLLuongContext : DbContext
+public partial class QlluongContext : DbContext
 {
-    public QLLuongContext()
+    public QlluongContext()
     {
     }
 
-    public QLLuongContext(DbContextOptions<QLLuongContext> options)
+    public QlluongContext(DbContextOptions<QlluongContext> options)
         : base(options)
     {
     }
@@ -41,17 +39,14 @@ public partial class QLLuongContext : DbContext
 
     public virtual DbSet<PhongBan> PhongBans { get; set; }
 
-    public virtual DbSet<Quyen> Quyens { get; set; }
-
     public virtual DbSet<TrinhDo> TrinhDos { get; set; }
 
     public virtual DbSet<UserLogin> UserLogins { get; set; }
 
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-		modelBuilder.Entity<NhanVien>().HasQueryFilter(nv => !nv.IsDeleted);
-
-		modelBuilder.Entity<ChamCong>(entity =>
+        modelBuilder.Entity<ChamCong>(entity =>
         {
             entity.HasKey(e => e.ChamCongId).HasName("PK__ChamCong__9D16AF613091FEAC");
 
@@ -251,15 +246,6 @@ public partial class QLLuongContext : DbContext
             entity.Property(e => e.DienThoai).HasMaxLength(15);
             entity.Property(e => e.TenPhongBan).HasMaxLength(100);
         });
-        modelBuilder.Entity<Quyen>(entity =>
-        {
-            entity.HasKey(e => e.MaQuyen).HasName("PK__Quyen__1D4B7ED4C979A184");
-
-            entity.ToTable("Quyen");
-
-            entity.Property(e => e.MaQuyen).ValueGeneratedNever();
-            entity.Property(e => e.TenQuyen).HasMaxLength(50);
-        });
 
         modelBuilder.Entity<TrinhDo>(entity =>
         {
@@ -274,26 +260,17 @@ public partial class QLLuongContext : DbContext
 
         modelBuilder.Entity<UserLogin>(entity =>
         {
-            entity.HasKey(e => e.MaNhanVien).HasName("PK__UserLogi__77B2CA4788CF4ED4");
+            entity.HasKey(e => e.MaNhanVien).HasName("PK__UserLogi__3213E83FE7597B88");
 
             entity.ToTable("UserLogin");
 
-            entity.Property(e => e.MaNhanVien).ValueGeneratedNever();
+            entity.Property(e => e.MaNhanVien).HasColumnName("MaNhanVien");
             entity.Property(e => e.Username)
                 .HasMaxLength(50)
                 .HasColumnName("username");
             entity.Property(e => e.Userpassword)
                 .HasMaxLength(255)
                 .HasColumnName("userpassword");
-
-            entity.HasOne(d => d.MaNhanVienNavigation).WithOne(p => p.UserLogin)
-                .HasForeignKey<UserLogin>(d => d.MaNhanVien)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__UserLogin__MaNha__59C55456");
-
-            entity.HasOne(d => d.MaQuyenNavigation).WithMany(p => p.UserLogins)
-                .HasForeignKey(d => d.MaQuyen)
-                .HasConstraintName("FK__UserLogin__MaQuy__5AB9788F");
         });
 
         OnModelCreatingPartial(modelBuilder);

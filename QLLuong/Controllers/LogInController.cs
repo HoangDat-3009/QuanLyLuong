@@ -14,19 +14,10 @@ namespace QLLuong.Controllers
         {
             _context = context;
         }
-        /*public IActionResult Index()
-        {
-            return View();
-        }*/
 
-        /*[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }*/
 
         //login
-       /* QLLuongContext db = new QLLuongContext();*/
+
         public ActionResult Index()
         {
             if (HttpContext.Session.GetString("Username") == null)

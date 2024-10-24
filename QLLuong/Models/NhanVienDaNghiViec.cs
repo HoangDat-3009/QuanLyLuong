@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace QLLuong.Models;
 
-public partial class NhanVien
+public partial class NhanVienDaNghiViec
 {
     public int MaNhanVien { get; set; }
 
@@ -30,7 +30,6 @@ public partial class NhanVien
     public string? DiaChi { get; set; }
 
     public string? DienThoai { get; set; }
-    public bool IsDeleted { get; set; }
 
     public int? MaHeSo { get; set; }
 
@@ -40,22 +39,5 @@ public partial class NhanVien
 
     public string? SoTaiKhoanNganHang { get; set; }
 
-    public virtual ICollection<ChamCong> ChamCongs { get; set; } = new List<ChamCong>();
-
-    public virtual ICollection<KhenThuongKyLuat> KhenThuongKyLuats { get; set; } = new List<KhenThuongKyLuat>();
-
-    public virtual ICollection<Luong> Luongs { get; set; } = new List<Luong>();
-
-    public virtual ChucVu? MaChucVuNavigation { get; set; }
-
-    public virtual ChuyenMon? MaChuyenMonNavigation { get; set; }
-
-    public virtual DanToc? MaDanTocNavigation { get; set; }
-
-    public virtual HeSo? MaHeSoNavigation { get; set; }
-
-    public virtual PhongBan? MaPhongBanNavigation { get; set; }
-
-    public virtual TrinhDo? MaTrinhDoNavigation { get; set; }
-    public virtual UserLogin? UserLogin { get; set; }
+    public DateTime NgayNghiViec { get; set; }
 }

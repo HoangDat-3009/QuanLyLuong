@@ -1,0 +1,103 @@
+﻿@{
+    ViewData["Title"] = "Luong List";
+    Layout = "~/Views/Shared/MyLayout.cshtml";
+}
+@model IEnumerable<QLLuong.Models.Luong>
+
+<h1>Lương đây</h1>
+@* @foreach(var i in Model)
+{
+    <li>@i.MaNhanVienNavigation?.HoTen</li>
+} *@
+
+<div class="container align-content-center " style="margin: 20px;">
+    <div class="d-flex justify-content-around align-items-center mb-3">
+        <div>
+            <form method="get" asp-action="Index" class="form-inline">
+                <div class="input-group">
+                    <input type="text" name="searchString" class="form-control"
+                           placeholder="Nhập mã nhân viên hoặc tên nhân viên" value="@ViewBag.SearchString" />
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div>
+            <a asp-action="Create" class="btn btn-success">Lương cơ bản và bảo hiểm</a>
+        </div>
+        
+       
+    </div>
+    <div class="table-responsive">
+        <div id="content">
+            <table class="table table-striped table-bordered table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>STT</th>
+                        <th>Mã lương</th>
+                        <th>Tên nhân viên</th>
+                        <th>Tháng </th>
+                        <th>Năm</th>
+                        <th>Lương cơ bản</th>
+                        <th>Hệ số</th>
+                        <th>Phụ cấp trình độ</th>
+                        <th>Phụ cấp chức vị</th>
+                        <th>BHYT</th>
+                        <th>BHTN</th>
+                        <th>BHXH</th>
+                        <th>Khen thưởng hoặc kỷ luật</th>
+                        <th>Thực lĩnh</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        var STT = 1;
+                    }
+                    @if (Model != null)
+                    {
+                        @foreach (var s in Model)
+                        {
+                            var luongcoban = s.MaLuongCoBanPhanTramBhNavigation?.LuongCoBan ?? 0;
+                            var hesoluong = s.MaNhanVienNavigation?.MaHeSoNavigation?.HeSoLuong ?? 0;
+                            var phucachucvu = s.MaNhanVienNavigation?.MaChucVuNavigation?.PhuCap ?? 0;
+                            var phucaptrihdo = s.MaNhanVienNavigation?.MaTrinhDoNavigation?.PhuCap ?? 0;
+                            var ptBhyt = s.MaLuongCoBanPhanTramBhNavigation?.PhanTramBhyt ?? 0;
+                            var ptBhtn = s.MaLuongCoBanPhanTramBhNavigation?.PhanTramBhtn ?? 0;
+                            var ptBhxh = s.MaLuongCoBanPhanTramBhNavigation?.PhanTramBhxh ?? 0;
+                            var bhyt = Math.Round(((float)luongcoban * hesoluong + (float)phucachucvu + (float)phucaptrihdo) * ptBhyt, 2);
+                            var bhtn = Math.Round(((float)luongcoban * hesoluong + (float)phucachucvu + (float)phucaptrihdo) * ptBhtn, 2);
+                            var bhxh = Math.Round(((float)luongcoban * hesoluong + (float)phucachucvu + (float)phucaptrihdo) * ptBhxh, 2);
+                            var ktkl = s.MaKtklNavigation?.SoTien ?? 0;
+                            var thuclinh = Math.Round(((float)luongcoban * hesoluong + (float)phucachucvu + (float)phucaptrihdo) - (bhyt + bhxh + bhtn) + (float)ktkl, 2);
+                            <tr>
+                                <td>@STT</td>
+                                <td>@s.MaLuong</td>
+                                <td>@s.MaNhanVienNavigation?.HoTen</td>
+                                <td>@s.Thang</td>
+                                <td>@s.Nam</td>
+                                <td>@s.MaLuongCoBanPhanTramBhNavigation.LuongCoBan</td>
+                                <td>@s.MaNhanVienNavigation?.MaHeSoNavigation.HeSoLuong</td>
+                                <td>@s.MaNhanVienNavigation?.MaTrinhDoNavigation.PhuCap</td>
+                                <td>@s.MaNhanVienNavigation?.MaChucVuNavigation.PhuCap</td>
+                                <td>@bhyt</td>
+                                <td>@bhtn</td>
+                                <td>@bhxh</td>
+                                <td>@ktkl</td>
+                                <td>@thuclinh</td>
+                            </tr>
+                            STT++;
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="14">No data available.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
