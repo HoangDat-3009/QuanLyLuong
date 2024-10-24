@@ -162,6 +162,7 @@ public class NhanVienController : Controller
             try
             {
                 _context.Update(nhanVien);
+                TempData["ModalMessage"] = "Cập nhật thông tin thành công!";
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)

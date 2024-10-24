@@ -4,6 +4,25 @@
 }
 @model QLLuong.Models.LuongCoBanPhanTramBh
 <div style="border: 2px solid black; padding: 10px; border-radius: 8px; background-color: #f9f9f9;">
+    @* <!-- Modal thông báo -->
+    <div class="modal fade" id="notificationModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Thông báo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    @TempData["ModalMessage"]
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>  *@
+
+@* Form *@
     <form asp-action="Edit" method="post">
         <div class="form-horizontal">
             <hr />
@@ -54,7 +73,7 @@
             <!-- Nút Submit -->
             <div class="form-group col" style="display: flex; justify-content: center; padding: 20px; gap: 20px;">
                 <div>
-                    <input type="submit" value="Save" class="btn btn-primary" />
+                    <input type="submit" value="Lưu" class="btn btn-primary" />
                 </div>
                 <div>
                     <a asp-route="NhanVien_Luong" class="btn btn-danger">Huỷ</a>
@@ -64,8 +83,17 @@
         </div>
     </form>
 </div>
-@section Scripts {
+@* @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-}
+     <script>
+        $(document).ready(function () {
+            // Kiểm tra nếu có thông báo trong TempData
+            if ('@TempData["ModalMessage"]' !== '') {
+                // Hiển thị modal
+                $('#notificationModal').modal('show');
+            }
+        });
+    </script> 
+} *@

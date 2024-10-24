@@ -53,12 +53,7 @@ namespace QLLuong.Controllers
                     exit.PhanTramBhxh = lcb.PhanTramBhxh;
                     db.Entry(exit).State = EntityState.Modified;
                     await db.SaveChangesAsync();
-                    var result = await db.SaveChangesAsync();
-                    if (result == 0)
-                    {
-                        // Không có bản ghi nào được cập nhật
-                        Console.WriteLine( "Không có thay đổi nào được lưu.");
-                    }
+                    TempData["ModalMessage"] = "Thông tin đã được sửa thành công!";
                 }
                 catch (DbUpdateConcurrencyException ex)
                 {

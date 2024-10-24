@@ -1,0 +1,77 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model IEnumerable<QLLuong.Models.Luong>
+<div id="content">
+    <table class="table table-striped table-bordered table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th>STT</th>
+                <th>Mã lương</th>
+                <th>Mã NV</th>
+                <th>Tên nhân viên</th>
+                <th>Tháng </th>
+                <th>Năm</th>
+                <th>Lương cơ bản</th>
+                <th>Hệ số</th>
+                <th>Phụ cấp trình độ</th>
+                <th>Phụ cấp chức vị</th>
+                <th>BHYT</th>
+                <th>BHTN</th>
+                <th>BHXH</th>
+                <th>KT và KL</th>
+                <th>Thực lĩnh</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                var STT = (ViewBag.PageNumber - 1) * ViewBag.PageSize + 1;
+            }
+            @if (Model != null)
+            {
+                @foreach (var s in Model)
+                {
+                    var luongcoban = s.MaLuongCoBanPhanTramBhNavigation?.LuongCoBan ?? 0;
+                    var hesoluong = s.MaNhanVienNavigation?.MaHeSoNavigation?.HeSoLuong ?? 0;
+                    var phucachucvu = s.MaNhanVienNavigation?.MaChucVuNavigation?.PhuCap ?? 0;
+                    var phucaptrihdo = s.MaNhanVienNavigation?.MaTrinhDoNavigation?.PhuCap ?? 0;
+                    var ptBhyt = s.MaLuongCoBanPhanTramBhNavigation?.PhanTramBhyt ?? 0;
+                    var ptBhtn = s.MaLuongCoBanPhanTramBhNavigation?.PhanTramBhtn ?? 0;
+                    var ptBhxh = s.MaLuongCoBanPhanTramBhNavigation?.PhanTramBhxh ?? 0;
+                    var bhyt = Math.Round(((float)luongcoban * hesoluong + (float)phucachucvu + (float)phucaptrihdo) * ptBhyt, 2);
+                    var bhtn = Math.Round(((float)luongcoban * hesoluong + (float)phucachucvu + (float)phucaptrihdo) * ptBhtn, 2);
+                    var bhxh = Math.Round(((float)luongcoban * hesoluong + (float)phucachucvu + (float)phucaptrihdo) * ptBhxh, 2);
+                    var ktkl = s.MaKtklNavigation?.SoTien ?? 0;
+                    var thuclinh = Math.Round(((float)luongcoban * hesoluong + (float)phucachucvu + (float)phucaptrihdo) - (bhyt + bhxh + bhtn) + (float)ktkl, 2);
+                    <tr class="text-end">
+                        <td>@STT</td>
+                        <td>@s.MaLuong</td>
+                        <td>@s.MaNhanVien</td>
+                        <td class="text-start">@s.MaNhanVienNavigation?.HoTen</td>
+                        <td>@s.Thang</td>
+                        <td>@s.Nam</td>
+                        <td>@s.MaLuongCoBanPhanTramBhNavigation?.LuongCoBan</td>
+                        <td>@s.MaNhanVienNavigation?.MaHeSoNavigation?.HeSoLuong</td>
+                        <td>@s.MaNhanVienNavigation?.MaTrinhDoNavigation?.PhuCap</td>
+                        <td>@s.MaNhanVienNavigation?.MaChucVuNavigation?.PhuCap</td>
+                        <td>@bhyt</td>
+                        <td>@bhtn</td>
+                        <td>@bhxh</td>
+                        <td>@ktkl</td>
+                        <td>@thuclinh</td>
+                    </tr>
+                    STT++;
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="14">No data available.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>

@@ -1,0 +1,38 @@
+﻿
+@model IEnumerable<MonthYearViewModel>
+
+<form action="/Luong/Filter" method="post">
+    <div class="row mb-3">
+        <!-- Dropdown chọn tháng -->
+        <div class="col-md-4">
+            <label for="monthSelect" class="form-label">Tháng:</label>
+            <select id="monthSelect" name="Thang" class="form-select"  >
+                <option value="0"  selected>Tất cả</option>
+                @foreach (var item in Model.Select(m => m.Thang).Distinct())
+                {
+                    <option value="@item">@item</option>
+                }
+            </select>
+        </div>
+
+        <!-- Dropdown chọn năm -->
+        <div class="col-md-4">
+            <label for="yearSelect" class="form-label">Năm:</label>
+            <select id="yearSelect" name="Nam" class="form-select">
+                <option value="0"  selected>Tất cả</option>
+                @foreach (var item in Model.Select(m => m.Nam).Distinct())
+                {
+                    <option value="@item">@item</option>
+                }
+            </select>
+        </div>
+
+        <!-- Nút submit -->
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-primary">Lọc</button>
+            </div>
+        
+    </div>
+
+    
+</form>
