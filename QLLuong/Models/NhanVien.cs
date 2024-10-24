@@ -57,4 +57,5 @@ public partial class NhanVien
     public virtual PhongBan? MaPhongBanNavigation { get; set; }
 
     public virtual TrinhDo? MaTrinhDoNavigation { get; set; }
+    public virtual UserLogin? UserLogin { get; set; }
 }

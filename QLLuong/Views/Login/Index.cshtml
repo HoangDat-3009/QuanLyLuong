@@ -61,17 +61,19 @@
                                     </button>
                                 </div>
                                 <span asp-validation-for="Userpassword" class="text-danger"></span>
-
+                                <br />
+                                @if (ViewBag.LoginFail != null)
+                                {
+                                    <span  class="text-danger text-start">@ViewBag.LoginFail</span>
+                                }
                                 
-                                <div class="text-center pt-1 mb-5 pb-1 help">
+                                <div style="margin-top:20px;" class="text-center pt-1 mb-5 pb-1 help">
+
                                     <a class="text-muted " href="#!">Quên mật khẩu?</a>
                                     <a class="text-muted" href="">
                                         <i class="fa-solid fa-circle-question"></i>Trợ giúp
                                     </a>
-                                    @if (ViewBag.LoginFail != null)
-                                    {
-                                        <span  class="text-danger">@ViewBag.LoginFail</span>
-                                    }
+                                    
                                     <button class="btn btn-primary btn-block fa-lg  mb-3" type="submit" id="btn-log-in">Đăng nhập</button>
                                 </div>
                             @* </form> *@

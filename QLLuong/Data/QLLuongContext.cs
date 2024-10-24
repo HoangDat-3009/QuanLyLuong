@@ -41,13 +41,11 @@ public partial class QLLuongContext : DbContext
 
     public virtual DbSet<PhongBan> PhongBans { get; set; }
 
+    public virtual DbSet<Quyen> Quyens { get; set; }
+
     public virtual DbSet<TrinhDo> TrinhDos { get; set; }
 
     public virtual DbSet<UserLogin> UserLogins { get; set; }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=NGUYENBIEN\\SQLEXPRESS;Initial Catalog=QLLuong;Integrated Security=True;Connect Timeout=30;Encrypt=True;Trust Server Certificate=True;Application Intent=ReadWrite;Multi Subnet Failover=False");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -253,6 +251,15 @@ public partial class QLLuongContext : DbContext
             entity.Property(e => e.DienThoai).HasMaxLength(15);
             entity.Property(e => e.TenPhongBan).HasMaxLength(100);
         });
+        modelBuilder.Entity<Quyen>(entity =>
+        {
+            entity.HasKey(e => e.MaQuyen).HasName("PK__Quyen__1D4B7ED4C979A184");
+
+            entity.ToTable("Quyen");
+
+            entity.Property(e => e.MaQuyen).ValueGeneratedNever();
+            entity.Property(e => e.TenQuyen).HasMaxLength(50);
+        });
 
         modelBuilder.Entity<TrinhDo>(entity =>
         {
@@ -267,17 +274,26 @@ public partial class QLLuongContext : DbContext
 
         modelBuilder.Entity<UserLogin>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__UserLogi__3213E83FE7597B88");
+            entity.HasKey(e => e.MaNhanVien).HasName("PK__UserLogi__77B2CA4788CF4ED4");
 
             entity.ToTable("UserLogin");
 
-            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.MaNhanVien).ValueGeneratedNever();
             entity.Property(e => e.Username)
                 .HasMaxLength(50)
                 .HasColumnName("username");
             entity.Property(e => e.Userpassword)
                 .HasMaxLength(255)
                 .HasColumnName("userpassword");
+
+            entity.HasOne(d => d.MaNhanVienNavigation).WithOne(p => p.UserLogin)
+                .HasForeignKey<UserLogin>(d => d.MaNhanVien)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__UserLogin__MaNha__59C55456");
+
+            entity.HasOne(d => d.MaQuyenNavigation).WithMany(p => p.UserLogins)
+                .HasForeignKey(d => d.MaQuyen)
+                .HasConstraintName("FK__UserLogin__MaQuy__5AB9788F");
         });
 
         OnModelCreatingPartial(modelBuilder);
