@@ -15,68 +15,28 @@ namespace QLLuong.Controllers
         {
             db = context;
         }
-        public IActionResult Index(string searchString,int pageNumber =1,int pageSize =10)
+        public IActionResult Index(int month, int year, string searchString, int pageNumber = 1, int pageSize = 10)
         {
-            
-            var luongs = db.Luongs.Include(l=> l.MaNhanVienNavigation)
-                .ThenInclude(nv=>nv.MaHeSoNavigation)
-                .Include(l=>l.MaKtklNavigation)
-                .Include(l=>l.MaLuongCoBanPhanTramBhNavigation).Where(l=>l.MaNhanVienNavigation != null);
-           
-            ViewBag.LuongCoBanPhanTramBhs = db.LuongCoBanPhanTramBhs.ToList();
-            ViewBag.KhenThuongKyLuats = db.KhenThuongKyLuats.ToList();
-            ViewBag.TrinhDos = db.TrinhDos.ToList();
-            ViewBag.ChucVus = db.ChucVus.ToList();
-            ViewBag.HeSos = db.HeSos.ToList();
-            ViewBag.PhongBans = db.PhongBans.ToList();
+
+            var luongs = db.Luongs.Include(l => l.MaNhanVienNavigation)
+                .ThenInclude(nv => nv.MaHeSoNavigation)
+                .Include(l => l.MaKtklNavigation)
+                .Include(l => l.MaLuongCoBanPhanTramBhNavigation).Where(l => l.MaNhanVienNavigation != null);
+
+            TempData["ModalMessage"] = "Tháng:" + month + ",năm:" + year;
+            if (month != 0)
+            {
+                luongs = luongs.Where(l => l.Thang == month);
+            }
+            if (year != 0)
+            {
+                luongs = luongs.Where(l => l.Nam == year);
+            }
             if (!string.IsNullOrEmpty(searchString))
             {
                 luongs = luongs.Where(s => s.MaNhanVien.ToString().Equals(searchString)
                 || (s.MaNhanVienNavigation.HoTen != null && s.MaNhanVienNavigation.HoTen.Contains(searchString)));
             }
-            
-            //phantrang
-
-            var totalRecords =  luongs.Count();
-            var totalPages = (int)Math.Ceiling(totalRecords / (double)pageSize);
-
-            var paginatedLuongs =  luongs
-                .Skip((pageNumber - 1) * pageSize)
-                .Take(pageSize)
-                .ToList();
-
-            ViewBag.PageNumber = pageNumber;
-            ViewBag.PageSize = pageSize;
-            ViewBag.TotalPages = totalPages;
-            ViewBag.searchString = searchString;
-            return View(paginatedLuongs);
-        }
-        [HttpPost]
-        public IActionResult Filter(int month,int year, int pageNumber = 1, int pageSize = 7)
-        {
-            var luongs = db.Luongs.Include(l => l.MaNhanVienNavigation)
-                .ThenInclude(nv => nv.MaHeSoNavigation)
-                .Include(l => l.MaKtklNavigation)
-                .Include(l => l.MaLuongCoBanPhanTramBhNavigation).Where(l => l.MaNhanVienNavigation != null);
-            if (month == 0 && year == 0)
-            {
-                return View("Index",luongs);
-            }
-
-            if (month == 0)
-            {
-                luongs= luongs.Where(l=> l.Nam == year);
-            }
-            if (year == 0) {
-                luongs = luongs.Where(l => l.Thang == month);
-            }
-            ViewBag.LuongCoBanPhanTramBhs = db.LuongCoBanPhanTramBhs.ToList();
-            ViewBag.KhenThuongKyLuats = db.KhenThuongKyLuats.ToList();
-            ViewBag.TrinhDos = db.TrinhDos.ToList();
-            ViewBag.ChucVus = db.ChucVus.ToList();
-            ViewBag.HeSos = db.HeSos.ToList();
-            ViewBag.PhongBans = db.PhongBans.ToList();
-            ViewBag.ChuyenMons = db.ChuyenMons.ToList();
 
             var totalRecords = luongs.Count();
             var totalPages = (int)Math.Ceiling(totalRecords / (double)pageSize);
@@ -85,12 +45,74 @@ namespace QLLuong.Controllers
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .ToList();
+            ViewBag.LuongCoBanPhanTramBhs = db.LuongCoBanPhanTramBhs.ToList();
+            ViewBag.KhenThuongKyLuats = db.KhenThuongKyLuats.ToList();
+            ViewBag.TrinhDos = db.TrinhDos.ToList();
+            ViewBag.ChucVus = db.ChucVus.ToList();
+            ViewBag.HeSos = db.HeSos.ToList();
+            ViewBag.PhongBans = db.PhongBans.ToList();
 
             ViewBag.PageNumber = pageNumber;
             ViewBag.PageSize = pageSize;
             ViewBag.TotalPages = totalPages;
 
-            return PartialView("LuongTable",luongs);
+
+            ViewBag.month = month;
+            ViewBag.year = year;
+            ViewBag.searchString = searchString;
+
+            return View(paginatedLuongs);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Filter(int month, int year, string searchString, int pageNumber =1,int pageSize =10)
+        {
+            
+            var luongs = db.Luongs.Include(l=> l.MaNhanVienNavigation)
+                .ThenInclude(nv=>nv.MaHeSoNavigation)
+                .Include(l=>l.MaKtklNavigation)
+                .Include(l=>l.MaLuongCoBanPhanTramBhNavigation).Where(l=>l.MaNhanVienNavigation != null);
+
+            TempData["ModalMessage"] = "Tháng:" + month + ",năm:" + year;
+            if (month != 0)
+            {
+                luongs = luongs.Where(l => l.Thang == month);
+            }
+            if (year != 0)
+            {
+                luongs = luongs.Where(l => l.Nam == year);
+            }
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                luongs = luongs.Where(s => s.MaNhanVien.ToString().Equals(searchString)
+                || (s.MaNhanVienNavigation.HoTen != null && s.MaNhanVienNavigation.HoTen.Contains(searchString)));
+            }
+
+            var totalRecords =  luongs.Count();
+            var totalPages = (int)Math.Ceiling(totalRecords / (double)pageSize);
+
+            var paginatedLuongs =  luongs
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+            ViewBag.LuongCoBanPhanTramBhs = db.LuongCoBanPhanTramBhs.ToList();
+            ViewBag.KhenThuongKyLuats = db.KhenThuongKyLuats.ToList();
+            ViewBag.TrinhDos = db.TrinhDos.ToList();
+            ViewBag.ChucVus = db.ChucVus.ToList();
+            ViewBag.HeSos = db.HeSos.ToList();
+            ViewBag.PhongBans = db.PhongBans.ToList();
+
+            ViewBag.PageNumber = pageNumber;
+            ViewBag.PageSize = pageSize;
+            ViewBag.TotalPages = totalPages;
+
+
+            ViewBag.month = month;
+            ViewBag.year = year;
+            ViewBag.searchString = searchString;
+
+            return View("Index",paginatedLuongs);
         }
     }
 }
