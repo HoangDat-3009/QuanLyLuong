@@ -21,7 +21,7 @@ namespace QLLuong.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK__ChucVu__D463953359346141", x => x.MaChucVu);
+                    table.PrimaryKey("PK__ChucVu__D4639533225348B7", x => x.MaChucVu);
                 });
 
             migrationBuilder.CreateTable(
@@ -33,7 +33,7 @@ namespace QLLuong.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK__ChuyenMo__9A6A23216EA0151C", x => x.MaChuyenMon);
+                    table.PrimaryKey("PK__ChuyenMo__9A6A23219205454B", x => x.MaChuyenMon);
                 });
 
             migrationBuilder.CreateTable(
@@ -45,7 +45,7 @@ namespace QLLuong.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK__DanToc__A5FA0970C9E0330F", x => x.MaDanToc);
+                    table.PrimaryKey("PK__DanToc__A5FA0970D34914F9", x => x.MaDanToc);
                 });
 
             migrationBuilder.CreateTable(
@@ -57,19 +57,22 @@ namespace QLLuong.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK__HeSo__0C16CD3DDACDE2E9", x => x.MaHeSo);
+                    table.PrimaryKey("PK__HeSo__0C16CD3D6D80D345", x => x.MaHeSo);
                 });
 
             migrationBuilder.CreateTable(
-                name: "LuongCoBan",
+                name: "LuongCoBan_PhanTramBH",
                 columns: table => new
                 {
-                    MaLuongCoBan = table.Column<int>(type: "int", nullable: false),
-                    LuongCoBan = table.Column<decimal>(type: "decimal(15,2)", nullable: true)
+                    MaLuongCoBan_PhanTramBH = table.Column<int>(type: "int", nullable: false),
+                    LuongCoBan = table.Column<decimal>(type: "decimal(15,2)", nullable: true),
+                    PhanTramBHYT = table.Column<double>(type: "float", nullable: true),
+                    PhanTramBHTN = table.Column<double>(type: "float", nullable: true),
+                    PhanTramBHXH = table.Column<double>(type: "float", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK__LuongCoB__542BDA5FA898E9B5", x => x.MaLuongCoBan);
+                    table.PrimaryKey("PK__LuongCoB__EDBBAA72C5AFCE92", x => x.MaLuongCoBan_PhanTramBH);
                 });
 
             migrationBuilder.CreateTable(
@@ -81,36 +84,35 @@ namespace QLLuong.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK__LyDoKTKL__28E8B61E81D03FA8", x => x.MaLyDo);
+                    table.PrimaryKey("PK__LyDoKTKL__28E8B61EDE463E26", x => x.MaLyDo);
                 });
 
             migrationBuilder.CreateTable(
-                name: "NhanVienDaNghiViecs",
+                name: "NhanVienDaNghiViec",
                 columns: table => new
                 {
-                    MaNhanVien = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    HoTen = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    GioiTinh = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MaNhanVien = table.Column<int>(type: "int", nullable: false),
+                    HoTen = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    GioiTinh = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     NgaySinh = table.Column<DateOnly>(type: "date", nullable: true),
-                    NoiSinh = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NoiSinh = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     NgayVaoCongTy = table.Column<DateOnly>(type: "date", nullable: true),
                     MaDanToc = table.Column<int>(type: "int", nullable: true),
                     MaChucVu = table.Column<int>(type: "int", nullable: true),
                     MaPhongBan = table.Column<int>(type: "int", nullable: true),
                     MaTrinhDo = table.Column<int>(type: "int", nullable: true),
                     MaChuyenMon = table.Column<int>(type: "int", nullable: true),
-                    DiaChi = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DienThoai = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DiaChi = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    DienThoai = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     MaHeSo = table.Column<int>(type: "int", nullable: true),
-                    Cccd = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TaiKhoanNganHang = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SoTaiKhoanNganHang = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NgayNghiViec = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Cccd = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    TaiKhoanNganHang = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    SoTaiKhoanNganHang = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    NgayNghiViec = table.Column<DateTime>(type: "datetime", nullable: false, defaultValueSql: "(getdate())")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_NhanVienDaNghiViecs", x => x.MaNhanVien);
+                    table.PrimaryKey("PK__NhanVien__77B2CA47D92B47D3", x => x.MaNhanVien);
                 });
 
             migrationBuilder.CreateTable(
@@ -123,7 +125,19 @@ namespace QLLuong.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK__PhongBan__D0910CC8CDCC7106", x => x.MaPhongBan);
+                    table.PrimaryKey("PK__PhongBan__D0910CC8C4AAD809", x => x.MaPhongBan);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Quyen",
+                columns: table => new
+                {
+                    MaQuyen = table.Column<int>(type: "int", nullable: false),
+                    TenQuyen = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK__Quyen__1D4B7ED4C979A184", x => x.MaQuyen);
                 });
 
             migrationBuilder.CreateTable(
@@ -136,21 +150,7 @@ namespace QLLuong.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK__TrinhDo__B64C90D359CB8978", x => x.MaTrinhDo);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "UserLogin",
-                columns: table => new
-                {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    username = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    userpassword = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK__UserLogi__3213E83FF4866A6C", x => x.id);
+                    table.PrimaryKey("PK__TrinhDo__B64C90D36890B05F", x => x.MaTrinhDo);
                 });
 
             migrationBuilder.CreateTable(
@@ -170,6 +170,7 @@ namespace QLLuong.Migrations
                     MaChuyenMon = table.Column<int>(type: "int", nullable: true),
                     DiaChi = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     DienThoai = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     MaHeSo = table.Column<int>(type: "int", nullable: true),
                     CCCD = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
                     TaiKhoanNganHang = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
@@ -177,34 +178,34 @@ namespace QLLuong.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK__NhanVien__77B2CA4773660A31", x => x.MaNhanVien);
+                    table.PrimaryKey("PK__NhanVien__77B2CA47443858AA", x => x.MaNhanVien);
                     table.ForeignKey(
-                        name: "FK__NhanVien__MaChuc__619B8048",
+                        name: "FK__NhanVien__MaChuc__59FA5E80",
                         column: x => x.MaChucVu,
                         principalTable: "ChucVu",
                         principalColumn: "MaChucVu");
                     table.ForeignKey(
-                        name: "FK__NhanVien__MaChuy__6477ECF3",
+                        name: "FK__NhanVien__MaChuy__5CD6CB2B",
                         column: x => x.MaChuyenMon,
                         principalTable: "ChuyenMon",
                         principalColumn: "MaChuyenMon");
                     table.ForeignKey(
-                        name: "FK__NhanVien__MaDanT__60A75C0F",
+                        name: "FK__NhanVien__MaDanT__59063A47",
                         column: x => x.MaDanToc,
                         principalTable: "DanToc",
                         principalColumn: "MaDanToc");
                     table.ForeignKey(
-                        name: "FK__NhanVien__MaHeSo__656C112C",
+                        name: "FK__NhanVien__MaHeSo__5DCAEF64",
                         column: x => x.MaHeSo,
                         principalTable: "HeSo",
                         principalColumn: "MaHeSo");
                     table.ForeignKey(
-                        name: "FK__NhanVien__MaPhon__628FA481",
+                        name: "FK__NhanVien__MaPhon__5AEE82B9",
                         column: x => x.MaPhongBan,
                         principalTable: "PhongBan",
                         principalColumn: "MaPhongBan");
                     table.ForeignKey(
-                        name: "FK__NhanVien__MaTrin__6383C8BA",
+                        name: "FK__NhanVien__MaTrin__5BE2A6F2",
                         column: x => x.MaTrinhDo,
                         principalTable: "TrinhDo",
                         principalColumn: "MaTrinhDo");
@@ -214,8 +215,9 @@ namespace QLLuong.Migrations
                 name: "ChamCong",
                 columns: table => new
                 {
+                    ChamCongID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     MaNhanVien = table.Column<int>(type: "int", nullable: false),
-                    ChamCongId = table.Column<int>(type: "int", nullable: false),
                     NgayGioVao = table.Column<DateTime>(type: "datetime", nullable: true),
                     NgayGioRa = table.Column<DateTime>(type: "datetime", nullable: true),
                     TrangThai = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
@@ -223,9 +225,9 @@ namespace QLLuong.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ChamCong", x => x.MaNhanVien);
+                    table.PrimaryKey("PK__ChamCong__9D16AF613091FEAC", x => x.ChamCongID);
                     table.ForeignKey(
-                        name: "FK__ChamCong__MaNhan__6754599E",
+                        name: "FK__ChamCong__MaNhan__60A75C0F",
                         column: x => x.MaNhanVien,
                         principalTable: "NhanVien",
                         principalColumn: "MaNhanVien",
@@ -236,8 +238,7 @@ namespace QLLuong.Migrations
                 name: "KhenThuongKyLuat",
                 columns: table => new
                 {
-                    MaKTKL = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    MaKTKL = table.Column<int>(type: "int", nullable: false),
                     MaNhanVien = table.Column<int>(type: "int", nullable: true),
                     LoaiKTKL = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     Thang = table.Column<int>(type: "int", nullable: true),
@@ -247,46 +248,79 @@ namespace QLLuong.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_KhenThuongKyLuat", x => x.MaKTKL);
+                    table.PrimaryKey("PK__KhenThuo__4019B956708EE729", x => x.MaKTKL);
                     table.ForeignKey(
-                        name: "FK__KhenThuon__MaLyD__6D0D32F4",
+                        name: "FK__KhenThuon__MaLyD__04E4BC85",
                         column: x => x.MaLyDo,
                         principalTable: "LyDoKTKL",
                         principalColumn: "MaLyDo");
                     table.ForeignKey(
-                        name: "FK__KhenThuon__MaNha__6C190EBB",
+                        name: "FK__KhenThuon__MaNha__03F0984C",
                         column: x => x.MaNhanVien,
                         principalTable: "NhanVien",
                         principalColumn: "MaNhanVien");
                 });
 
             migrationBuilder.CreateTable(
-                name: "Luong",
+                name: "UserLogin",
                 columns: table => new
                 {
-                    MaLuong = table.Column<int>(type: "int", nullable: false),
-                    MaNhanVien = table.Column<int>(type: "int", nullable: true),
-                    Thang = table.Column<int>(type: "int", nullable: true),
-                    Nam = table.Column<int>(type: "int", nullable: true),
-                    HeSo = table.Column<double>(type: "float", nullable: true),
-                    Luong = table.Column<decimal>(type: "decimal(15,2)", nullable: true),
-                    PhuCapChucVu = table.Column<decimal>(type: "decimal(15,2)", nullable: true),
-                    PhuCapTrinhDo = table.Column<decimal>(type: "decimal(15,2)", nullable: true),
-                    BHYT = table.Column<decimal>(type: "decimal(15,2)", nullable: true),
-                    BHTN = table.Column<decimal>(type: "decimal(15,2)", nullable: true),
-                    BHXH = table.Column<decimal>(type: "decimal(15,2)", nullable: true),
-                    KhenThuongKyLuat = table.Column<decimal>(type: "decimal(15,2)", nullable: true),
-                    ThucLinh = table.Column<decimal>(type: "decimal(15,2)", nullable: true)
+                    MaNhanVien = table.Column<int>(type: "int", nullable: false),
+                    username = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    userpassword = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
+                    MaQuyen = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK__Luong__6609A48D03F257E2", x => x.MaLuong);
+                    table.PrimaryKey("PK__UserLogi__77B2CA4788CF4ED4", x => x.MaNhanVien);
                     table.ForeignKey(
-                        name: "FK__Luong__MaNhanVie__6A30C649",
+                        name: "FK__UserLogin__MaNha__59C55456",
+                        column: x => x.MaNhanVien,
+                        principalTable: "NhanVien",
+                        principalColumn: "MaNhanVien");
+                    table.ForeignKey(
+                        name: "FK__UserLogin__MaQuy__5AB9788F",
+                        column: x => x.MaQuyen,
+                        principalTable: "Quyen",
+                        principalColumn: "MaQuyen");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Luong",
+                columns: table => new
+                {
+                    MaLuong = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    MaLuongCoBan_PhanTramBH = table.Column<int>(type: "int", nullable: true),
+                    MaNhanVien = table.Column<int>(type: "int", nullable: true),
+                    Thang = table.Column<int>(type: "int", nullable: true),
+                    Nam = table.Column<int>(type: "int", nullable: true),
+                    MaKTKL = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK__Luong__6609A48D5AA62083", x => x.MaLuong);
+                    table.ForeignKey(
+                        name: "FK__Luong__MaKTKL__05D8E0BE",
+                        column: x => x.MaKTKL,
+                        principalTable: "KhenThuongKyLuat",
+                        principalColumn: "MaKTKL");
+                    table.ForeignKey(
+                        name: "FK__Luong__MaLuongCo__6477ECF3",
+                        column: x => x.MaLuongCoBan_PhanTramBH,
+                        principalTable: "LuongCoBan_PhanTramBH",
+                        principalColumn: "MaLuongCoBan_PhanTramBH");
+                    table.ForeignKey(
+                        name: "FK__Luong__MaNhanVie__6383C8BA",
                         column: x => x.MaNhanVien,
                         principalTable: "NhanVien",
                         principalColumn: "MaNhanVien");
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ChamCong_MaNhanVien",
+                table: "ChamCong",
+                column: "MaNhanVien");
 
             migrationBuilder.CreateIndex(
                 name: "IX_KhenThuongKyLuat_MaLyDo",
@@ -297,6 +331,16 @@ namespace QLLuong.Migrations
                 name: "IX_KhenThuongKyLuat_MaNhanVien",
                 table: "KhenThuongKyLuat",
                 column: "MaNhanVien");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Luong_MaKTKL",
+                table: "Luong",
+                column: "MaKTKL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Luong_MaLuongCoBan_PhanTramBH",
+                table: "Luong",
+                column: "MaLuongCoBan_PhanTramBH");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Luong_MaNhanVien",
@@ -332,6 +376,11 @@ namespace QLLuong.Migrations
                 name: "IX_NhanVien_MaTrinhDo",
                 table: "NhanVien",
                 column: "MaTrinhDo");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserLogin_MaQuyen",
+                table: "UserLogin",
+                column: "MaQuyen");
         }
 
         /// <inheritdoc />
@@ -341,19 +390,22 @@ namespace QLLuong.Migrations
                 name: "ChamCong");
 
             migrationBuilder.DropTable(
-                name: "KhenThuongKyLuat");
-
-            migrationBuilder.DropTable(
                 name: "Luong");
 
             migrationBuilder.DropTable(
-                name: "LuongCoBan");
-
-            migrationBuilder.DropTable(
-                name: "NhanVienDaNghiViecs");
+                name: "NhanVienDaNghiViec");
 
             migrationBuilder.DropTable(
                 name: "UserLogin");
+
+            migrationBuilder.DropTable(
+                name: "KhenThuongKyLuat");
+
+            migrationBuilder.DropTable(
+                name: "LuongCoBan_PhanTramBH");
+
+            migrationBuilder.DropTable(
+                name: "Quyen");
 
             migrationBuilder.DropTable(
                 name: "LyDoKTKL");

@@ -1,0 +1,43 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Staff/Views/Shared/MyLayoutStaff.cshtml";
+}
+
+@model IEnumerable<QLLuong.Models.NhanVien >
+<table id="tb" class="table table-hover">
+    <thead>
+        <tr>
+            <th>STT</th>
+            <th>MNV</th>
+            <th>Tên nhân viên</th>
+            <th>Phòng ban</th>
+            <th>Chức vụ</th>
+            <th>Thời gian vào</th>
+            <th>Thời gian ra</th>
+            <th>Trạng thái</th>
+            <th>Ghi chú</th>
+
+        </tr>
+    </thead>
+    <tbody>
+
+        @{
+
+            var STT = 1 + (ViewBag.pageIndex - 1) * 10;
+        }
+
+
+        @foreach (var s in Model)
+        {
+
+            <tr>
+                <td>@STT</td>
+                <td>@s.MaNhanVien</td>
+                <td>@s.HoTen</td>
+                <td>@s.MaChucVuNavigation.TenChucVu</td>
+
+            </tr>
+            STT++;
+        }
+    </tbody>
+</table>

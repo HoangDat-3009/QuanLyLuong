@@ -24,15 +24,19 @@ namespace QLLuong.Migrations
 
             modelBuilder.Entity("QLLuong.Models.ChamCong", b =>
                 {
-                    b.Property<int>("MaNhanVien")
-                        .HasColumnType("int");
-
                     b.Property<int>("ChamCongId")
-                        .HasColumnType("int");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("ChamCongID");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ChamCongId"));
 
                     b.Property<string>("GhiChu")
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
+
+                    b.Property<int>("MaNhanVien")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("NgayGioRa")
                         .HasColumnType("datetime");
@@ -44,7 +48,10 @@ namespace QLLuong.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.HasKey("MaNhanVien");
+                    b.HasKey("ChamCongId")
+                        .HasName("PK__ChamCong__9D16AF613091FEAC");
+
+                    b.HasIndex("MaNhanVien");
 
                     b.ToTable("ChamCong", (string)null);
                 });
@@ -62,7 +69,7 @@ namespace QLLuong.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.HasKey("MaChucVu")
-                        .HasName("PK__ChucVu__D463953359346141");
+                        .HasName("PK__ChucVu__D4639533225348B7");
 
                     b.ToTable("ChucVu", (string)null);
                 });
@@ -77,7 +84,7 @@ namespace QLLuong.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.HasKey("MaChuyenMon")
-                        .HasName("PK__ChuyenMo__9A6A23216EA0151C");
+                        .HasName("PK__ChuyenMo__9A6A23219205454B");
 
                     b.ToTable("ChuyenMon", (string)null);
                 });
@@ -92,7 +99,7 @@ namespace QLLuong.Migrations
                         .HasColumnType("nvarchar(50)");
 
                     b.HasKey("MaDanToc")
-                        .HasName("PK__DanToc__A5FA0970C9E0330F");
+                        .HasName("PK__DanToc__A5FA0970D34914F9");
 
                     b.ToTable("DanToc", (string)null);
                 });
@@ -106,7 +113,7 @@ namespace QLLuong.Migrations
                         .HasColumnType("float");
 
                     b.HasKey("MaHeSo")
-                        .HasName("PK__HeSo__0C16CD3DDACDE2E9");
+                        .HasName("PK__HeSo__0C16CD3D6D80D345");
 
                     b.ToTable("HeSo", (string)null);
                 });
@@ -114,11 +121,8 @@ namespace QLLuong.Migrations
             modelBuilder.Entity("QLLuong.Models.KhenThuongKyLuat", b =>
                 {
                     b.Property<int>("MaKtkl")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("MaKTKL");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MaKtkl"));
 
                     b.Property<string>("LoaiKtkl")
                         .HasMaxLength(50)
@@ -140,7 +144,8 @@ namespace QLLuong.Migrations
                     b.Property<int?>("Thang")
                         .HasColumnType("int");
 
-                    b.HasKey("MaKtkl");
+                    b.HasKey("MaKtkl")
+                        .HasName("PK__KhenThuo__4019B956708EE729");
 
                     b.HasIndex("MaLyDo");
 
@@ -152,29 +157,18 @@ namespace QLLuong.Migrations
             modelBuilder.Entity("QLLuong.Models.Luong", b =>
                 {
                     b.Property<int>("MaLuong")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<decimal?>("Bhtn")
-                        .HasColumnType("decimal(15, 2)")
-                        .HasColumnName("BHTN");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MaLuong"));
 
-                    b.Property<decimal?>("Bhxh")
-                        .HasColumnType("decimal(15, 2)")
-                        .HasColumnName("BHXH");
+                    b.Property<int?>("MaKtkl")
+                        .HasColumnType("int")
+                        .HasColumnName("MaKTKL");
 
-                    b.Property<decimal?>("Bhyt")
-                        .HasColumnType("decimal(15, 2)")
-                        .HasColumnName("BHYT");
-
-                    b.Property<double?>("HeSo")
-                        .HasColumnType("float");
-
-                    b.Property<decimal?>("KhenThuongKyLuat")
-                        .HasColumnType("decimal(15, 2)");
-
-                    b.Property<decimal?>("Luong1")
-                        .HasColumnType("decimal(15, 2)")
-                        .HasColumnName("Luong");
+                    b.Property<int?>("MaLuongCoBanPhanTramBh")
+                        .HasColumnType("int")
+                        .HasColumnName("MaLuongCoBan_PhanTramBH");
 
                     b.Property<int?>("MaNhanVien")
                         .HasColumnType("int");
@@ -182,39 +176,46 @@ namespace QLLuong.Migrations
                     b.Property<int?>("Nam")
                         .HasColumnType("int");
 
-                    b.Property<decimal?>("PhuCapChucVu")
-                        .HasColumnType("decimal(15, 2)");
-
-                    b.Property<decimal?>("PhuCapTrinhDo")
-                        .HasColumnType("decimal(15, 2)");
-
                     b.Property<int?>("Thang")
                         .HasColumnType("int");
 
-                    b.Property<decimal?>("ThucLinh")
-                        .HasColumnType("decimal(15, 2)");
-
                     b.HasKey("MaLuong")
-                        .HasName("PK__Luong__6609A48D03F257E2");
+                        .HasName("PK__Luong__6609A48D5AA62083");
+
+                    b.HasIndex("MaKtkl");
+
+                    b.HasIndex("MaLuongCoBanPhanTramBh");
 
                     b.HasIndex("MaNhanVien");
 
                     b.ToTable("Luong", (string)null);
                 });
 
-            modelBuilder.Entity("QLLuong.Models.LuongCoBan", b =>
+            modelBuilder.Entity("QLLuong.Models.LuongCoBanPhanTramBh", b =>
                 {
-                    b.Property<int>("MaLuongCoBan")
-                        .HasColumnType("int");
+                    b.Property<int>("MaLuongCoBanPhanTramBh")
+                        .HasColumnType("int")
+                        .HasColumnName("MaLuongCoBan_PhanTramBH");
 
-                    b.Property<decimal?>("LuongCoBan1")
-                        .HasColumnType("decimal(15, 2)")
-                        .HasColumnName("LuongCoBan");
+                    b.Property<decimal?>("LuongCoBan")
+                        .HasColumnType("decimal(15, 2)");
 
-                    b.HasKey("MaLuongCoBan")
-                        .HasName("PK__LuongCoB__542BDA5FA898E9B5");
+                    b.Property<double?>("PhanTramBhtn")
+                        .HasColumnType("float")
+                        .HasColumnName("PhanTramBHTN");
 
-                    b.ToTable("LuongCoBan", (string)null);
+                    b.Property<double?>("PhanTramBhxh")
+                        .HasColumnType("float")
+                        .HasColumnName("PhanTramBHXH");
+
+                    b.Property<double?>("PhanTramBhyt")
+                        .HasColumnType("float")
+                        .HasColumnName("PhanTramBHYT");
+
+                    b.HasKey("MaLuongCoBanPhanTramBh")
+                        .HasName("PK__LuongCoB__EDBBAA72C5AFCE92");
+
+                    b.ToTable("LuongCoBan_PhanTramBH", (string)null);
                 });
 
             modelBuilder.Entity("QLLuong.Models.LyDoKtkl", b =>
@@ -227,7 +228,7 @@ namespace QLLuong.Migrations
                         .HasColumnType("nvarchar(255)");
 
                     b.HasKey("MaLyDo")
-                        .HasName("PK__LyDoKTKL__28E8B61E81D03FA8");
+                        .HasName("PK__LyDoKTKL__28E8B61EDE463E26");
 
                     b.ToTable("LyDoKTKL", (string)null);
                 });
@@ -238,28 +239,23 @@ namespace QLLuong.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Cccd")
-                        .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)")
                         .HasColumnName("CCCD");
 
                     b.Property<string>("DiaChi")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("DienThoai")
-                        .IsRequired()
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
 
                     b.Property<string>("GioiTinh")
-                        .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("HoTen")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -285,29 +281,25 @@ namespace QLLuong.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateOnly?>("NgaySinh")
-                        .IsRequired()
                         .HasColumnType("date");
 
                     b.Property<DateOnly?>("NgayVaoCongTy")
                         .HasColumnType("date");
 
                     b.Property<string>("NoiSinh")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("SoTaiKhoanNganHang")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("TaiKhoanNganHang")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
                     b.HasKey("MaNhanVien")
-                        .HasName("PK__NhanVien__77B2CA4773660A31");
+                        .HasName("PK__NhanVien__77B2CA47443858AA");
 
                     b.HasIndex("MaChucVu");
 
@@ -321,7 +313,84 @@ namespace QLLuong.Migrations
 
                     b.HasIndex("MaTrinhDo");
 
-                    b.ToTable("NhanVien", (string)null);
+                    b.ToTable("NhanVien", null, t =>
+                        {
+                            t.HasTrigger("update_luong_from_nv");
+                        });
+
+                    b.HasAnnotation("SqlServer:UseSqlOutputClause", false);
+                });
+
+            modelBuilder.Entity("QLLuong.Models.NhanVienDaNghiViec", b =>
+                {
+                    b.Property<int>("MaNhanVien")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Cccd")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("DiaChi")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("DienThoai")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("GioiTinh")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("HoTen")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<int?>("MaChucVu")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("MaChuyenMon")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("MaDanToc")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("MaHeSo")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("MaPhongBan")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("MaTrinhDo")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("NgayNghiViec")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("(getdate())");
+
+                    b.Property<DateOnly?>("NgaySinh")
+                        .HasColumnType("date");
+
+                    b.Property<DateOnly?>("NgayVaoCongTy")
+                        .HasColumnType("date");
+
+                    b.Property<string>("NoiSinh")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("SoTaiKhoanNganHang")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("TaiKhoanNganHang")
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.HasKey("MaNhanVien")
+                        .HasName("PK__NhanVien__77B2CA47D92B47D3");
+
+                    b.ToTable("NhanVienDaNghiViec", (string)null);
                 });
 
             modelBuilder.Entity("QLLuong.Models.PhongBan", b =>
@@ -338,9 +407,24 @@ namespace QLLuong.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.HasKey("MaPhongBan")
-                        .HasName("PK__PhongBan__D0910CC8CDCC7106");
+                        .HasName("PK__PhongBan__D0910CC8C4AAD809");
 
                     b.ToTable("PhongBan", (string)null);
+                });
+
+            modelBuilder.Entity("QLLuong.Models.Quyen", b =>
+                {
+                    b.Property<int>("MaQuyen")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TenQuyen")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("MaQuyen")
+                        .HasName("PK__Quyen__1D4B7ED4C979A184");
+
+                    b.ToTable("Quyen", (string)null);
                 });
 
             modelBuilder.Entity("QLLuong.Models.TrinhDo", b =>
@@ -356,34 +440,33 @@ namespace QLLuong.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.HasKey("MaTrinhDo")
-                        .HasName("PK__TrinhDo__B64C90D359CB8978");
+                        .HasName("PK__TrinhDo__B64C90D36890B05F");
 
                     b.ToTable("TrinhDo", (string)null);
                 });
 
             modelBuilder.Entity("QLLuong.Models.UserLogin", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("id");
+                    b.Property<int>("MaNhanVien")
+                        .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<int?>("MaQuyen")
+                        .HasColumnType("int");
 
                     b.Property<string>("Username")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)")
                         .HasColumnName("username");
 
                     b.Property<string>("Userpassword")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)")
                         .HasColumnName("userpassword");
 
-                    b.HasKey("Id")
-                        .HasName("PK__UserLogi__3213E83FF4866A6C");
+                    b.HasKey("MaNhanVien")
+                        .HasName("PK__UserLogi__77B2CA4788CF4ED4");
+
+                    b.HasIndex("MaQuyen");
 
                     b.ToTable("UserLogin", (string)null);
                 });
@@ -391,11 +474,11 @@ namespace QLLuong.Migrations
             modelBuilder.Entity("QLLuong.Models.ChamCong", b =>
                 {
                     b.HasOne("QLLuong.Models.NhanVien", "MaNhanVienNavigation")
-                        .WithMany()
+                        .WithMany("ChamCongs")
                         .HasForeignKey("MaNhanVien")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("FK__ChamCong__MaNhan__6754599E");
+                        .HasConstraintName("FK__ChamCong__MaNhan__60A75C0F");
 
                     b.Navigation("MaNhanVienNavigation");
                 });
@@ -403,14 +486,14 @@ namespace QLLuong.Migrations
             modelBuilder.Entity("QLLuong.Models.KhenThuongKyLuat", b =>
                 {
                     b.HasOne("QLLuong.Models.LyDoKtkl", "MaLyDoNavigation")
-                        .WithMany()
+                        .WithMany("KhenThuongKyLuats")
                         .HasForeignKey("MaLyDo")
-                        .HasConstraintName("FK__KhenThuon__MaLyD__6D0D32F4");
+                        .HasConstraintName("FK__KhenThuon__MaLyD__04E4BC85");
 
                     b.HasOne("QLLuong.Models.NhanVien", "MaNhanVienNavigation")
-                        .WithMany()
+                        .WithMany("KhenThuongKyLuats")
                         .HasForeignKey("MaNhanVien")
-                        .HasConstraintName("FK__KhenThuon__MaNha__6C190EBB");
+                        .HasConstraintName("FK__KhenThuon__MaNha__03F0984C");
 
                     b.Navigation("MaLyDoNavigation");
 
@@ -419,10 +502,24 @@ namespace QLLuong.Migrations
 
             modelBuilder.Entity("QLLuong.Models.Luong", b =>
                 {
+                    b.HasOne("QLLuong.Models.KhenThuongKyLuat", "MaKtklNavigation")
+                        .WithMany("Luongs")
+                        .HasForeignKey("MaKtkl")
+                        .HasConstraintName("FK__Luong__MaKTKL__05D8E0BE");
+
+                    b.HasOne("QLLuong.Models.LuongCoBanPhanTramBh", "MaLuongCoBanPhanTramBhNavigation")
+                        .WithMany("Luongs")
+                        .HasForeignKey("MaLuongCoBanPhanTramBh")
+                        .HasConstraintName("FK__Luong__MaLuongCo__6477ECF3");
+
                     b.HasOne("QLLuong.Models.NhanVien", "MaNhanVienNavigation")
                         .WithMany("Luongs")
                         .HasForeignKey("MaNhanVien")
-                        .HasConstraintName("FK__Luong__MaNhanVie__6A30C649");
+                        .HasConstraintName("FK__Luong__MaNhanVie__6383C8BA");
+
+                    b.Navigation("MaKtklNavigation");
+
+                    b.Navigation("MaLuongCoBanPhanTramBhNavigation");
 
                     b.Navigation("MaNhanVienNavigation");
                 });
@@ -432,32 +529,32 @@ namespace QLLuong.Migrations
                     b.HasOne("QLLuong.Models.ChucVu", "MaChucVuNavigation")
                         .WithMany("NhanViens")
                         .HasForeignKey("MaChucVu")
-                        .HasConstraintName("FK__NhanVien__MaChuc__619B8048");
+                        .HasConstraintName("FK__NhanVien__MaChuc__59FA5E80");
 
                     b.HasOne("QLLuong.Models.ChuyenMon", "MaChuyenMonNavigation")
                         .WithMany("NhanViens")
                         .HasForeignKey("MaChuyenMon")
-                        .HasConstraintName("FK__NhanVien__MaChuy__6477ECF3");
+                        .HasConstraintName("FK__NhanVien__MaChuy__5CD6CB2B");
 
                     b.HasOne("QLLuong.Models.DanToc", "MaDanTocNavigation")
                         .WithMany("NhanViens")
                         .HasForeignKey("MaDanToc")
-                        .HasConstraintName("FK__NhanVien__MaDanT__60A75C0F");
+                        .HasConstraintName("FK__NhanVien__MaDanT__59063A47");
 
                     b.HasOne("QLLuong.Models.HeSo", "MaHeSoNavigation")
                         .WithMany("NhanViens")
                         .HasForeignKey("MaHeSo")
-                        .HasConstraintName("FK__NhanVien__MaHeSo__656C112C");
+                        .HasConstraintName("FK__NhanVien__MaHeSo__5DCAEF64");
 
                     b.HasOne("QLLuong.Models.PhongBan", "MaPhongBanNavigation")
                         .WithMany("NhanViens")
                         .HasForeignKey("MaPhongBan")
-                        .HasConstraintName("FK__NhanVien__MaPhon__628FA481");
+                        .HasConstraintName("FK__NhanVien__MaPhon__5AEE82B9");
 
                     b.HasOne("QLLuong.Models.TrinhDo", "MaTrinhDoNavigation")
                         .WithMany("NhanViens")
                         .HasForeignKey("MaTrinhDo")
-                        .HasConstraintName("FK__NhanVien__MaTrin__6383C8BA");
+                        .HasConstraintName("FK__NhanVien__MaTrin__5BE2A6F2");
 
                     b.Navigation("MaChucVuNavigation");
 
@@ -470,6 +567,24 @@ namespace QLLuong.Migrations
                     b.Navigation("MaPhongBanNavigation");
 
                     b.Navigation("MaTrinhDoNavigation");
+                });
+
+            modelBuilder.Entity("QLLuong.Models.UserLogin", b =>
+                {
+                    b.HasOne("QLLuong.Models.NhanVien", "MaNhanVienNavigation")
+                        .WithOne("UserLogin")
+                        .HasForeignKey("QLLuong.Models.UserLogin", "MaNhanVien")
+                        .IsRequired()
+                        .HasConstraintName("FK__UserLogin__MaNha__59C55456");
+
+                    b.HasOne("QLLuong.Models.Quyen", "MaQuyenNavigation")
+                        .WithMany("UserLogins")
+                        .HasForeignKey("MaQuyen")
+                        .HasConstraintName("FK__UserLogin__MaQuy__5AB9788F");
+
+                    b.Navigation("MaNhanVienNavigation");
+
+                    b.Navigation("MaQuyenNavigation");
                 });
 
             modelBuilder.Entity("QLLuong.Models.ChucVu", b =>
@@ -492,14 +607,40 @@ namespace QLLuong.Migrations
                     b.Navigation("NhanViens");
                 });
 
-            modelBuilder.Entity("QLLuong.Models.NhanVien", b =>
+            modelBuilder.Entity("QLLuong.Models.KhenThuongKyLuat", b =>
                 {
                     b.Navigation("Luongs");
+                });
+
+            modelBuilder.Entity("QLLuong.Models.LuongCoBanPhanTramBh", b =>
+                {
+                    b.Navigation("Luongs");
+                });
+
+            modelBuilder.Entity("QLLuong.Models.LyDoKtkl", b =>
+                {
+                    b.Navigation("KhenThuongKyLuats");
+                });
+
+            modelBuilder.Entity("QLLuong.Models.NhanVien", b =>
+                {
+                    b.Navigation("ChamCongs");
+
+                    b.Navigation("KhenThuongKyLuats");
+
+                    b.Navigation("Luongs");
+
+                    b.Navigation("UserLogin");
                 });
 
             modelBuilder.Entity("QLLuong.Models.PhongBan", b =>
                 {
                     b.Navigation("NhanViens");
+                });
+
+            modelBuilder.Entity("QLLuong.Models.Quyen", b =>
+                {
+                    b.Navigation("UserLogins");
                 });
 
             modelBuilder.Entity("QLLuong.Models.TrinhDo", b =>
