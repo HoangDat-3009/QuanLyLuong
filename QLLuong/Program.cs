@@ -59,12 +59,12 @@ namespace QLLuong
 
             app.MapControllerRoute(
                 name: "NhanVienList",
-                pattern: "/NhanVien",
+                pattern: "/NhanVienAdmin",
                 defaults: new { controller = "NhanVien", action = "Index" });
            
             app.MapControllerRoute(
                 name: "NhanVien_Luong",
-                pattern: "Luong",
+                pattern: "LuongAdmin",
                 defaults: new { controller = "Luong", action = "Index" });
             app.MapControllerRoute(
                 name: "Login_Index",
@@ -76,8 +76,30 @@ namespace QLLuong
                 defaults: new { controller = "Home", action = "Index" });
             app.MapControllerRoute(
                 name: "ChamCong",
-                pattern: "/ChamCong",
+                pattern: "/ChamCongAdmin",
                 defaults: new { controller = "ChamCong", action = "Index" });
+
+
+            app.MapControllerRoute(
+                name: "HomeStaff",
+                pattern: "/HomeStaff",
+                defaults: new { controller = "HomeStaff", action = "Index" });
+
+
+            /*app.MapControllerRoute(
+                name: "ChamCongStaff",
+                pattern: "{area:exists}/{controller=ChamCongStaff}/{action=Index}/{id?}"
+            );*/
+
+            app.MapControllerRoute(
+                name: "areas",
+                pattern: "{area:exists}/{controller=ChamCongStaff}/{action=Index}/{id?}");
+            /*app.MapControllerRoute(
+                name: "ChamCongStaff",
+                pattern: "/ChamCongStaff",
+                defaults: new { controller = "ChamCongStaff", action = "Index" });*/
+
+
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=LogIn}/{action=Index}/{id?}");
