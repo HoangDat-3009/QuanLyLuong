@@ -16,13 +16,13 @@
 
     <div class="card mb-4">
         <div class="card-body">
-            @* <form method="get" asp-action="Index" class="d-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+            <form method="get" asp-action="Index" class="d-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
                 <div class="input-group">
-                    <input id="keyword" class="form-control" name="searchString" type="text" placeholder="Tìm kiếm theo MNV,Họ Tên" style="width: 250px;" />
+                    @* <input id="keyword" class="form-control" name="searchString" type="text" placeholder="Tìm kiếm theo MNV,Họ Tên" style="width: 250px;" />
                     <button id="btnSearch" class="btn btn-primary" type="submit">
                         <i class="fas fa-search"></i>
-                    </button>
-                    <select id="departmentFilter" style="width: 200px; margin-left:20px;" class="form-control" name="selectedDepartmentId" onchange="this.form.submit()">
+                    </button> *@
+                    @* <select id="departmentFilter" style="width: 200px; margin-left:20px;" class="form-control" name="selectedDepartmentId" onchange="this.form.submit()">
                         <option value="0">----Chọn phòng ban----</option>
                         @foreach (var department in ViewBag.Departments)
                         {
@@ -30,11 +30,12 @@
                                 @department.TenPhongBan
                             </option>
                         }
-                    </select>
+                    </select> *@
+                    <input type="month" id="monthInput" name="selectedMonth" class="form-control" style="width: 200px; margin-left:20px;" value="@Context.Request.Query["selectedMonth"]" onchange="this.form.submit()" />
                 </div>
 
 
-            </form> *@
+            </form>
 
 
 

@@ -47,9 +47,8 @@ namespace QLLuong
             app.UseStaticFiles();
 
 
-        
-
             app.UseRouting();
+
 
             app.UseAuthorization();
 
@@ -104,6 +103,16 @@ namespace QLLuong
                 name: "default",
                 pattern: "{controller=LogIn}/{action=Index}/{id?}");
 
+
+            app.Use(async (context, next) =>
+            {
+                context.Response.Headers["Cache-Control"] = "no-cache, no-store, must-revalidate";
+                context.Response.Headers["Pragma"] = "no-cache";
+                context.Response.Headers["Expires"] = "0";
+                await next();
+            });
+
+                 
             app.Run();
         }
     }

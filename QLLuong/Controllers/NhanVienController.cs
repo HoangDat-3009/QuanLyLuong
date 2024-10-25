@@ -19,6 +19,16 @@ public class NhanVienController : Controller
     [Authentication]
     public async Task<IActionResult> Index(string searchString, int pageNumber = 1, int pageSize = 6)
     {
+
+        Response.Headers["Cache-Control"] = "no-cache, no-store, must-revalidate";
+        Response.Headers["Pragma"] = "no-cache";
+        Response.Headers["Expires"] = "0";
+
+        if (HttpContext.Session.GetString("Username") == null)
+        {
+            return RedirectToAction("Index", "LogIn");
+        }
+
         var nhanViens = from nv in _context.NhanViens
                         .Include(nv => nv.MaPhongBanNavigation)
                         .Include(nv => nv.MaChucVuNavigation)

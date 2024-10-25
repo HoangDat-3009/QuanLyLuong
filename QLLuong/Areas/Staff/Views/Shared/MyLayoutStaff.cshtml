@@ -49,7 +49,7 @@
                     <li>
                         <hr class="dropdown-divider" />
                     </li>
-                    <li><a asp-controller="LogIn" asp-action="Logout" class="dropdown-item">Logout</a></li>
+                    <li><a  asp-controller="LogIn" asp-action="Logout" class="dropdown-item">Logout</a></li>
                 </ul>
             </li>
         </ul>
@@ -63,7 +63,7 @@
                 <div class="sb-sidenav-menu">
                     <div class="nav">
                         <!-- <div class="sb-sidenav-menu-heading">Core</div> -->
-                        <a class="nav-link" asp-route="HomeStaff">
+                        <a class="nav-link" asp-area="Staff" asp-controller="HomeStaff" asp-action="Index">
                             <div class="sb-nav-link-icon"><i class="fa-solid fa-house"></i></div>
                             Home
                         </a>

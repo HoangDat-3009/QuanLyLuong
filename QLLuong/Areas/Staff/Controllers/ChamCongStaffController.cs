@@ -24,7 +24,7 @@ namespace QLLuong.Areas.Staff.Controllers
 
         [HttpGet]
         [Authentication]
-        public IActionResult Index(string searchString, int selectedDepartmentId = 0, int page = 1)
+        public IActionResult Index(string searchString, DateTime? selectedMonth, int page = 1)
         {
             var chamcongs = _context.ChamCongs
                 .Include(c => c.MaNhanVienNavigation)
@@ -36,16 +36,11 @@ namespace QLLuong.Areas.Staff.Controllers
                 .AsQueryable();
 
 
-            //tim kiem
-            /*if (!string.IsNullOrEmpty(searchString))
+            if (selectedMonth.HasValue && selectedMonth.Value != DateTime.MinValue)
             {
-                chamcongs = chamcongs.Where(c => c.MaNhanVienNavigation.HoTen.ToLower().Contains(searchString.ToLower()) || c.MaNhanVien.ToString().Contains(searchString));
+                chamcongs = chamcongs.Where(c => c.NgayGioRa.HasValue && c.NgayGioRa.Value.Month == selectedMonth.Value.Month);
             }
-            // Lọc theo phòng ban đã chọn
-            if (selectedDepartmentId > 0)
-            {
-                chamcongs = chamcongs.Where(c => c.MaNhanVienNavigation.MaPhongBan == selectedDepartmentId);
-            }*/
+
             var chek = _context.UserLogins.Where(x => x.Username == HttpContext.Session.GetString("Username")).FirstOrDefault();
             
             chamcongs = chamcongs.Where(c => c.MaNhanVienNavigation.UserLogin.MaNhanVien == chek.MaNhanVien );
@@ -63,6 +58,7 @@ namespace QLLuong.Areas.Staff.Controllers
             ViewBag.TotalPages = totalPages;
 
             ViewBag.Departments = _context.PhongBans.ToList();
+            ViewBag.SelectedMonth = selectedMonth;
 
             return View(paginatedChamCongs);
         }
