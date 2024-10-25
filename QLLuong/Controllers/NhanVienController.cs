@@ -65,6 +65,32 @@ public class NhanVienController : Controller
 
         return View(paginatedNhanViens);
     }
+   public async Task<IActionResult> StaffInfor(string searchString, int pageNumber = 1, int pageSize = 10)
+    {
+        var nhanViens = from nv in _context.NhanViens
+                        select nv;
+
+        if (!string.IsNullOrEmpty(searchString))
+        {
+            nhanViens = nhanViens.Where(s => s.MaNhanVien.ToString().Equals(searchString)
+            || (s.HoTen != null && s.HoTen.Contains(searchString)));
+        }
+
+        var totalRecords = await nhanViens.CountAsync();
+        var totalPages = (int)Math.Ceiling(totalRecords / (double)pageSize);
+
+        var paginatedNhanViens = await nhanViens
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+
+        ViewBag.PageNumber = pageNumber;
+        ViewBag.PageSize = pageSize;
+        ViewBag.TotalPages = totalPages;
+        ViewBag.SearchString = searchString;
+
+        return View(paginatedNhanViens);
+    }
     public IActionResult Create()
     {
         // Fetch the last MaNhanVien

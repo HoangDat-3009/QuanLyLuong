@@ -51,10 +51,7 @@ namespace QLLuong
                 name: "NhanVien_Luong",
                 pattern: "Luong",
                 defaults: new { controller = "Luong", action = "Index" });
-            app.MapControllerRoute(
-                name: "NhanVien_KTKL",
-                pattern: "KTKL",
-                defaults: new { controller = "KTKL", action = "Index" });
+           
             app.MapControllerRoute(
                 name: "Login_Index",
                 pattern: "/Login",
