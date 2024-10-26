@@ -1,7 +1,9 @@
-﻿@{
-    ViewData["Title"] = "Cham Cong";
-    Layout = "~/Views/Shared/MyLayout.cshtml";
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Staff/Views/Shared/MyLayoutStaff.cshtml";
 }
+
 @model IEnumerable<QLLuong.Models.ChamCong >
 
 
@@ -16,11 +18,11 @@
         <div class="card-body">
             <form method="get" asp-action="Index" class="d-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
                 <div class="input-group">
-                    <input id="keyword" class="form-control" name="searchString" type="text" placeholder="Tìm kiếm theo MNV,Họ Tên" style="width: 250px;" />
+                    @* <input id="keyword" class="form-control" name="searchString" type="text" placeholder="Tìm kiếm theo MNV,Họ Tên" style="width: 250px;" />
                     <button id="btnSearch" class="btn btn-primary" type="submit">
                         <i class="fas fa-search"></i>
-                    </button>
-                    <select id="departmentFilter" style="width: 200px; margin-left:20px;" class="form-control" name="selectedDepartmentId" onchange="this.form.submit()">
+                    </button> *@
+                    @* <select id="departmentFilter" style="width: 200px; margin-left:20px;" class="form-control" name="selectedDepartmentId" onchange="this.form.submit()">
                         <option value="0">----Chọn phòng ban----</option>
                         @foreach (var department in ViewBag.Departments)
                         {
@@ -28,16 +30,14 @@
                                 @department.TenPhongBan
                             </option>
                         }
-                    </select>
-
-                    <input type="date" id="dateFilter" name="selectedDate" class="form-control" style="width: 200px; margin-left:20px;" value="@Context.Request.Query["selectedDate"]" onchange="this.form.submit()" />
-
+                    </select> *@
+                    <input type="month" id="monthInput" name="selectedMonth" class="form-control" style="width: 200px; margin-left:20px;" value="@Context.Request.Query["selectedMonth"]" onchange="this.form.submit()" />
                 </div>
 
-                
+
             </form>
-            
-            
+
+
 
             <table id="tb" class="table table-hover">
                 <thead>
@@ -51,17 +51,20 @@
                         <th>Thời gian ra</th>
                         <th>Trạng thái</th>
                         <th>Ghi chú</th>
-                        <th></th>
+                        
                     </tr>
                 </thead>
                 <tbody>
-                    
+
                     @{
 
                         var STT = 1 + (ViewBag.pageIndex - 1) * 10;
                     }
+
+
                     @foreach (var s in Model)
                     {
+                        
                         <tr>
                             <td>@STT</td>
                             <td>@s.MaNhanVien</td>
@@ -72,7 +75,7 @@
                             <td>@s.NgayGioRa</td>
                             <td>@s.TrangThai</td>
                             <td>@s.GhiChu</td>
-                            <td><a asp-action="Edit" asp-route-maNhanVien="@s.MaNhanVien">Sửa</a></td>
+                            
                         </tr>
                         STT++;
                     }
@@ -84,63 +87,49 @@
                     @if (ViewBag.PageIndex > 3)
                     {
                         <li class="page-item">
-                            <a class="page-link" href="@Url.Action("Index", new { page = 1, searchString = Context.Request.Query["searchString"], selectedDate = Context.Request.Query["selectedDate"], selectedDepartmentId = Context.Request.Query["selectedDepartmentId"] })">
-                                Trang đầu
-                            </a>
-
+                            <a class="page-link" href="@Url.Action("Index", new { page = 1, searchString = Context.Request.Query["searchString"] })">Trang đầu</a>
                         </li>
                     }
 
                     <!-- Nut trang truoc -->
                     <li class="page-item @(ViewBag.PageIndex == 1 ? "disabled" : "")">
-                        <a class="page-link" href="@Url.Action("Index", new { page = ViewBag.PageIndex - 1, searchString = Context.Request.Query["searchString"], selectedDate = Context.Request.Query["selectedDate"], selectedDepartmentId = Context.Request.Query["selectedDepartmentId"] })" aria-label="Previous">
+                        <a class="page-link" href="@Url.Action("Index", new { page = ViewBag.PageIndex - 1, searchString = Context.Request.Query["searchString"] })" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
-
                     </li>
 
                     <!-- hien thi 2 trang truoc va sau trang hien tai -->
-                    @* @for (int i = Math.Max(1, ViewBag.PageIndex - 2); i <= Math.Min(ViewBag.TotalPages, ViewBag.PageIndex + 2); i++)
-                    {
-                        <a class="page-link" href="@Url.Action("Index", new { page = i, searchString = Context.Request.Query["searchString"], selectedDate = Context.Request.Query["selectedDate"], selectedDepartmentId = Context.Request.Query["selectedDepartmentId"] })">
-                            @i
-                        </a>
-
-                    } *@
                     @for (int i = Math.Max(1, ViewBag.PageIndex - 2); i <= Math.Min(ViewBag.TotalPages, ViewBag.PageIndex + 2); i++)
                     {
                         <li class="page-item @(i == ViewBag.PageIndex ? "active" : "")">
-                            <a class="page-link" href="@Url.Action("Index", new { page = i, searchString = Context.Request.Query["searchString"], selectedDate = Context.Request.Query["selectedDate"], selectedDepartmentId = Context.Request.Query["selectedDepartmentId"] })">@i</a>
+                            <a class="page-link" href="@Url.Action("Index", new { page = i, searchString = Context.Request.Query["searchString"] })">@i</a>
                         </li>
                     }
 
-
                     <!-- Nut next -->
                     <li class="page-item @(ViewBag.PageIndex == ViewBag.TotalPages ? "disabled" : "")">
-                        <a class="page-link" href="@Url.Action("Index", new { page = ViewBag.PageIndex + 1, searchString = Context.Request.Query["searchString"], selectedDate = Context.Request.Query["selectedDate"], selectedDepartmentId = Context.Request.Query["selectedDepartmentId"] })" aria-label="Next">
+                        <a class="page-link" href="@Url.Action("Index", new { page = ViewBag.PageIndex + 1, searchString = Context.Request.Query["searchString"] })" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
-
                     </li>
 
                     <!-- nut trang cuoi -->
                     @if (ViewBag.PageIndex < ViewBag.TotalPages - 2)
                     {
                         <li class="page-item">
-                            <a class="page-link" href="@Url.Action("Index", new { page = ViewBag.TotalPages, searchString = Context.Request.Query["searchString"], selectedDate = Context.Request.Query["selectedDate"], selectedDepartmentId = Context.Request.Query["selectedDepartmentId"] })">
-                                Trang cuối
-                            </a>
-
+                            <a class="page-link" href="@Url.Action("Index", new { page = ViewBag.TotalPages, searchString = Context.Request.Query["searchString"] })">Trang cuối</a>
                         </li>
                     }
                 </ul>
             </nav>
+
+
 
         </div>
     </div>
 </div>
 @section Scripts {
     <script>
-        
+
     </script>
 }

@@ -47,9 +47,8 @@ namespace QLLuong
             app.UseStaticFiles();
 
 
-        
-
             app.UseRouting();
+
 
             app.UseAuthorization();
 
@@ -59,12 +58,12 @@ namespace QLLuong
 
             app.MapControllerRoute(
                 name: "NhanVienList",
-                pattern: "/NhanVien",
+                pattern: "/NhanVienAdmin",
                 defaults: new { controller = "NhanVien", action = "Index" });
            
             app.MapControllerRoute(
                 name: "NhanVien_Luong",
-                pattern: "Luong",
+                pattern: "LuongAdmin",
                 defaults: new { controller = "Luong", action = "Index" });
             app.MapControllerRoute(
                 name: "Login_Index",
@@ -76,12 +75,44 @@ namespace QLLuong
                 defaults: new { controller = "Home", action = "Index" });
             app.MapControllerRoute(
                 name: "ChamCong",
-                pattern: "/ChamCong",
+                pattern: "/ChamCongAdmin",
                 defaults: new { controller = "ChamCong", action = "Index" });
+
+
+            app.MapControllerRoute(
+                name: "HomeStaff",
+                pattern: "/HomeStaff",
+                defaults: new { controller = "HomeStaff", action = "Index" });
+
+
+            /*app.MapControllerRoute(
+                name: "ChamCongStaff",
+                pattern: "{area:exists}/{controller=ChamCongStaff}/{action=Index}/{id?}"
+            );*/
+
+            app.MapControllerRoute(
+                name: "areas",
+                pattern: "{area:exists}/{controller=ChamCongStaff}/{action=Index}/{id?}");
+            /*app.MapControllerRoute(
+                name: "ChamCongStaff",
+                pattern: "/ChamCongStaff",
+                defaults: new { controller = "ChamCongStaff", action = "Index" });*/
+
+
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=LogIn}/{action=Index}/{id?}");
 
+
+            app.Use(async (context, next) =>
+            {
+                context.Response.Headers["Cache-Control"] = "no-cache, no-store, must-revalidate";
+                context.Response.Headers["Pragma"] = "no-cache";
+                context.Response.Headers["Expires"] = "0";
+                await next();
+            });
+
+                 
             app.Run();
         }
     }

@@ -36,12 +36,25 @@ namespace QLLuong.Controllers
 
             if (HttpContext.Session.GetString("Username") == null)
             {
+                
+
                 var u = _context.UserLogins.Where(x => x.Username.Equals(users.Username) && x.Userpassword.Equals(users.Userpassword)).FirstOrDefault();
                 if (u != null)
                 {
-                    HttpContext.Session.SetString("Username", u.Username.ToString());
-                    return RedirectToAction("Index", "Home");
+                    
+                    if (u.MaQuyen ==1)
+                    {
+                        HttpContext.Session.SetString("Username", u.Username.ToString());
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        HttpContext.Session.SetString("Username", u.Username.ToString());
+                        return RedirectToAction("Index", "HomeStaff");
+                    }
+                    
                 }
+
             }
             
             ViewBag.LoginFail = "Đăng nhập thất bại, vui lòng kiểm tra lại!";
@@ -54,6 +67,11 @@ namespace QLLuong.Controllers
         {
             HttpContext.Session.Clear();
             HttpContext.Session.Remove("Username");
+
+            Response.Headers["Cache-Control"] = "no-cache, no-store, must-revalidate";
+            Response.Headers["Pragma"] = "no-cache";
+            Response.Headers["Expires"] = "0";
+
             return RedirectToAction("Index","LogIn");
         }
 

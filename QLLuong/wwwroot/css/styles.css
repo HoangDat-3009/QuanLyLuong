@@ -12,3 +12,9 @@
     background-color: rgba(11, 30, 82,0.2) !important;
 
 }
+.pagination .active .page-link {
+    background-color: #007bff;
+    color: white; 
+    border-color: #007bff;
+}
+

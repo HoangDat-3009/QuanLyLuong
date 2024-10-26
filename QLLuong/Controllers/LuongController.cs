@@ -17,6 +17,17 @@ namespace QLLuong.Controllers
         }
         public IActionResult Index(int month, int year, string searchString, int pageNumber = 1, int pageSize = 10)
         {
+            Response.Headers["Cache-Control"] = "no-cache, no-store, must-revalidate";
+            Response.Headers["Pragma"] = "no-cache";
+            Response.Headers["Expires"] = "0";
+
+            if (HttpContext.Session.GetString("Username") == null)
+            {
+                return RedirectToAction("Index", "LogIn");
+            }
+
+            var luongs = from nv in db.Luongs
+                         select nv;
 
             var luongs = db.Luongs.Include(l => l.MaNhanVienNavigation)
                 .ThenInclude(nv => nv.MaHeSoNavigation)

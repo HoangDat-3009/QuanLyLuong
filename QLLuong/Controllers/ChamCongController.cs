@@ -25,8 +25,17 @@ namespace QLLuong.Controllers
 
         [HttpGet]
         [Authentication]
-        public IActionResult Index(string searchString, int selectedDepartmentId = 0, int page = 1)
+        public IActionResult Index(string searchString,DateTime? selectedDate , int selectedDepartmentId = 0, int page = 1)
         {
+            Response.Headers["Cache-Control"] = "no-cache, no-store, must-revalidate";
+            Response.Headers["Pragma"] = "no-cache";
+            Response.Headers["Expires"] = "0";
+
+            if (HttpContext.Session.GetString("MaQuyen") == "1")
+            {
+                return RedirectToAction("Index", "LogIn");
+            }
+
             var chamcongs = _context.ChamCongs
                 .Include(c => c.MaNhanVienNavigation)
                 .ThenInclude(nv => nv.MaPhongBanNavigation)
@@ -45,6 +54,10 @@ namespace QLLuong.Controllers
             {
                 chamcongs = chamcongs.Where(c => c.MaNhanVienNavigation.MaPhongBan == selectedDepartmentId);
             }
+            if (selectedDate.HasValue && selectedDate.Value != DateTime.MinValue)
+            {
+                chamcongs = chamcongs.Where(c => c.NgayGioRa.HasValue && c.NgayGioRa.Value.Date == selectedDate.Value.Date);
+            }
 
             //phan trang
             page = page < 1 ? 1 : page;
@@ -60,6 +73,8 @@ namespace QLLuong.Controllers
             ViewBag.TotalPages = totalPages;
 
             ViewBag.Departments = _context.PhongBans.ToList();
+
+            ViewBag.selectdate = selectedDate;
 
             return View(paginatedChamCongs);
         }
