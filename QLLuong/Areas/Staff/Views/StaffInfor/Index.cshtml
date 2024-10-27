@@ -1,0 +1,118 @@
+﻿@model IEnumerable<QLLuong.Models.NhanVien>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Staff/Views/Shared/MyLayoutStaff.cshtml";
+}
+
+<div style="text-align: center; margin: 15px">
+    <h1>Danh sách thông tin nhân viên</h1>
+</div>
+<div class="container">
+    @foreach (var nhanVien in Model)
+    {
+        <div class="card mb-4" style="width: 60%; margin: auto;">
+            <div class="card-body">
+                <h5 class="card-title text-center">Thông tin nhân viên - @nhanVien.MaNhanVien</h5>
+
+                <!-- Hàng 1: Mã nhân viên và Họ tên -->
+                <div class="form-group row">
+                    <label class="col-sm-3 control-label">Mã nhân viên:</label>
+                    <div class="col-sm-3">
+                        <span>@nhanVien.MaNhanVien</span>
+                    </div>
+                    <label class="col-sm-3 control-label">Họ và tên:</label>
+                    <div class="col-sm-3">
+                        <span>@nhanVien.HoTen</span>
+                    </div>
+                </div>
+
+                <!-- Hàng 2: Ngày sinh và Ngày vào công ty -->
+                <div class="form-group row">
+                    <label class="col-sm-3 control-label">Ngày sinh:</label>
+                    <div class="col-sm-3">
+                        <span>@nhanVien.NgaySinh?.ToString("dd/MM/yyyy")</span>
+                    </div>
+                    <label class="col-sm-3 control-label">Ngày vào công ty:</label>
+                    <div class="col-sm-3">
+                        <span>@nhanVien.NgayVaoCongTy?.ToString("dd/MM/yyyy")</span>
+                    </div>
+                </div>
+
+                <!-- Hàng 3: Giới tính và Nơi sinh -->
+                <div class="form-group row">
+                    <label class="col-sm-3 control-label">Giới tính:</label>
+                    <div class="col-sm-3">
+                        <span>@nhanVien.GioiTinh</span>
+                    </div>
+                    <label class="col-sm-3 control-label">Nơi sinh:</label>
+                    <div class="col-sm-3">
+                        <span>@nhanVien.NoiSinh</span>
+                    </div>
+                </div>
+
+                <!-- Hàng 4: Địa chỉ và Số điện thoại -->
+                <div class="form-group row">
+                    <label class="col-sm-3 control-label">Địa chỉ:</label>
+                    <div class="col-sm-3">
+                        <span>@nhanVien.DiaChi</span>
+                    </div>
+                    <label class="col-sm-3 control-label">Số điện thoại:</label>
+                    <div class="col-sm-3">
+                        <span>@nhanVien.DienThoai</span>
+                    </div>
+                </div>
+
+                <!-- Hàng 5: CCCD và Ngân hàng -->
+                <div class="form-group row">
+                    <label class="col-sm-3 control-label">CCCD:</label>
+                    <div class="col-sm-3">
+                        <span>@nhanVien.Cccd</span>
+                    </div>
+                    <label class="col-sm-3 control-label">Ngân hàng:</label>
+                    <div class="col-sm-3">
+                        <span>@nhanVien.TaiKhoanNganHang</span>
+                    </div>
+                </div>
+
+                <!-- Hàng 6: Số tài khoản ngân hàng -->
+                <div class="form-group row">
+                    <label class="col-sm-3 control-label">Số tài khoản:</label>
+                    <div class="col-sm-3">
+                        <span>@nhanVien.SoTaiKhoanNganHang</span>
+                    </div>
+                    <label class="col-sm-3 control-label">Hệ số lương:</label>
+                    <div class="col-sm-3">
+                        <span>@nhanVien.MaHeSoNavigation.HeSoLuong</span>
+                    </div>
+                </div>
+
+                <!-- Hàng 7: Chức vụ và Phòng ban -->
+                <div class="form-group row">
+                    <label class="col-sm-3 control-label">Chức vụ:</label>
+                    <div class="col-sm-3">
+                        <span>@nhanVien.MaChucVuNavigation.TenChucVu</span>
+                    </div>
+                    <label class="col-sm-3 control-label">Phòng ban:</label>
+                    <div class="col-sm-3">
+                        <span>@nhanVien.MaPhongBanNavigation.TenPhongBan</span>
+                    </div>
+                </div>
+
+                <!-- Hàng 8: Trình độ và Chuyên môn -->
+                <div class="form-group row">
+                    <label class="col-sm-3 control-label">Trình độ:</label>
+                    <div class="col-sm-3">
+                        <span>@nhanVien.MaTrinhDoNavigation.TenTrinhDo</span>
+                    </div>
+                    <label class="col-sm-3 control-label">Chuyên môn:</label>
+                    <div class="col-sm-3">
+                        <span>@nhanVien.MaChuyenMonNavigation.TenChuyenMon</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+
+
