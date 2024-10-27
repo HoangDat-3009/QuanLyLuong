@@ -84,6 +84,7 @@ namespace QLLuong
                 name: "HomeStaff",
                 pattern: "/HomeStaff",
                 defaults: new { controller = "HomeStaff", action = "Index" });
+            
 
 
             /*app.MapControllerRoute(
