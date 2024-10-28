@@ -1,0 +1,63 @@
+﻿
+@model IEnumerable<MonthYearViewModel>
+
+<form asp-action="Filter" method="post" class="form-inline">
+    @Html.AntiForgeryToken()
+
+    
+    <div class="row mb-3 align-items-end">
+        @if (ViewBag.showSearch)
+        {
+            <div class="input-group col-md-4">
+                <input type="text" name="searchString" class="form-control"
+                       placeholder="Nhập mã nhân viên hoặc tên nhân viên" value="@ViewBag.SearchString" />
+            </div>
+        }
+
+        <!-- Dropdown chọn tháng -->
+        <div class="col-md-6">
+            <label for="monthSelect" class="form-label">Tháng:</label>
+            <select id="monthSelect" name="month" class="form-select">
+                <option value="0" selected>Tất cả</option>
+                @foreach (var item in Model.Select(m => m.Thang).Distinct())
+                {
+                    if (item == ViewBag.month)
+                    {
+                        <option value="@item" selected>@item</option>
+                    }
+                    else
+                    {
+                        <option value="@item">@item</option>
+                    }
+
+                }
+            </select>
+        </div>
+
+        <!-- Dropdown chọn năm -->
+        <div class="col-md-6">
+            <label for="yearSelect" class="form-label">Năm:</label>
+            <select id="yearSelect" name="year" class="form-select">
+                <option value="0" selected>Tất cả</option>
+                @foreach (var item in Model.Select(m => m.Nam).Distinct())
+                {
+                    if (item == ViewBag.year)
+                    {
+                        <option value="@item" selected>@item</option>
+                    }
+                    else
+                    {
+                        <option value="@item">@item</option>
+                    }
+                }
+            </select>
+        </div>
+
+        <!-- Nút submit -->
+        
+    </div>
+    <div class="col-md-2 float-end">
+        <button type="submit" class="btn btn-primary">Lọc</button>
+    </div>
+</form>
+

@@ -17,6 +17,23 @@
 </head>
 
 <body class="sb-nav-fixed">
+    <!-- Modal thông báo --> <!-- Modal thông báo -->
+    <div class="modal fade" id="notificationModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Thông báo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    @TempData["ModalMessage"]
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Begin Top nav -->
     <partial name="TopNav" />
     <!-- End Top nav -->
@@ -28,6 +45,7 @@
         <div id="layoutSidenav_content">
             <!-- Begin Main -->
             <main>
+                
                 @RenderBody()
             </main>
             <!-- End Main -->
@@ -43,3 +61,13 @@
 </body>
 
 </html>
+<script>
+    $(document).ready(function () {
+        // Kiểm tra nếu có thông báo trong TempData
+        if ('@TempData["ModalMessage"]' !== '') {
+            // Hiển thị modal
+            $('#notificationModal').modal('show');
+        }
+    });
+</script>
+

@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using QLLuong.Data;
 using QLLuong.Models;
-using System.Diagnostics;
+//using System.Diagnostics;
 
 namespace QLLuong.Controllers
 {
