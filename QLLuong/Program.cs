@@ -94,7 +94,7 @@ namespace QLLuong
                 name: "ChamCongStaff",
                 pattern: "{area:exists}/{controller=ChamCongStaff}/{action=Index}/{id?}"
             );*/
-
+/*
             app.MapControllerRoute(
                 name: "areas",
                 pattern: "{area:exists}/{controller=ChamCongStaff}/{action=Index}/{id?}");
@@ -107,7 +107,7 @@ namespace QLLuong
             app.MapControllerRoute(
                 name: "LuongStaff",
                 pattern: "/LuongStaff",
-                defaults: new { Areas = "Areas", controller = "LuongStaff", action = "Index" });
+                defaults: new { Areas = "Areas", controller = "LuongStaff", action = "Index" });*/
 
             app.MapControllerRoute(
                 name: "default",
