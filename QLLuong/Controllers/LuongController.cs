@@ -15,7 +15,7 @@ namespace QLLuong.Controllers
         {
             db = context;
         }
-        public IActionResult Index(int month, int year, string searchString, int pageNumber = 1, int pageSize = 10)
+        public IActionResult Index(string searchString, int pageNumber = 1, int pageSize = 10)
         {
             Response.Headers["Cache-Control"] = "no-cache, no-store, must-revalidate";
             Response.Headers["Pragma"] = "no-cache";
@@ -25,32 +25,81 @@ namespace QLLuong.Controllers
             {
                 return RedirectToAction("Index", "LogIn");
             }
-
-
-            var luongs = db.Luongs.Include(l => l.MaNhanVienNavigation)
-                .ThenInclude(nv => nv.MaHeSoNavigation)
-                .Include(l => l.MaKtklNavigation)
-                .Include(l => l.MaLuongCoBanPhanTramBhNavigation).Where(l => l.MaNhanVienNavigation != null);
-
-            TempData["ModalMessage"] = "Tháng:" + month + ",năm:" + year;
-            if (month != 0)
+            int monthNow = 10;//DateTime.Now.Month;
+            int yearNow = DateTime.Now.Year;
+            var chamCongs = db.ChamCongs.Where(cc => cc.NgayGioRa.Value.Month == monthNow && cc.NgayGioRa.Value.Year == yearNow).ToList();
+            var chamCongsTemp = chamCongs;
+            var nhanviens = db.NhanViens
+                .Include(n => n.MaHeSoNavigation)
+                .Include(n => n.MaChucVuNavigation)
+                .Include(n => n.MaTrinhDoNavigation)
+                .Where(nv => nv.IsDeleted == false);
+            LuongCoBanPhanTramBh lcb_bh = db.LuongCoBanPhanTramBhs.FirstOrDefault();
+            var luongs = new List<LuongCu>();
+            
+            foreach( var i in nhanviens)
             {
-                luongs = luongs.Where(l => l.Thang == month);
+                LuongCu luonght = new LuongCu();
+                luonght.MaLuongCu = 165 + i.MaNhanVien;
+                luonght.MaNhanVien = i.MaNhanVien;
+                luonght.Thang = monthNow;
+                luonght.Nam = yearNow;
+                luonght.LuongCoBan = lcb_bh?.LuongCoBan ?? 0;
+                luonght.HeSo = i?.MaHeSoNavigation?.HeSoLuong ?? 0;
+                luonght.PhuCapChucVu = i.MaChucVuNavigation.PhuCap;
+                luonght.PhuCapTrinhDo = i.MaTrinhDoNavigation.PhuCap;
+                luonght.Bhyt = (decimal)(((float)luonght.LuongCoBan
+                    * (float)luonght.HeSo
+                    + (float)luonght.PhuCapTrinhDo
+                    + (float)luonght.PhuCapChucVu)
+                    * lcb_bh.PhanTramBhyt);
+                luonght.Bhtn = (decimal)(((float)luonght.LuongCoBan * (float)luonght.HeSo + (float)luonght.PhuCapTrinhDo + (float)luonght.PhuCapChucVu) * lcb_bh.PhanTramBhtn);
+                luonght.Bhxh = (decimal)(((float)luonght.LuongCoBan * (float)luonght.HeSo + (float)luonght.PhuCapTrinhDo + (float)luonght.PhuCapChucVu) * lcb_bh.PhanTramBhxh);
+                luonght.MaNhanVienNavigation = i;
+                float ktkl = 0;
+                int socong = 0;
+                foreach (var j in chamCongs)
+                {
+                    if (j.MaNhanVien != i.MaNhanVien) continue;
+                    if (j.TrangThai.Equals("Ðã Hoàn Thành") || j.TrangThai.Equals("Đã hoàn thành")) socong++;
+                    if (j.TrangThai.Equals("Tăng ca")) socong++;
+                    if (j.TrangThai.Equals("Vào trễ", StringComparison.OrdinalIgnoreCase))
+                    {
+                        socong++;
+                        ktkl -= 50000;
+                    }
+                    if (j.TrangThai.Equals("Nghỉ"))
+                    {
+                        if (j.GhiChu.Equals("Không phép")) ktkl -= 100000;
+
+                    }
+
+                }
+                luonght.SoCong = socong;
+                luonght.KhenThuongKyLuat = (decimal)ktkl;
+                luonght.ThucLinh = Math.Round(
+        (
+        ((decimal)(luonght.LuongCoBan ?? 0) * (decimal)luonght.HeSo * (decimal)socong / 30)
+        + (decimal)(luonght.PhuCapChucVu ?? 0)
+        + (decimal)(luonght.PhuCapTrinhDo ?? 0)
+        - (decimal)(luonght.Bhyt ?? 0)
+        - (decimal)(luonght.Bhtn ?? 0)
+        - (decimal)(luonght.Bhxh ?? 0)
+        + (decimal)(luonght.KhenThuongKyLuat ?? 0)), 2);
+                luongs.Add(luonght);
             }
-            if (year != 0)
-            {
-                luongs = luongs.Where(l => l.Nam == year);
-            }
+
+            IEnumerable<LuongCu> luong1 = luongs;
             if (!string.IsNullOrEmpty(searchString))
             {
-                luongs = luongs.Where(s => s.MaNhanVien.ToString().Equals(searchString)
+                luong1 = luong1.Where(s => s.MaNhanVien.ToString().Equals(searchString)
                 || (s.MaNhanVienNavigation.HoTen != null && s.MaNhanVienNavigation.HoTen.Contains(searchString)));
             }
 
-            var totalRecords = luongs.Count();
+            var totalRecords = luong1.Count();
             var totalPages = (int)Math.Ceiling(totalRecords / (double)pageSize);
 
-            var paginatedLuongs = luongs
+            var paginatedLuongs = luong1
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .ToList();
@@ -66,43 +115,96 @@ namespace QLLuong.Controllers
             ViewBag.TotalPages = totalPages;
 
 
-            ViewBag.month = month;
-            ViewBag.year = year;
             ViewBag.showSearch = true;
             ViewBag.searchString = searchString;
+            ViewBag.showThangnam = false;
 
             return View(paginatedLuongs);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Filter(int month, int year, string searchString, int pageNumber =1,int pageSize =10)
+        public IActionResult Filter(string searchString, int pageNumber =1,int pageSize =10)
         {
-            
-            var luongs = db.Luongs.Include(l=> l.MaNhanVienNavigation)
-                .ThenInclude(nv=>nv.MaHeSoNavigation)
-                .Include(l=>l.MaKtklNavigation)
-                .Include(l=>l.MaLuongCoBanPhanTramBhNavigation).Where(l=>l.MaNhanVienNavigation != null);
+            if (HttpContext.Session.GetString("Username") == null)
+            {
+                return RedirectToAction("Index", "LogIn");
+            }
+            int monthNow = 10;//DateTime.Now.Month;
+            int yearNow = DateTime.Now.Year;
+            var chamCongs = db.ChamCongs.Where(cc => cc.NgayGioRa.Value.Month == monthNow && cc.NgayGioRa.Value.Year == yearNow).ToList();
+            var chamCongsTemp = chamCongs;
+            var nhanviens = db.NhanViens
+                .Include(n => n.MaHeSoNavigation)
+                .Include(n => n.MaChucVuNavigation)
+                .Include(n => n.MaTrinhDoNavigation)
+                .Where(nv => nv.IsDeleted == false);
+            LuongCoBanPhanTramBh lcb_bh = db.LuongCoBanPhanTramBhs.FirstOrDefault();
+            var luongs = new List<LuongCu>();
 
-            TempData["ModalMessage"] = "Tháng:" + month + ",năm:" + year;
-            if (month != 0)
+            foreach (var i in nhanviens)
             {
-                luongs = luongs.Where(l => l.Thang == month);
+                LuongCu luonght = new LuongCu();
+                luonght.MaLuongCu = 165 + i.MaNhanVien;
+                luonght.MaNhanVien = i.MaNhanVien;
+                luonght.Thang = monthNow;
+                luonght.Nam = yearNow;
+                luonght.LuongCoBan = lcb_bh?.LuongCoBan ?? 0;
+                luonght.HeSo = i?.MaHeSoNavigation?.HeSoLuong ?? 0;
+                luonght.PhuCapChucVu = i.MaChucVuNavigation.PhuCap;
+                luonght.PhuCapTrinhDo = i.MaTrinhDoNavigation.PhuCap;
+                luonght.Bhyt = (decimal)(((float)luonght.LuongCoBan
+                    * (float)luonght.HeSo
+                    + (float)luonght.PhuCapTrinhDo
+                    + (float)luonght.PhuCapChucVu)
+                    * lcb_bh.PhanTramBhyt);
+                luonght.Bhtn = (decimal)(((float)luonght.LuongCoBan * (float)luonght.HeSo + (float)luonght.PhuCapTrinhDo + (float)luonght.PhuCapChucVu) * lcb_bh.PhanTramBhtn);
+                luonght.Bhxh = (decimal)(((float)luonght.LuongCoBan * (float)luonght.HeSo + (float)luonght.PhuCapTrinhDo + (float)luonght.PhuCapChucVu) * lcb_bh.PhanTramBhxh);
+                luonght.MaNhanVienNavigation = i;
+                float ktkl = 0;
+                int socong = 0;
+                foreach (var j in chamCongs)
+                {
+                    if (j.MaNhanVien != i.MaNhanVien) continue;
+                    if (j.TrangThai.Equals("Ðã Hoàn Thành") || j.TrangThai.Equals("Đã hoàn thành")) socong++;
+                    if (j.TrangThai.Equals("Tăng ca")) socong++;
+                    if (j.TrangThai.Equals("Vào trễ", StringComparison.OrdinalIgnoreCase))
+                    {
+                        socong++;
+                        ktkl -= 50000;
+                    }
+                    if (j.TrangThai.Equals("Nghỉ"))
+                    {
+                        if (j.GhiChu.Equals("Không phép")) ktkl -= 100000;
+
+                    }
+
+                }
+                luonght.SoCong = socong;
+                luonght.KhenThuongKyLuat = (decimal)ktkl;
+                luonght.ThucLinh = Math.Round(
+        (
+        ((decimal)(luonght.LuongCoBan ?? 0) * (decimal)luonght.HeSo * (decimal)socong / 30)
+        + (decimal)(luonght.PhuCapChucVu ?? 0)
+        + (decimal)(luonght.PhuCapTrinhDo ?? 0)
+        - (decimal)(luonght.Bhyt ?? 0)
+        - (decimal)(luonght.Bhtn ?? 0)
+        - (decimal)(luonght.Bhxh ?? 0)
+        + (decimal)(luonght.KhenThuongKyLuat ?? 0)), 2);
+                luongs.Add(luonght);
             }
-            if (year != 0)
-            {
-                luongs = luongs.Where(l => l.Nam == year);
-            }
+
+            IEnumerable<LuongCu> luong1 = luongs;
             if (!string.IsNullOrEmpty(searchString))
             {
-                luongs = luongs.Where(s => s.MaNhanVien.ToString().Equals(searchString)
+                luong1 = luong1.Where(s => s.MaNhanVien.ToString().Equals(searchString)
                 || (s.MaNhanVienNavigation.HoTen != null && s.MaNhanVienNavigation.HoTen.Contains(searchString)));
             }
 
-            var totalRecords =  luongs.Count();
+            var totalRecords = luong1.Count();
             var totalPages = (int)Math.Ceiling(totalRecords / (double)pageSize);
 
-            var paginatedLuongs =  luongs
+            var paginatedLuongs = luong1
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .ToList();
@@ -118,9 +220,9 @@ namespace QLLuong.Controllers
             ViewBag.TotalPages = totalPages;
 
 
-            ViewBag.month = month;
-            ViewBag.year = year;
+            ViewBag.showSearch = true;
             ViewBag.searchString = searchString;
+            ViewBag.showThangnam = false;
 
             return View("Index",paginatedLuongs);
         }

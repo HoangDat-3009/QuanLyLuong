@@ -4,7 +4,7 @@
 }
 @model IEnumerable<QLLuong.Models.LuongCu>
 
-<h1>Lương hiện tại</h1>
+<h1>Lịch sử lương đã trả</h1>
 @* @foreach(var i in Model)
 {
     <li>@i.MaNhanVienNavigation?.HoTen</li>
@@ -12,25 +12,23 @@
 
 <div class="container align-content-center " style="margin: 20px;">
     <div class="d-flex justify-content-around align-items-center mb-3">
-       @*  <div>
-            <form method="post" asp-action="Filter" class="form-inline">
-                <div class="input-group">
-                    <input type="text" name="searchString" class="form-control"
-                           placeholder="Nhập mã nhân viên hoặc tên nhân viên" value="@ViewBag.SearchString" />
-                    <div class="input-group-append">
-                        <button type="submit" class="btn btn-primary">Tìm kiếm</button>
-                    </div>
-                </div>
-            </form>
+        @*  <div>
+        <form method="post" asp-action="Filter" class="form-inline">
+        <div class="input-group">
+        <input type="text" name="searchString" class="form-control"
+        placeholder="Nhập mã nhân viên hoặc tên nhân viên" value="@ViewBag.SearchString" />
+        <div class="input-group-append">
+        <button type="submit" class="btn btn-primary">Tìm kiếm</button>
+        </div>
+        </div>
+        </form>
         </div> *@
         <div class="row">
             @await Component.InvokeAsync("ThangNam")
-        </div> 
+        </div>
         <div>
             <a asp-route="Luong_LuongCB" asp-route-MaLuongCoBanPhanTramBh="1" class="btn btn-success">Lương cơ bản và bảo hiểm</a>
         </div>
-        
-       
     </div>
     <div class="table-responsive">
         <div id="content">
@@ -45,7 +43,6 @@
                         <th>Năm</th>
                         <th>Lương cơ bản</th>
                         <th>Hệ số</th>
-                        <th>Số công</th>
                         <th>Phụ cấp trình độ</th>
                         <th>Phụ cấp chức vị</th>
                         <th>BHYT</th>
@@ -84,7 +81,6 @@
                                 <td>@s.Nam</td>
                                 <td>@s.LuongCoBan</td>
                                 <td>@s.HeSo</td>
-                                <td>@s.SoCong</td>
                                 <td>@s.PhuCapTrinhDo</td>
                                 <td>@s.PhuCapChucVu</td>
                                 <td>@s.Bhyt</td>
@@ -104,7 +100,7 @@
                     }
                 </tbody>
             </table>
-            
+
         </div>
     </div>
     <div class="d-flex justify-content-center align-items-center">

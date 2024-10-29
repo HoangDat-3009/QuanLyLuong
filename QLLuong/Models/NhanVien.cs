@@ -7,6 +7,8 @@ public partial class NhanVien
 {
     public int MaNhanVien { get; set; }
 
+    public bool IsDeleted { get; set; }
+
     public string? HoTen { get; set; }
 
     public string? GioiTinh { get; set; }
@@ -30,7 +32,6 @@ public partial class NhanVien
     public string? DiaChi { get; set; }
 
     public string? DienThoai { get; set; }
-    public bool IsDeleted { get; set; }
 
     public int? MaHeSo { get; set; }
 
@@ -43,6 +44,8 @@ public partial class NhanVien
     public virtual ICollection<ChamCong> ChamCongs { get; set; } = new List<ChamCong>();
 
     public virtual ICollection<KhenThuongKyLuat> KhenThuongKyLuats { get; set; } = new List<KhenThuongKyLuat>();
+
+    public virtual ICollection<LuongCu> LuongCus { get; set; } = new List<LuongCu>();
 
     public virtual ICollection<Luong> Luongs { get; set; } = new List<Luong>();
 
@@ -57,5 +60,6 @@ public partial class NhanVien
     public virtual PhongBan? MaPhongBanNavigation { get; set; }
 
     public virtual TrinhDo? MaTrinhDoNavigation { get; set; }
+
     public virtual UserLogin? UserLogin { get; set; }
 }
