@@ -48,7 +48,7 @@ namespace QLLuong.Controllers
             //tim kiem
             if (!string.IsNullOrEmpty(searchString))
             {
-                chamcongs = chamcongs.Where(c => c.MaNhanVienNavigation.HoTen.ToLower().Contains(searchString.ToLower())||c.MaNhanVien.ToString().Contains(searchString));
+                chamcongs = chamcongs.Where(c => c.MaNhanVienNavigation.HoTen.ToLower().Contains(searchString.ToLower())||c.MaNhanVien.ToString().Equals(searchString));
             }
             // Lọc theo phòng ban đã chọn
             if (selectedDepartmentId > 0)
