@@ -41,18 +41,9 @@ namespace QLLuong.Controllers
                 var u = _context.UserLogins.Where(x => x.Username.Equals(users.Username) && x.Userpassword.Equals(users.Userpassword)).FirstOrDefault();
                 if (u != null)
                 {
-                    
-                    if (u.MaQuyen ==1)
-                    {
-                        HttpContext.Session.SetString("Username", u.Username.ToString());
-                        return RedirectToAction("Index", "Home");
-                    }
-                    else
-                    {
-                        HttpContext.Session.SetString("Username", u.Username.ToString());
-                        return RedirectToAction("Index", "HomeStaff");
-                    }
-                    
+
+                    HttpContext.Session.SetString("Username", u.Username.ToString());
+                    return u.MaQuyen == 1 ? RedirectToAction("Index", "Home") : RedirectToAction("Index", "HomeStaff");
                 }
 
             }
