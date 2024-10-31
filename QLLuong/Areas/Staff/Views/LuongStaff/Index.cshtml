@@ -2,116 +2,75 @@
     ViewData["Title"] = "Luong List";
     Layout = "~/Areas/Staff/Views/Shared/MyLayoutStaff.cshtml";
 }
-@model IEnumerable<QLLuong.Models.Luong>
-
-<h1>Lương đây</h1>
-@* @foreach(var i in Model)
-{
-    <li>@i.MaNhanVienNavigation?.HoTen</li>
-} *@
-
-<div class="container align-content-center " style="margin: 20px;">
-    <div class="d-flex justify-content-around align-items-center mb-3">
-       
-        <div class="row">
-            @await Component.InvokeAsync("ThangNam")
+@model QLLuong.Models.LuongCu
+<div class="container mt-5">
+    <div class="card shadow-lg">
+        <div class="card-header text-center bg-primary text-white">
+            <h3>Bảng lương tháng @Model.Thang</h3>
         </div>
-
-    </div>
-    <div class="table-responsive">
-        <div id="content">
-            <table class="table table-striped table-bordered table-hover">
-                <thead class="thead-dark">
-                    <tr>
-                        <th>STT</th>
-                        <th>Mã lương</th>
-                        <th>Mã NV</th>
-                        <th>Tên nhân viên</th>
-                        <th>Tháng </th>
-                        <th>Năm</th>
-                        <th>Lương cơ bản</th>
-                        <th>Hệ số</th>
-                        <th>Phụ cấp trình độ</th>
-                        <th>Phụ cấp chức vị</th>
-                        <th>BHYT</th>
-                        <th>BHTN</th>
-                        <th>BHXH</th>
-                        <th>KT và KL</th>
-                        <th>Thực lĩnh</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @{
-                        var STT = (ViewBag.PageNumber - 1) * ViewBag.PageSize + 1;
-                    }
-                    @if (Model != null)
-                    {
-                        @foreach (var s in Model)
-                        {
-                            var luongcoban = s.MaLuongCoBanPhanTramBhNavigation?.LuongCoBan ?? 0;
-                            var hesoluong = s.MaNhanVienNavigation?.MaHeSoNavigation?.HeSoLuong ?? 0;
-                            var phucachucvu = s.MaNhanVienNavigation?.MaChucVuNavigation?.PhuCap ?? 0;
-                            var phucaptrihdo = s.MaNhanVienNavigation?.MaTrinhDoNavigation?.PhuCap ?? 0;
-                            var ptBhyt = s.MaLuongCoBanPhanTramBhNavigation?.PhanTramBhyt ?? 0;
-                            var ptBhtn = s.MaLuongCoBanPhanTramBhNavigation?.PhanTramBhtn ?? 0;
-                            var ptBhxh = s.MaLuongCoBanPhanTramBhNavigation?.PhanTramBhxh ?? 0;
-                            var bhyt = Math.Round(((float)luongcoban * hesoluong + (float)phucachucvu + (float)phucaptrihdo) * ptBhyt, 2);
-                            var bhtn = Math.Round(((float)luongcoban * hesoluong + (float)phucachucvu + (float)phucaptrihdo) * ptBhtn, 2);
-                            var bhxh = Math.Round(((float)luongcoban * hesoluong + (float)phucachucvu + (float)phucaptrihdo) * ptBhxh, 2);
-                            var ktkl = s.MaKtklNavigation?.SoTien ?? 0;
-                            var thuclinh = Math.Round(((float)luongcoban * hesoluong + (float)phucachucvu + (float)phucaptrihdo) - (bhyt + bhxh + bhtn) + (float)ktkl, 2);
-                            <tr class="text-end">
-                                <td>@STT</td>
-                                <td>@s.MaLuong</td>
-                                <td>@s.MaNhanVien</td>
-                                <td class="text-start">@s.MaNhanVienNavigation?.HoTen</td>
-                                <td>@s.Thang</td>
-                                <td>@s.Nam</td>
-                                <td>@s.MaLuongCoBanPhanTramBhNavigation?.LuongCoBan</td>
-                                <td>@s.MaNhanVienNavigation?.MaHeSoNavigation?.HeSoLuong</td>
-                                <td>@s.MaNhanVienNavigation?.MaTrinhDoNavigation?.PhuCap</td>
-                                <td>@s.MaNhanVienNavigation?.MaChucVuNavigation?.PhuCap</td>
-                                <td>@bhyt</td>
-                                <td>@bhtn</td>
-                                <td>@bhxh</td>
-                                <td>@ktkl</td>
-                                <td>@thuclinh</td>
+        <div class="card-body">
+            <div class="row mb-4">
+                <div class="col-md-4 text-center">
+                    <img src="https://via.placeholder.com/150" class="img-thumbnail rounded-circle" alt="Employee Image">
+                    <h5 class="mt-2"> @Model.MaNhanVienNavigation?.HoTen</h5>
+                    <p>@Model.MaNhanVien</p>
+                </div>
+                <div class="col-md-8">
+                    <table class="table table-bordered">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Nội dung</th>
+                                <th class="text-end">Số tiền (VNĐ)</th>
                             </tr>
-                            STT++;
-                        }
-                    }
-                    else
-                    {
-                        <tr>
-                            <td colspan="14">No data available.</td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Lương cơ bản</td>
+                                <td class ="text-end">@Model.LuongCoBan</tdclass>
+                            </tr>
+                            <tr>
+                                <td>Hệ số</td>
+                                <td class="text-end">@Model.HeSo</tdclass>
+                            </tr>
+                            <tr>
+                                <td>Số công</td>
+                                <td class="text-end">@Model.SoCong</td>
+                            </tr>
+                            <tr>
+                                <td>Phụ cấp chức vụ</td>
+                                <td class ="text-end">@Model.PhuCapChucVu</td>
+                            </tr>
+                            <tr>
+                                <td>Phụ cấp trình độ</td>
+                                <td class="text-end">@Model.PhuCapTrinhDo</td>
+                            </tr>
+                            <tr>
+                                <td>Bảo hiểm y tế</td>
+                                <td class="text-end">@Model.Bhyt</td>
+                            </tr>
+                            <tr>
+                                <td>Bảo hiểm thất nghiệp</td>
+                                <td class ="text-end">@Model.Bhtn</td>
+                            </tr>
+                            <tr>
+                                <td>Bảo hiểm xã hội</td>
+                                <td class ="text-end">@Model.Bhxh</td>
+                            </tr>
+                            <tr>
+                                <td>Khen thưởng hoặc kỷ luật</td>
+                                <td class ="text-end">@Model.KhenThuongKyLuat</td>
+                            </tr>
+                            <tr class="table-primary">
+                                <th>Thực lĩnh</th>
+                                <th class="text-end">@Model.ThucLinh</th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer text-muted text-center">
+            Ngày xuất bảng lương: @DateTime.Now
         </div>
     </div>
-    <div class="d-flex justify-content-center align-items-center">
-        <div class="me-3">
-            @if (ViewBag.PageNumber > 1)
-            {
-                <a asp-action="Index" asp-route-pageNumber="@(ViewBag.PageNumber - 1)" asp-route-pageSize="@ViewBag.PageSize"  asp-route-month="@ViewBag.month" asp-route-year="@ViewBag.year" class="btn btn-primary">Trang trước</a>
-            }
-        </div>
-        <div>
-            <span>Page @ViewBag.PageNumber / @ViewBag.TotalPages</span>
-        </div>
-
-        <div class="ms-3">
-            @if (ViewBag.PageNumber < ViewBag.TotalPages && Model.Count() == ViewBag.PageSize)
-            {
-                <a asp-action="Index" asp-route-pageNumber="@(ViewBag.PageNumber + 1)" asp-route-pageSize="@ViewBag.PageSize"  asp-route-month="@ViewBag.month" asp-route-year="@ViewBag.year" class="btn btn-primary">Trang sau</a>
-            }
-            else
-            {
-                <button class="btn btn-primary" disabled>Trang sau</button>
-            }
-        </div>
-    </div>
-
 </div>

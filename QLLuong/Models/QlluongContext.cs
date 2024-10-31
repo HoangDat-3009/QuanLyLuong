@@ -1,18 +1,16 @@
-﻿
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using QLLuong.Models;
 
-namespace QLLuong.Data;
+namespace QLLuong.Models;
 
-public partial class QLLuongContext : DbContext
+public partial class QlluongContext : DbContext
 {
-    public QLLuongContext()
+    public QlluongContext()
     {
     }
 
-    public QLLuongContext(DbContextOptions<QLLuongContext> options)
+    public QlluongContext(DbContextOptions<QlluongContext> options)
         : base(options)
     {
     }

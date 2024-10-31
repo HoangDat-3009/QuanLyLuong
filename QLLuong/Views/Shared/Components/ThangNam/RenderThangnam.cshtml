@@ -15,43 +15,47 @@
         }
 
         <!-- Dropdown chọn tháng -->
-        <div class="col-md-6">
-            <label for="monthSelect" class="form-label">Tháng:</label>
-            <select id="monthSelect" name="month" class="form-select">
-                <option value="0" selected>Tất cả</option>
-                @foreach (var item in Model.Select(m => m.Thang).Distinct())
-                {
-                    if (item == ViewBag.month)
+        @if (ViewBag.showThangNam)
+        {
+            <div class="col-md-6">
+                <label for="monthSelect" class="form-label">Tháng:</label>
+                <select id="monthSelect" name="month" class="form-select">
+                    <option value="0" selected>Tất cả</option>
+                    @foreach (var item in Model.Select(m => m.Thang).Distinct())
                     {
-                        <option value="@item" selected>@item</option>
-                    }
-                    else
-                    {
-                        <option value="@item">@item</option>
-                    }
+                        if (item == ViewBag.month)
+                        {
+                            <option value="@item" selected>@item</option>
+                        }
+                        else
+                        {
+                            <option value="@item">@item</option>
+                        }
 
-                }
-            </select>
-        </div>
+                    }
+                </select>
+            </div>
 
-        <!-- Dropdown chọn năm -->
-        <div class="col-md-6">
-            <label for="yearSelect" class="form-label">Năm:</label>
-            <select id="yearSelect" name="year" class="form-select">
-                <option value="0" selected>Tất cả</option>
-                @foreach (var item in Model.Select(m => m.Nam).Distinct())
-                {
-                    if (item == ViewBag.year)
+            <!-- Dropdown chọn năm -->
+            <div class="col-md-6">
+                <label for="yearSelect" class="form-label">Năm:</label>
+                <select id="yearSelect" name="year" class="form-select">
+                    <option value="0" selected>Tất cả</option>
+                    @foreach (var item in Model.Select(m => m.Nam).Distinct())
                     {
-                        <option value="@item" selected>@item</option>
+                        if (item == ViewBag.year)
+                        {
+                            <option value="@item" selected>@item</option>
+                        }
+                        else
+                        {
+                            <option value="@item">@item</option>
+                        }
                     }
-                    else
-                    {
-                        <option value="@item">@item</option>
-                    }
-                }
-            </select>
-        </div>
+                </select>
+            </div>
+        }
+        
 
         <!-- Nút submit -->
         

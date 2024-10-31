@@ -11,11 +11,11 @@ public partial class Luong
 
     public int? MaNhanVien { get; set; }
 
-    public int Thang { get; set; }
-
-    public int Nam { get; set; }
-
     public int? MaKtkl { get; set; }
+
+    public int? Thang { get; set; }
+
+    public int? Nam { get; set; }
 
     public virtual KhenThuongKyLuat? MaKtklNavigation { get; set; }
 

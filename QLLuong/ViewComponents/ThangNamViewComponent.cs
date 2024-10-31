@@ -11,7 +11,7 @@ namespace QLLuong.ViewComponents
         public ThangNamViewComponent(QLLuongContext context)
         {
             db = context;
-            monthsAndYears = db.Luongs
+            monthsAndYears = db.LuongCus
             .Select(l => new MonthYearViewModel { Thang = l.Thang, Nam = l.Nam })
             .Distinct()
             .OrderBy(l => l.Nam)
