@@ -41,6 +41,7 @@ namespace QLLuong.Controllers
                 .ThenInclude(nv => nv.MaPhongBanNavigation)
                 .Include(c => c.MaNhanVienNavigation)
                 .ThenInclude(nv => nv.MaChucVuNavigation)
+                .Where(c => c.MaNhanVienNavigation != null)
                 .AsQueryable();
 
 
