@@ -3,9 +3,10 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using QLLuong.Data;
 using QLLuong.Models;
-using QLLuong.Models.Authentication;
 using System.Linq;
 using System.Threading.Tasks;
+
+using QLLuong.Models.Authentication;
 
 public class NhanVienController : Controller
 {
@@ -15,11 +16,9 @@ public class NhanVienController : Controller
     {
         _context = context;
     }
-
     [Authentication]
-    public async Task<IActionResult> Index(string searchString, int pageNumber = 1, int pageSize = 6)
+    public async Task<IActionResult> Index(string searchString, int pageNumber = 1, int pageSize = 10)
     {
-
         Response.Headers["Cache-Control"] = "no-cache, no-store, must-revalidate";
         Response.Headers["Pragma"] = "no-cache";
         Response.Headers["Expires"] = "0";
@@ -28,7 +27,6 @@ public class NhanVienController : Controller
         {
             return RedirectToAction("Index", "LogIn");
         }
-
         var nhanViens = from nv in _context.NhanViens
                         .Include(nv => nv.MaPhongBanNavigation)
                         .Include(nv => nv.MaChucVuNavigation)
@@ -107,6 +105,7 @@ public class NhanVienController : Controller
 
 
     // POST: NhanVien/Create
+    [Authentication]
     [HttpPost]
     public IActionResult Create(NhanVien nhanVien)
     {
@@ -127,15 +126,14 @@ public class NhanVienController : Controller
 
         return View(nhanVien);
     }
-
     [Authentication]
     public IActionResult NhanVienByPhongBan(int mid)
     {
-        if(mid == 0)
+        if (mid == 0)
         {
             return View("Index");
         }
-        
+
         var nhanViens = _context.NhanViens.Where(nv => nv.MaPhongBan == mid).ToList();
         ViewBag.TrinhDos = _context.TrinhDos.ToList();
         ViewBag.ChucVus = _context.ChucVus.ToList();
@@ -180,7 +178,6 @@ public class NhanVienController : Controller
             try
             {
                 _context.Update(nhanVien);
-                TempData["ModalMessage"] = "Cập nhật thông tin thành công!";
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
@@ -218,9 +215,9 @@ public class NhanVienController : Controller
         return View(nhanVien);
     }
 
-    [Authentication]
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
+    [Authentication]
     public async Task<IActionResult> DeleteConfirmed(int maNhanVien)
     {
         var nhanVien = await _context.NhanViens.FindAsync(maNhanVien);
@@ -229,8 +226,8 @@ public class NhanVienController : Controller
             return NotFound();
         }
 
-		nhanVien.IsDeleted = true;
-		await _context.SaveChangesAsync();
+        nhanVien.IsDeleted = true;
+        await _context.SaveChangesAsync();
         return RedirectToAction(nameof(Index));
     }
 
