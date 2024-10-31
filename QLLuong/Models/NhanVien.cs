@@ -5,6 +5,8 @@ namespace QLLuong.Models;
 
 public partial class NhanVien
 {
+    //dit me thang nao lam loi code thi sua lai
+    [Key]
     public int MaNhanVien { get; set; }
 
     public bool IsDeleted { get; set; }
