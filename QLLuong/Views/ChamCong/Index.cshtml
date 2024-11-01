@@ -100,13 +100,6 @@
                     </li>
 
                     <!-- hien thi 2 trang truoc va sau trang hien tai -->
-                    @* @for (int i = Math.Max(1, ViewBag.PageIndex - 2); i <= Math.Min(ViewBag.TotalPages, ViewBag.PageIndex + 2); i++)
-                    {
-                        <a class="page-link" href="@Url.Action("Index", new { page = i, searchString = Context.Request.Query["searchString"], selectedDate = Context.Request.Query["selectedDate"], selectedDepartmentId = Context.Request.Query["selectedDepartmentId"] })">
-                            @i
-                        </a>
-
-                    } *@
                     @for (int i = Math.Max(1, ViewBag.PageIndex - 2); i <= Math.Min(ViewBag.TotalPages, ViewBag.PageIndex + 2); i++)
                     {
                         <li class="page-item @(i == ViewBag.PageIndex ? "active" : "")">

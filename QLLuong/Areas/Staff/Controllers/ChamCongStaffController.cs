@@ -35,7 +35,7 @@ namespace QLLuong.Areas.Staff.Controllers
                 .ThenInclude(nv => nv.UserLogin)
                 .AsQueryable();
 
-
+            // loc theo thang
             if (selectedMonth.HasValue && selectedMonth.Value != DateTime.MinValue)
             {
                 chamcongs = chamcongs.Where(c => c.NgayGioRa.HasValue && c.NgayGioRa.Value.Month == selectedMonth.Value.Month);

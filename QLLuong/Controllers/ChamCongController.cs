@@ -27,10 +27,11 @@ namespace QLLuong.Controllers
         [Authentication]
         public IActionResult Index(string searchString,DateTime? selectedDate , int selectedDepartmentId = 0, int page = 1)
         {
+            //xoa cache tren trinh duyet
             Response.Headers["Cache-Control"] = "no-cache, no-store, must-revalidate";
             Response.Headers["Pragma"] = "no-cache";
             Response.Headers["Expires"] = "0";
-
+            //kiem tra quyen
             if (HttpContext.Session.GetString("MaQuyen") == "1")
             {
                 return RedirectToAction("Index", "LogIn");
@@ -50,7 +51,7 @@ namespace QLLuong.Controllers
             {
                 chamcongs = chamcongs.Where(c => c.MaNhanVienNavigation.HoTen.ToLower().Contains(searchString.ToLower())||c.MaNhanVien.ToString().Equals(searchString));
             }
-            // Lọc theo phòng ban đã chọn
+            // loc theo phong ban
             if (selectedDepartmentId > 0)
             {
                 chamcongs = chamcongs.Where(c => c.MaNhanVienNavigation.MaPhongBan == selectedDepartmentId);
