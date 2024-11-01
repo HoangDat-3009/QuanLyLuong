@@ -2428,11 +2428,3 @@ update Luong
 		join KhenThuongKyLuat on KhenThuongKyLuat.MaNhanVien = NhanVien.MaNhanVien
 */
 go
-
-create proc proc_logic
- @username nvarchar(50),
- @userpassword nvarchar(50)
- as
- begin
- select* from UserLogin where username = @username and userpassword = @userpassword
- end
