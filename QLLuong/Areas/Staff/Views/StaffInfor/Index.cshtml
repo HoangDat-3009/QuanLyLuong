@@ -5,14 +5,14 @@
 }
 
 <div style="text-align: center; margin: 15px">
-    <h1>Danh sách thông tin nhân viên</h1>
+    <h1>Thông tin nhân viên</h1>
 </div>
 <div class="container">
     @foreach (var nhanVien in Model)
     {
         <div class="card mb-4" style="width: 60%; margin: auto;">
             <div class="card-body">
-                <h5 class="card-title text-center">Thông tin nhân viên - @nhanVien.MaNhanVien</h5>
+                <h5 class="card-title text-center">Thông tin nhân viên - @nhanVien.HoTen</h5>
 
                 <!-- Hàng 1: Mã nhân viên và Họ tên -->
                 <div class="form-group row">
