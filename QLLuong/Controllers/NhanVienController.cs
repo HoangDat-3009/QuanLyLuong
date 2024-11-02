@@ -87,7 +87,7 @@ public class NhanVienController : Controller
     public IActionResult Create()
     {
         // Fetch the last MaNhanVien
-        var lastNhanVien = _context.NhanViens.OrderByDescending(nv => nv.MaNhanVien).FirstOrDefault();
+        var lastNhanVien = _context.NhanViens.IgnoreQueryFilters().OrderByDescending(nv => nv.MaNhanVien).FirstOrDefault();
         int newMaNhanVien = (lastNhanVien != null) ? lastNhanVien.MaNhanVien + 1 : 1;
 
         // Initialize ViewBag properties
